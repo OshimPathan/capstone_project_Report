@@ -1,0 +1,49 @@
+flowchart TB
+    subgraph Client["📱 Mobile Application (Flutter)"]
+        UI[User Interface]
+        Chat[Chat Screen]
+        Analytics[Analytics Dashboard]
+        Settings[Settings & Profile]
+    end
+    
+    subgraph Backend["☁️ Backend Server (Node.js/Vercel)"]
+        API[REST API Gateway]
+        Auth[Auth Middleware]
+        ChatCtrl[Chat Controller]
+        
+        subgraph Pipeline["🧠 Emotion-Aware Processing Pipeline"]
+            Stage1[Stage 1: BERT Emotion Detection]
+            Stage2[Stage 2: Therapeutic Response Mapping]
+            Stage3[Stage 3: Emotion-Guided Prompting]
+        end
+        
+        EmotionSvc[Emotion Service]
+        DecisionSvc[Decision Service]
+    end
+    
+    subgraph External["🌐 External Services"]
+        HF[HuggingFace API\nBERT Model]
+        Gemini[Google Gemini API\nLLM Response]
+        MongoDB[(MongoDB Atlas\nDatabase)]
+    end
+    
+    UI --> Chat
+    UI --> Analytics
+    UI --> Settings
+    Chat -->|HTTPS| API
+    Analytics -->|HTTPS| API
+    
+    API --> Auth
+    Auth --> ChatCtrl
+    ChatCtrl --> Pipeline
+    
+    Stage1 --> Stage2
+    Stage2 --> Stage3
+    
+    Pipeline --> EmotionSvc
+    Pipeline --> DecisionSvc
+    EmotionSvc -->|Inference API| HF
+    Stage3 -->|Generate Response| Gemini
+    
+    ChatCtrl -->|Store/Retrieve| MongoDB
+    Auth -->|Verify JWT| MongoDB

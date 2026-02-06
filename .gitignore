@@ -1,0 +1,18 @@
+# Subdirectories with their own repos
+rebirth/
+rebirth_backend/
+
+# OS files
+.DS_Store
+*.swp
+*~
+
+# Temporary Word files
+~$*.docx
+
+# IDE files
+.idea/
+.vscode/
+
+# Build files
+*.log

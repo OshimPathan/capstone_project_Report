@@ -1,0 +1,52 @@
+flowchart TB
+    subgraph Collection["📥 Data Collection"]
+        MSG[User Messages]
+        EMO[Emotion Detection]
+        STORE[Store with Timestamp]
+    end
+    
+    subgraph Analytics["📊 Longitudinal Emotion Analytics"]
+        subgraph Metrics["Computed Metrics"]
+            DIST[Emotion Distribution]
+            PR[Positivity Ratio]
+            STAB[Stability Score]
+            TREND[Daily Trends]
+        end
+        
+        subgraph Detection["Pattern Detection"]
+            DOM[Dominant Emotion]
+            PERSIST[Persistence Check]
+            SHIFT[Sudden Shifts]
+        end
+    end
+    
+    subgraph Alerts["⚠️ Early Warning System"]
+        HIGH_VOL[High Volatility Alert]
+        NEG_DOM[Negative Dominance Alert]
+        CRISIS[Crisis Detection]
+    end
+    
+    subgraph Output["📈 Visualization"]
+        CHART[Emotion Charts]
+        SCORES[Wellness Scores]
+        PROGRESS[Progress Tracking]
+    end
+    
+    MSG --> EMO
+    EMO --> STORE
+    STORE --> DIST
+    STORE --> PR
+    STORE --> STAB
+    STORE --> TREND
+    
+    DIST --> DOM
+    PR --> PERSIST
+    STAB --> SHIFT
+    
+    DOM --> HIGH_VOL
+    PERSIST --> NEG_DOM
+    SHIFT --> CRISIS
+    
+    Metrics --> CHART
+    Metrics --> SCORES
+    Detection --> PROGRESS
