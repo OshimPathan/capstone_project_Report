@@ -1,0 +1,29 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+sequenceDiagram
+    autonumber
+    participant 600 as 600: User Device
+    participant 601 as 601: Mobile App
+    participant 602 as 602: API Server
+    participant 603 as 603: BERT Service
+    participant 604 as 604: TRM Module
+    participant 605 as 605: EGP Module
+    participant 606 as 606: LLM Service
+    participant 607 as 607: Database
+    
+    600->>601: 610: Input message text
+    601->>602: 611: POST /api/chat/message
+    602->>602: 612: Authenticate token
+    602->>603: 613: Request emotion classification
+    603-->>602: 614: Return emotion probabilities
+    602->>602: 615: Compute emotion metadata
+    602->>604: 616: Request therapeutic strategy
+    604-->>602: 617: Return TRM mapping
+    602->>605: 618: Request prompt construction
+    605-->>602: 619: Return EGP prompt
+    602->>606: 620: Generate AI response
+    606-->>602: 621: Return generated text
+    602->>607: 622: Store message + metadata
+    607-->>602: 623: Confirm persistence
+    602-->>601: 624: Return response + emotionData
+    601->>601: 625: Render response UI
+    601-->>600: 626: Display to user

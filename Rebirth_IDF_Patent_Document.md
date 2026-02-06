@@ -1446,16 +1446,36 @@ User                   Flutter App             Express API           HuggingFace
 
 ## 8A. Formal Patent Figures
 
-The following figures are included as formal patent drawings (see /diagrams/ folder for PNG files):
+### Patent Drawing Specifications
 
-| Figure No. | Title | Description | File |
-|------------|-------|-------------|------|
-| **Figure 1** | High-Level System Architecture | Complete system overview showing Flutter mobile app, Node.js backend, MongoDB database, HuggingFace BERT API, and Google Gemini LLM integration | `1_system_architecture.png` |
-| **Figure 2** | EGRG Processing Pipeline | Three-stage pipeline flow: Stage 1 (BERT Emotion Detection) → Stage 2 (TRM Therapeutic Mapping) → Stage 3 (EGP Prompt Construction) → LLM Response Generation | `2_processing_pipeline.png` |
-| **Figure 3** | Database Schema Design | MongoDB collections showing User, ChatSession, and ChatMessageBucket schemas with bucketed message storage pattern | `3_database_schema.png` |
-| **Figure 4** | Message Flow Sequence | Complete sequence diagram showing data flow from user input through all pipeline stages to response delivery | `4_message_flow.png` |
-| **Figure 5** | Technology Stack | Layered architecture diagram showing Frontend, Backend, Security, AI/ML, Data, and Deployment layers with specific technologies | `5_technology_stack.png` |
-| **Figure 6** | LEA Analytics System | Longitudinal Emotion Analytics architecture showing data collection, analytics engine, pattern detection, and visualization components | `6_analytics_system.png` |
+The following formal patent figures are included with reference numerals per USPTO 37 CFR 1.84 standards. All figures are available in the `/diagrams/patent/` folder.
+
+| Figure No. | Title | Description | Reference Numerals | File |
+|------------|-------|-------------|-------------------|------|
+| **Figure 1** | High-Level System Architecture | Three-tier system showing Mobile Client (100), Backend Server (200), and External Services (300) with EGRG Pipeline (210) | 100-303 | `FIG1_system_architecture.png` |
+| **Figure 2** | EGRG Processing Pipeline | Complete emotion-guided response generation flow from User Input (400) through Detection (410), Mapping (430), Prompting (440), to Output (460) | 400-461 | `FIG2_processing_pipeline.png` |
+| **Figure 3** | Database Schema Design | MongoDB document schema showing User (500), Session (510), Bucket (520), Message (530), and Emotion (540) entities | 500-546 | `FIG3_database_schema.png` |
+| **Figure 4** | Message Flow Sequence | Complete sequence diagram showing 16-step message processing from User Device (600) through all services (601-607) | 600-626 | `FIG4_message_flow.png` |
+| **Figure 5** | Technology Stack | Layered architecture showing Presentation (700), Application (710), Security (720), AI/ML (730), Data (740), and Cloud (750) layers | 700-753 | `FIG5_technology_stack.png` |
+| **Figure 6** | LEA Analytics System | Longitudinal Emotion Analytics showing Data Collection (800), Analytics Engine (810), Early Warning (830), and Visualization (840) | 800-843 | `FIG6_analytics_system.png` |
+
+### Brief Description of Drawings
+
+**FIG. 1** is a block diagram illustrating the three-tier system architecture of the REBIRTH mental health support system, comprising a Mobile Client Tier (100), a Backend Server Tier (200) containing the novel EGRG Pipeline (210), and an External Services Tier (300) for AI model inference and data persistence.
+
+**FIG. 2** is a flowchart illustrating the Emotion-Guided Response Generation (EGRG) algorithm processing pipeline, showing the transformation of a natural language user input (401) through Stage 1 Emotion Detection (410), Stage 2 Therapeutic Mapping (430), and Stage 3 Prompt Construction (440) to produce a therapeutically-appropriate response (461).
+
+**FIG. 3** is an entity relationship diagram illustrating the MongoDB database schema employing a bucketed message storage pattern, wherein Message Bucket entities (520) contain embedded Message documents (530) with associated Emotion data (540), enabling efficient storage and retrieval of emotion-annotated conversation histories.
+
+**FIG. 4** is a sequence diagram illustrating the message processing flow through the system, showing the temporal sequence of operations from user input (610) through authentication (612), emotion classification (613-615), therapeutic mapping (616-617), prompt construction (618-619), response generation (620-621), and response delivery (624-626).
+
+**FIG. 5** is a layered architecture diagram illustrating the technology stack of the REBIRTH system, showing the hierarchical relationship between the Presentation Layer (700), Application Layer (710), Security Layer (720), AI/ML Processing Layer (730), Data Persistence Layer (740), and Cloud Infrastructure (750).
+
+**FIG. 6** is a block diagram illustrating the Longitudinal Emotion Analytics (LEA) system architecture, comprising a Data Collection Stage (800), an LEA Analytics Engine (810) with Metric Computation (811) and Pattern Detection (820) subsystems, an Early Warning System (830) for crisis detection, and a Visualization Output (840) for user-facing displays.
+
+### Reference Numeral Legend
+
+For complete reference numeral definitions, see: `/diagrams/patent/FIGURE_LEGEND.md`
 
 ---
 

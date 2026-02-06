@@ -1,0 +1,58 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+flowchart TB
+    subgraph 700["700 - PRESENTATION LAYER"]
+        701["701 - Flutter Framework"]
+        702["702 - Dart Runtime"]
+        703["703 - Provider State Management"]
+        704["704 - HTTP Client Module"]
+    end
+    
+    subgraph 710["710 - APPLICATION LAYER"]
+        711["711 - Node.js Runtime"]
+        712["712 - Express.js Framework"]
+        713["713 - JWT Authentication"]
+        714["714 - Mongoose ODM"]
+    end
+    
+    subgraph 720["720 - SECURITY LAYER"]
+        721["721 - Helmet Security Headers"]
+        722["722 - CORS Configuration"]
+        723["723 - Rate Limiting Module"]
+        724["724 - Bcrypt Password Hashing"]
+    end
+    
+    subgraph 730["730 - AI/ML PROCESSING LAYER"]
+        731["731 - BERT Emotion Classifier"]
+        732["732 - Gemini LLM Generator"]
+        733["733 - TRM Algorithm Module"]
+        734["734 - EGP Algorithm Module"]
+        735["735 - CIP Crisis Protocol"]
+    end
+    
+    subgraph 740["740 - DATA PERSISTENCE LAYER"]
+        741["741 - MongoDB Atlas Cluster"]
+        742["742 - Local Secure Storage"]
+    end
+    
+    subgraph 750["750 - CLOUD INFRASTRUCTURE"]
+        751["751 - Vercel Serverless"]
+        752["752 - HuggingFace Inference"]
+        753["753 - Google Cloud AI"]
+    end
+    
+    701 --> 704
+    704 --> 712
+    712 --> 720
+    720 --> 713
+    713 --> 714
+    714 --> 741
+    
+    712 --> 731
+    731 --> 733
+    733 --> 734
+    734 --> 732
+    734 --> 735
+    
+    731 -.-> 752
+    732 -.-> 753
+    712 -.-> 751

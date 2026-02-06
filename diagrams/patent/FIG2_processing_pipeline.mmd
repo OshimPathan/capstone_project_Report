@@ -1,0 +1,60 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+flowchart LR
+    subgraph 400["400 - USER INPUT"]
+        401["401 - Natural Language Message"]
+    end
+    
+    subgraph 410["410 - STAGE 1: EMOTION DETECTION"]
+        411["411 - BERT Classifier"]
+        412["412 - Probability Computation"]
+        413["413 - Metadata Enrichment"]
+    end
+    
+    subgraph 420["420 - EMOTION OUTPUT"]
+        421["421 - Primary Emotion Label"]
+        422["422 - Confidence Score"]
+        423["423 - Category Classification"]
+        424["424 - Severity Level"]
+    end
+    
+    subgraph 430["430 - STAGE 2: THERAPEUTIC MAPPING"]
+        431["431 - Strategy Lookup Table"]
+        432["432 - Approach Selection"]
+        433["433 - Tone Determination"]
+    end
+    
+    subgraph 440["440 - STAGE 3: PROMPT CONSTRUCTION"]
+        441["441 - Context Integration"]
+        442["442 - Therapeutic Instructions"]
+        443["443 - Crisis Protocol Check"]
+    end
+    
+    subgraph 450["450 - RESPONSE GENERATION"]
+        451["451 - LLM Processing"]
+        452["452 - Response Validation"]
+    end
+    
+    subgraph 460["460 - OUTPUT"]
+        461["461 - Therapeutic Response"]
+    end
+    
+    401 --> 411
+    411 --> 412
+    412 --> 413
+    413 --> 421
+    413 --> 422
+    413 --> 423
+    413 --> 424
+    
+    421 --> 431
+    431 --> 432
+    432 --> 433
+    
+    433 --> 441
+    421 --> 441
+    441 --> 442
+    442 --> 443
+    
+    443 --> 451
+    451 --> 452
+    452 --> 461

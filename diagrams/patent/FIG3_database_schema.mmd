@@ -1,0 +1,48 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+erDiagram
+    USER_500 ||--o{ SESSION_510 : "has sessions"
+    USER_500 {
+        string id_501 PK "Primary Key"
+        string name_502 "User Name"
+        string email_503 "Email Address"
+        string password_504 "Hashed Password"
+        object onboarding_505 "Onboarding Data"
+        array goals_506 "User Goals Array"
+        date createdAt_507 "Creation Timestamp"
+    }
+    
+    SESSION_510 ||--o{ BUCKET_520 : "contains buckets"
+    SESSION_510 {
+        string id_511 PK "Primary Key"
+        string user_512 FK "User Reference"
+        string title_513 "Session Title"
+        int messagesCount_514 "Message Counter"
+        date lastMessageAt_515 "Last Activity"
+        boolean archived_516 "Archive Flag"
+    }
+    
+    BUCKET_520 ||--o{ MESSAGE_530 : "stores messages"
+    BUCKET_520 {
+        string id_521 PK "Primary Key"
+        string session_522 FK "Session Reference"
+        int bucketIndex_523 "Bucket Number"
+        int count_524 "Message Count"
+        array messages_525 "Message Array"
+    }
+    
+    MESSAGE_530 ||--|| EMOTION_540 : "has emotion"
+    MESSAGE_530 {
+        string role_531 "Sender Role"
+        string text_532 "Message Content"
+        object emotionData_533 "Emotion Object"
+        date createdAt_534 "Timestamp"
+    }
+    
+    EMOTION_540 {
+        string emotion_541 "Primary Emotion"
+        float confidence_542 "Confidence Score"
+        string category_543 "Emotion Category"
+        string severity_544 "Severity Level"
+        object responseStrategy_545 "TRM Output"
+        array allEmotions_546 "All Probabilities"
+    }

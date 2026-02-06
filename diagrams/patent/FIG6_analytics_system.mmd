@@ -1,0 +1,53 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+flowchart TB
+    subgraph 800["800 - DATA COLLECTION STAGE"]
+        801["801 - User Message Input"]
+        802["802 - Emotion Classification"]
+        803["803 - Timestamped Storage"]
+    end
+    
+    subgraph 810["810 - LEA ANALYTICS ENGINE"]
+        subgraph 811["811 - METRIC COMPUTATION"]
+            812["812 - Emotion Distribution Calculator"]
+            813["813 - Positivity Ratio Analyzer"]
+            814["814 - Stability Score Generator"]
+            815["815 - Daily Trend Aggregator"]
+        end
+        
+        subgraph 820["820 - PATTERN DETECTION"]
+            821["821 - Dominant Emotion Detector"]
+            822["822 - Persistence Analyzer"]
+            823["823 - Shift Detection Module"]
+        end
+    end
+    
+    subgraph 830["830 - EARLY WARNING SYSTEM"]
+        831["831 - High Volatility Alert"]
+        832["832 - Negative Dominance Alert"]
+        833["833 - Crisis Detection Trigger"]
+    end
+    
+    subgraph 840["840 - VISUALIZATION OUTPUT"]
+        841["841 - Emotion Trend Charts"]
+        842["842 - Wellness Score Display"]
+        843["843 - Progress Tracking View"]
+    end
+    
+    801 --> 802
+    802 --> 803
+    803 --> 812
+    803 --> 813
+    803 --> 814
+    803 --> 815
+    
+    812 --> 821
+    813 --> 822
+    814 --> 823
+    
+    821 --> 831
+    822 --> 832
+    823 --> 833
+    
+    811 --> 841
+    811 --> 842
+    820 --> 843

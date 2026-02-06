@@ -1,0 +1,50 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#ffffff', 'tertiaryColor': '#ffffff', 'background': '#ffffff'}}}%%
+flowchart TB
+    subgraph 100["100 - MOBILE CLIENT TIER"]
+        101["101 - User Interface Module"]
+        102["102 - Chat Interface"]
+        103["103 - Analytics Display"]
+        104["104 - Profile Manager"]
+    end
+    
+    subgraph 200["200 - BACKEND SERVER TIER"]
+        201["201 - API Gateway"]
+        202["202 - Authentication Module"]
+        203["203 - Chat Controller"]
+        
+        subgraph 210["210 - EGRG PIPELINE"]
+            211["211 - Stage 1: Emotion Detection"]
+            212["212 - Stage 2: Therapeutic Mapping"]
+            213["213 - Stage 3: Prompt Generation"]
+        end
+        
+        204["204 - Emotion Service"]
+        205["205 - Decision Service"]
+    end
+    
+    subgraph 300["300 - EXTERNAL SERVICES TIER"]
+        301["301 - BERT Inference API"]
+        302["302 - LLM Generation API"]
+        303["303 - Database Service"]
+    end
+    
+    101 --> 102
+    101 --> 103
+    101 --> 104
+    102 -->|"HTTPS Request"| 201
+    103 -->|"HTTPS Request"| 201
+    
+    201 --> 202
+    202 --> 203
+    203 --> 210
+    
+    211 --> 212
+    212 --> 213
+    
+    210 --> 204
+    210 --> 205
+    204 -->|"Inference Call"| 301
+    213 -->|"Generation Call"| 302
+    
+    203 -->|"Data Operations"| 303
+    202 -->|"Auth Verification"| 303
