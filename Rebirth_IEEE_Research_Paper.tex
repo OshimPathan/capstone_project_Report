@@ -315,6 +315,16 @@ Beyond individual exchanges, the LEA subsystem monitors emotional patterns acros
 
 When someone's emotional state takes a concerning turn---high volatility combined with persistent negativity, or a week of unrelenting sadness---the system raises a flag. This is not diagnosis; it is a gentle nudge that something may warrant attention, paired with prominent links to professional resources.
 
+\begin{figure}[htbp]
+\centering
+% ====== INSERT YOUR SCREENSHOT HERE ======
+% \includegraphics[width=0.85\columnwidth]{images/analytics_dashboard.png}
+\fbox{\parbox{0.8\columnwidth}{\centering\vspace{2cm}\textit{[Insert: Analytics Dashboard Screenshot]}\vspace{2cm}}}
+% ==========================================
+\caption{Longitudinal Emotion Analytics (LEA) dashboard showing emotion distribution over time, positivity ratio trends, and emotional stability metrics. The visualization helps users recognize patterns in their emotional states.}
+\label{fig:analytics}
+\end{figure}
+
 % ============= IV. System Architecture =============
 \section{System Architecture}
 
@@ -354,6 +364,16 @@ The system employs a production-ready three-tier architecture as illustrated in 
 \textbf{Application Layer:} RESTful API backend using Node.js 18.x with Express.js 4.18, deployed as serverless functions on Vercel for automatic scaling. Security is implemented through Helmet for HTTP headers, bcrypt for password hashing, and JWT for stateless authentication.
 
 \textbf{Data/AI Layer:} MongoDB Atlas provides document-based storage with emotion-enriched message schemas. HuggingFace Inference API hosts the BERT emotion model, while Google Gemini API provides LLM response generation.
+
+\begin{figure}[htbp]
+\centering
+% ====== INSERT YOUR SCREENSHOT HERE ======
+% \includegraphics[width=0.85\columnwidth]{images/app_chat_interface.png}
+\fbox{\parbox{0.8\columnwidth}{\centering\vspace{2cm}\textit{[Insert: App Chat Interface Screenshot]}\vspace{2cm}}}
+% ==========================================
+\caption{Rebirth mobile application interface showing the conversational UI with real-time emotion detection. Each message displays an emotion badge indicating the detected emotional state with confidence score.}
+\label{fig:app_interface}
+\end{figure}
 
 \subsection{Message Processing Flow}
 
@@ -586,7 +606,15 @@ Qualitative feedback themes:
     \item \textit{``Responses changed based on my mood—celebratory when happy, comforting when sad''} — Participant 27
     \item \textit{``The emotion badge helped me become more aware of my own patterns''} — Participant 41
 \end{itemize}
-
+\begin{figure}[htbp]
+\centering
+% ====== INSERT YOUR SCREENSHOT HERE ======
+% \includegraphics[width=0.85\columnwidth]{images/emotion_detection_demo.png}
+\fbox{\parbox{0.8\columnwidth}{\centering\vspace{2cm}\textit{[Insert: Emotion Detection Demo Screenshot]}\vspace{2cm}}}
+% ==========================================
+\caption{Emotion detection in action: The application displays detected emotions (sadness, joy, fear, etc.) as color-coded badges on each message, with conversation responses adapted to match the user's emotional state.}
+\label{fig:emotion_demo}
+\end{figure}
 \subsection{System Performance}
 
 Table \ref{tab:performance} presents production performance metrics.
