@@ -4,9 +4,9 @@
 
 **Oshim Pathan**
 
-*Department of Computer Science and Engineering*  
-*[University Name], [City, Country]*  
-*Email: [your.email@example.com]*
+*School of Computer Science and Engineering*  
+*Vellore Institute of Technology, Vellore, Tamil Nadu, India*  
+*Email: work.oshimkhan@gmail.com*
 
 ---
 
@@ -292,7 +292,7 @@ Future work will focus on multi-modal emotion detection incorporating voice and 
 
 ## Acknowledgment
 
-The author would like to thank [Advisor Name] for guidance throughout this research project.
+The author thanks the faculty of the School of Computer Science and Engineering at Vellore Institute of Technology for their guidance and support throughout this research project.
 
 ---
 
@@ -342,7 +342,7 @@ The author would like to thank [Advisor Name] for guidance throughout this resea
 
 ## Author Biography
 
-**Oshim Pathan** is a final-year undergraduate student in Computer Science and Engineering at [University Name]. His research interests include natural language processing, affective computing, and human-computer interaction. He is particularly interested in the application of artificial intelligence to improve mental health accessibility.
+**Oshim Pathan** is a final-year undergraduate student in Computer Science and Engineering at Vellore Institute of Technology (VIT), Vellore, India. His research interests include natural language processing, affective computing, and human-computer interaction. He is particularly interested in the application of artificial intelligence to improve mental health accessibility. Contact: work.oshimkhan@gmail.com
 
 ---
 
