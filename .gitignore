@@ -1,18 +1,81 @@
-# Subdirectories with their own repos
-rebirth/
-rebirth_backend/
+# ===========================================
+# Rebirth Capstone Project - .gitignore
+# ===========================================
 
-# OS files
+# ============= OS Files =============
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 *.swp
 *~
 
-# Temporary Word files
-~$*.docx
-
-# IDE files
+# ============= IDE Files =============
 .idea/
 .vscode/
+*.iml
+*.sublime-workspace
+*.sublime-project
 
-# Build files
+# ============= Temporary Files =============
+~$*.docx
 *.log
+*.tmp
+*.temp
+
+# ============= Flutter/Dart =============
+rebirth/.dart_tool/
+rebirth/.flutter-plugins
+rebirth/.flutter-plugins-dependencies
+rebirth/.packages
+rebirth/.pub-cache/
+rebirth/.pub/
+rebirth/build/
+rebirth/.metadata
+rebirth/pubspec.lock
+
+# ============= iOS =============
+rebirth/ios/Pods/
+rebirth/ios/.symlinks/
+rebirth/ios/Flutter/ephemeral/
+rebirth/ios/Flutter/flutter_export_environment.sh
+rebirth/ios/Flutter/Generated.xcconfig
+rebirth/ios/Flutter/App.framework
+rebirth/ios/Flutter/Flutter.framework
+rebirth/ios/Flutter/Flutter.podspec
+rebirth/ios/ServiceDefinitions.json
+rebirth/ios/Runner/GeneratedPluginRegistrant.*
+
+# ============= Android =============
+rebirth/android/.gradle/
+rebirth/android/local.properties
+rebirth/android/app/build/
+rebirth/android/build/
+rebirth/android/captures/
+rebirth/android/*.keystore
+rebirth/android/*.jks
+
+# ============= Backend Node.js =============
+rebirth_backend/rebirth-backend/node_modules/
+rebirth_backend/rebirth-backend/.env
+rebirth_backend/node_modules/
+rebirth_backend/.env
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# ============= Dependencies Lock Files =============
+rebirth_backend/package-lock.json
+rebirth_backend/rebirth-backend/package-lock.json
+
+# ============= Misc =============
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+*.cache
