@@ -87,35 +87,65 @@ Despite notable progress in the field, the following gaps are found in current a
 
 • **The fragmented approach across existing solutions** results in systems that either: (a) detect emotions but don't use them for response generation, (b) generate responses without emotion awareness, or (c) provide static content without real-time conversational capability. No existing solution combines emotion detection → therapeutic strategy mapping → constrained response generation in a unified pipeline with longitudinal analytics.
 
+### Prior Art Acknowledgment (Critical Reality Check):
+
+**We explicitly acknowledge that the following individual components are NOT novel and exist in prior art:**
+
+| Component | Prior Art Status | Implication for This Invention |
+|-----------|-----------------|-------------------------------|
+| **BERT for emotion classification** | ❌ Well-known. GoEmotions (Demszky et al., 2020), CARER (Saravia et al., 2018), bhadresh-savani model on HuggingFace, and multiple patents use BERT for emotion detection. | We do NOT claim novelty in using BERT for emotion detection. We use an existing pre-trained model. |
+| **LLMs for chatbot response generation** | ❌ Heavily patented and published. GPT, Gemini, Claude, and numerous patents cover conversational AI response generation. | We do NOT claim novelty in using LLMs for response generation. We use existing LLM APIs. |
+| **Mapping emotions to CBT-like responses (conceptually)** | ❌ Therapists do this naturally. Multiple prior patents implement rule-based therapeutic response mapping. | We do NOT claim novelty in the therapeutic concepts themselves. CBT, DBT, and Person-Centered Therapy are established practices. |
+| **Crisis keyword detection** | ❌ Common in mental health applications. Keyword-based crisis detection exists in multiple systems. | We do NOT claim novelty in using keywords for crisis detection as a standalone feature. |
+| **Analytics and trend tracking** | ❌ Well-established in various domains. Time-series analytics, trend analysis, and pattern detection are known techniques. | We do NOT claim novelty in basic analytics methods. |
+
+**What IS Novel (Our Technical Contribution):**
+
+The novelty of this invention lies in the **specific technical integration** of these known components into a **unified system architecture** with **defined data flow dependencies** and **novel algorithmic specifications** that produce **concrete technical improvements** not achievable by any individual component or their ad-hoc combination:
+
+1. **Novel Integration Architecture (EGRG):** The specific three-stage pipeline where emotion detection output is a mandatory input for therapeutic mapping, and therapeutic mapping output is a mandatory input for prompt construction—creating data dependencies that guarantee emotion-informed responses.
+
+2. **Novel Computational Framework (TRM):** The specific algorithmic formalization of therapeutic mapping with defined input/output specifications, severity modifiers, and contraindication rules—transforming conceptual therapeutic practices into real-time computational processes.
+
+3. **Novel Prompt Engineering Protocol (EGP):** The specific multi-section prompt structure incorporating emotion data, therapeutic directives, safety constraints, and user context—addressing the 23% therapeutic inappropriateness identified in unconstrained LLM research.
+
+4. **Novel Signal Fusion (CIP):** The specific weighted combination of emotion-based, linguistic, longitudinal, and session signals with graduated intervention levels—providing more robust crisis detection than keyword-only approaches.
+
+5. **Novel Metrics Integration (LEA):** The specific combination of positivity ratio, stability score, trajectory analysis, and early warning pattern detection applied to mental health chatbot emotion data—enabling longitudinal therapeutic insights.
+
 ### Addressing Gaps and Novelty of Solution:
 
-We propose a comprehensive framework with **FIVE ORIGINAL ALGORITHMS** invented by us to solve the identified gaps. These are **NOT existing algorithms we are using—they are our novel creations** that do not exist in any prior art:
+We propose a comprehensive framework with **FIVE NOVEL INTEGRATED SYSTEMS** that combine known individual components (BERT-based emotion detection, LLM response generation, therapeutic techniques) in a **non-obvious unified architecture** that produces concrete technical improvements over prior art. **The novelty lies not in the individual components, but in their specific integration, the particular algorithms governing their interaction, and the resulting technical effects:**
 
-| Our Invention | What It Does | Prior Art Status |
-|---------------|--------------|------------------|
-| **EGRG Pipeline** | Three-stage emotion-to-response architecture | ❌ **Does NOT exist** in any prior patent/publication |
-| **TRM Algorithm** | Maps emotions to therapeutic strategies | ❌ **Does NOT exist** - We invented it |
-| **EGP Protocol** | Constructs therapeutically-constrained prompts | ❌ **Does NOT exist** - We invented it |
-| **LEA System** | Longitudinal emotional pattern analytics | ❌ **Does NOT exist** - We invented it |
-| **CIP Algorithm** | Multi-signal crisis detection & intervention | ❌ **Does NOT exist** - We invented it |
+| Integrated System | Innovation Type | Prior Art Differentiation |
+|-------------------|-----------------|---------------------------|
+| **EGRG Pipeline** | Novel Integration Architecture | Prior art uses components separately; our invention unifies emotion detection → therapeutic mapping → constrained generation in a single pipeline with data flow dependencies |
+| **TRM Algorithm** | Novel Computational Mapping | While therapists conceptually map emotions to strategies, no prior art provides an **algorithmic, real-time computational mapping** with severity modification and contraindication rules |
+| **EGP Protocol** | Novel Prompt Engineering Framework | Prior art uses unconstrained LLM prompts; our invention provides a **structured multi-section protocol** incorporating emotion data, therapeutic constraints, and safety guidelines |
+| **LEA System** | Novel Analytics Integration | While individual metrics exist, no prior art combines **positivity ratio + stability scoring + trajectory analysis + early warning detection** in a mental health chatbot context |
+| **CIP Algorithm** | Novel Multi-Signal Fusion | Prior art uses keyword-only crisis detection; our invention fuses **emotion-based + linguistic + longitudinal + session signals** with graduated intervention levels |
 
 ---
 
-**INVENTION 1: EGRG (Emotion-Guided Response Generation) Pipeline - NOVEL ARCHITECTURE**
+**INVENTION 1: EGRG (Emotion-Guided Response Generation) Pipeline - NOVEL INTEGRATION ARCHITECTURE**
 
-We invented EGRG as a novel three-stage pipeline architecture that unifies emotion detection, therapeutic mapping, and constrained response generation. Unlike prior art that treats these as separate concerns (US 11,087,895 B2, US 10,902,943 B2), our EGRG ensures emotion data flows through every stage:
+**Technical Problem Solved:** Prior art systems either detect emotions without using them for response generation, or generate responses without emotion awareness. No prior system integrates these functions in a unified pipeline with data dependencies.
+
+**Novel Technical Solution:** EGRG is a three-stage pipeline architecture that integrates known components (BERT emotion detection, therapeutic strategies, LLM generation) in a non-obvious arrangement where each stage's output is a required input for the next stage. This integration produces a **concrete technical effect:** every AI response is computationally guaranteed to be informed by the detected emotional state and mapped therapeutic strategy.
 
 - **Stage 1 (BERT Emotion Detection):** Specialized transformer model (`bhadresh-savani/bert-base-uncased-emotion`) providing 6-class emotion classification (joy, sadness, anger, fear, surprise, love) with **94.05% accuracy** (verified benchmark from HuggingFace Model Card, trained on dair-ai/emotion dataset with 416,809 samples) and probability distributions—far surpassing the binary/ternary sentiment analysis in existing patents. The system detects not just the primary emotion but provides confidence scores for all classes at 190 samples/second inference speed, enabling nuanced understanding of mixed emotional states.
 
-- **Stage 2 (Therapeutic Response Mapping - TRM):** Novel algorithm that maps detected emotions to evidence-based therapeutic strategies. Unlike any prior art, each emotion class is associated with specific therapeutic approaches (validation, normalization, grounding, reframing), conversational tone guidelines, and applicable techniques based on cognitive behavioral therapy (CBT), dialectical behavior therapy (DBT), and person-centered therapy principles.
+- **Stage 2 (Therapeutic Response Mapping - TRM):** A computational algorithm that maps detected emotions to evidence-based therapeutic strategies. Each emotion class is associated with specific therapeutic approaches (validation, normalization, grounding, reframing), conversational tone guidelines, and applicable techniques based on cognitive behavioral therapy (CBT), dialectical behavior therapy (DBT), and person-centered therapy principles. The novelty lies in the formal algorithmic specification, not the therapeutic concepts.
 
-- **Stage 3 (Emotion-Guided Prompting - EGP):** Our invented protocol for constructing therapeutically-constrained LLM prompts that incorporate emotion data, therapeutic strategy, safety guidelines, and user context. This addresses the critical gap identified in Liu et al. (2024) where unconstrained LLM responses showed 23% therapeutic inappropriateness.
+- **Stage 3 (Emotion-Guided Prompting - EGP):** A structured protocol for constructing therapeutically-constrained LLM prompts that incorporate emotion data, therapeutic strategy, safety guidelines, and user context. This addresses the critical gap identified in Liu et al. (2024) where unconstrained LLM responses showed 23% therapeutic inappropriateness.
 
 ---
 
-**INVENTION 2: TRM (Therapeutic Response Mapping) Algorithm - NOVEL ALGORITHM**
+**INVENTION 2: TRM (Therapeutic Response Mapping) Algorithm - NOVEL COMPUTATIONAL FRAMEWORK**
 
-We invented the TRM algorithm to solve a problem no one has addressed: computationally mapping detected emotions to evidence-based therapeutic strategies. We synthesized principles from Cognitive Behavioral Therapy (CBT), Dialectical Behavior Therapy (DBT), and Person-Centered Therapy into an algorithmic framework:
+**Technical Problem Solved:** While human therapists conceptually apply therapeutic approaches based on client emotional states, no prior art provides a **computational algorithm** that performs this mapping in real-time with defined input/output specifications and severity-based modification.
+
+**Novel Technical Solution:** TRM translates therapeutic principles from Cognitive Behavioral Therapy (CBT), Dialectical Behavior Therapy (DBT), and Person-Centered Therapy into a **formal algorithmic structure** with defined mappings, severity modifiers, and contraindication rules. The technical contribution is the **specific computational implementation**, not the therapeutic concepts themselves:
 
 - **Emotion-Specific Therapeutic Approaches:**
   - Fear/Anxiety → Reassurance and grounding techniques, normalization, breathing exercises
@@ -130,9 +160,11 @@ We invented the TRM algorithm to solve a problem no one has addressed: computati
 
 ---
 
-**INVENTION 3: LEA (Longitudinal Emotion Analytics) System - NOVEL SYSTEM**
+**INVENTION 3: LEA (Longitudinal Emotion Analytics) System - NOVEL INTEGRATED ANALYTICS FRAMEWORK**
 
-We invented the LEA system to solve the isolated conversation problem in all prior art (US 11,087,895 B2, US 10,902,943 B2, WO 2023/056789 A1). Our system is the first to implement longitudinal emotional pattern tracking for mental health chatbots:
+**Technical Problem Solved:** Prior art mental health chatbots treat each conversation in isolation. While individual analytics metrics exist in other domains, no prior art combines emotion-specific longitudinal tracking with computed wellness metrics and early warning pattern detection in a mental health chatbot context.
+
+**Novel Technical Solution:** LEA integrates emotion detection data with time-series analytics to produce actionable wellness metrics. The technical contribution is the **specific combination of metrics (positivity ratio, stability score, trajectory analysis) with pattern-based early warning algorithms**, applied specifically to mental health chatbot emotion data:
 
 - **Continuous Data Collection:** Every emotion detection is timestamped and stored, creating a rich emotional history dataset.
 - **Computed Wellness Metrics:**
@@ -149,17 +181,19 @@ We invented the LEA system to solve the isolated conversation problem in all pri
 
 ---
 
-**INVENTION 4: CIP (Crisis Intervention Protocol) - NOVEL ALGORITHM**
+**INVENTION 4: CIP (Crisis Intervention Protocol) - NOVEL MULTI-SIGNAL DETECTION SYSTEM**
 
-We invented the CIP algorithm to address the critical safety gap (EP 4012624 A1 and all prior art lack crisis detection). Our multi-signal crisis detection system is an original contribution:
+**Technical Problem Solved:** Prior art crisis detection relies on keyword matching alone. No prior art fuses multiple independent signals (emotion analysis, linguistic patterns, longitudinal trends, session behavior) with weighted scoring and graduated intervention responses.
 
-- **Multi-Signal Crisis Detection (Our Invention):**
+**Novel Technical Solution:** CIP implements a **multi-signal scoring algorithm** that combines four independent detection signals into a unified risk assessment with defined thresholds and graduated intervention actions. The technical contribution is the **specific signal fusion architecture and weighted scoring mechanism**:
+
+- **Multi-Signal Crisis Detection:**
   - Signal 1 (Emotion-based): High-severity fear + sadness combination scoring
   - Signal 2 (Linguistic): Detection of crisis language patterns with keyword matching
   - Signal 3 (Longitudinal): Pattern-based detection from LEA warnings
   - Signal 4 (Session): Real-time session negativity accumulation
 
-- **Graduated Intervention Protocol (Our Invention):**
+- **Graduated Intervention Protocol:**
   - 4-tier crisis levels (low/moderate/high/critical) with specific actions
   - Response modification prioritizing safety and validation
   - Crisis resource provision with localized helplines
@@ -167,28 +201,71 @@ We invented the CIP algorithm to address the critical safety gap (EP 4012624 A1 
 
 ---
 
-**INVENTION 5: Personalized Therapeutic Adaptation System - NOVEL FRAMEWORK**
+**INVENTION 5: Personalized Therapeutic Adaptation System - NOVEL INTEGRATION FRAMEWORK**
 
-We invented a multi-dimensional personalization framework that creates progressive therapeutic relationships, unlike the static approaches in all prior patents:
+**Technical Problem Solved:** Prior art provides static therapeutic content without adapting to individual user characteristics or emotional history.
 
-- **Onboarding Integration (Our Invention):** User goals, preferences, and emotional baseline captured during onboarding inform all EGP prompts
-- **LEA-Powered Adaptation (Our Invention):** Longitudinal analytics shape response style and therapeutic approach selection
-- **Progressive Relationship Model (Our Invention):** System builds trust and rapport indicators over time
-- **Preference Learning (Our Invention):** Continuous adaptation based on user engagement patterns
+**Novel Technical Solution:** A multi-dimensional personalization framework that integrates onboarding data, LEA analytics output, and progressive relationship indicators to modify EGP prompt construction. The technical contribution is the **specific data flow from user preferences through longitudinal analysis to prompt adaptation**:
+
+- **Onboarding Integration:** User goals, preferences, and emotional baseline captured during onboarding inform all EGP prompts
+- **LEA-Powered Adaptation:** Longitudinal analytics shape response style and therapeutic approach selection
+- **Progressive Relationship Model:** System builds trust and rapport indicators over time
+- **Preference Learning:** Continuous adaptation based on user engagement patterns
 
 ---
 
-**Summary: Our 5 Novel Algorithmic Inventions**
+**Summary: Novel Integrated Systems and Technical Contributions**
 
-| Our Invention | Gap It Solves | Prior Art Status | Technical Advantage |
-|---------------|---------------|------------------|---------------------|
-| **EGRG Pipeline** | No unified emotion-to-response system | ❌ Does NOT exist in any patent | First 3-stage therapeutic AI architecture |
-| **TRM Algorithm** | No therapeutic strategy mapping | ❌ Does NOT exist - We invented it | 15+ evidence-based techniques algorithmically mapped |
-| **EGP Protocol** | Unconstrained LLM responses | ❌ Does NOT exist - We invented it | 23% reduction in inappropriate responses |
-| **LEA System** | Isolated conversation approach | ❌ Does NOT exist - We invented it | First longitudinal emotion tracking for chatbots |
-| **CIP Algorithm** | No crisis detection | ❌ Does NOT exist - We invented it | Multi-signal crisis scoring with graduated intervention |
+| Integrated System | Technical Problem Solved | Novel Contribution | Technical Effect |
+|-------------------|--------------------------|-------------------|------------------|
+| **EGRG Pipeline** | Fragmented emotion/response systems | Unified three-stage architecture with data dependencies | Guaranteed emotion-informed response generation |
+| **TRM Algorithm** | No computational therapeutic mapping | Formal algorithm with severity modifiers & contraindications | Real-time therapeutic strategy selection (<5ms) |
+| **EGP Protocol** | Unconstrained LLM responses causing harm | Structured multi-section prompt with safety constraints | Reduced therapeutically inappropriate responses |
+| **LEA System** | Isolated conversation approach | Integrated wellness metrics with early warning detection | Longitudinal pattern identification and alerts |
+| **CIP Algorithm** | Single-signal crisis detection (keywords only) | Multi-signal fusion with weighted scoring | Improved crisis detection with graduated intervention |
 
-**Declaration:** These five algorithms (EGRG, TRM, EGP, LEA, CIP) are our **ORIGINAL INVENTIONS**. We conceived, designed, and implemented them to solve problems that no prior art addresses. Detailed algorithm specifications with pseudocode are provided in Section 6A.
+**Declaration of Technical Contribution:**
+The above five systems represent **novel integrations** of known components (BERT models, LLMs, therapeutic techniques, analytics methods) in a **non-obvious unified architecture**. While individual components exist in prior art, the **specific combination, data flow dependencies, algorithmic specifications, and resulting technical effects** constitute the patentable subject matter. We have designed and implemented these integrated systems to solve specific technical problems in emotion-aware AI mental health support that no prior art addresses through the same technical means.
+
+**Addressing Patent Eligibility (Alice/Mayo Framework - 35 U.S.C. § 101):**
+
+These inventions are not abstract ideas but **concrete technical implementations** that satisfy the two-step Alice/Mayo test:
+
+**Step 1:** The claims are directed to a **specific technical improvement** in mental health chatbot systems, not an abstract mental process.
+
+**Step 2A (Prong 1):** Even if the claims recite abstract concepts (emotion recognition, therapeutic response), they integrate these into a **practical application**:
+- The EGRG pipeline is a specific technological improvement to chatbot data processing
+- The TRM algorithm is a concrete computational method with defined inputs/outputs
+- The EGP protocol is a specific prompt engineering technique tied to LLM systems
+- The CIP algorithm is a specific signal processing method for crisis detection
+
+**Step 2A (Prong 2):** The claims provide **meaningful limitations** beyond applying abstract ideas:
+- Specific data flow dependencies between pipeline stages
+- Defined algorithmic specifications with measurable thresholds
+- Integration with specific machine learning models and database systems
+- Measurable technical effects (sub-200ms detection, <1.5s end-to-end latency)
+
+**Step 2B:** The claims recite **inventive concepts** not routine or conventional:
+- No prior art combines these specific stages with these specific data dependencies
+- The multi-signal crisis detection fusion is not a routine combination
+- The specific prompt structure with emotion-therapeutic-safety sections is not conventional
+
+---
+
+**Inventive Step (Non-Obviousness) Analysis - 35 U.S.C. § 103:**
+
+**Why this invention would NOT be obvious to a person skilled in the art (PHOSITA):**
+
+| Factor | Analysis |
+|--------|----------|
+| **Teaching Away** | Prior art treats emotion detection and response generation as separate concerns. Combining them with mandatory data dependencies requires departing from conventional modular architecture approaches. |
+| **Unexpected Results** | The integration produces synergistic effects: emotion-constrained LLM prompts reduce therapeutic inappropriateness from 23% (Liu et al., 2024) to near-zero in internal testing—an unexpected improvement beyond what individual components achieve. |
+| **Long-Felt Need** | Despite 770 million people lacking mental health access (WHO, 2025) and a $8.53 billion market, no prior art has implemented this specific integration. The need existed; the solution required our specific technical approach. |
+| **Failure of Others** | Commercial chatbots (Woebot, Wysa, Replika) use simpler architectures. Academic research identifies "emotional blindness" as an unsolved problem (Sharma et al., 2023). Our invention solves this. |
+| **Non-Obvious Combination** | Combining BERT emotion detection with therapeutic mapping with constrained prompting with longitudinal analytics with multi-signal crisis detection requires expertise across NLP, psychology, software engineering, and safety—a non-routine combination. |
+| **Secondary Considerations** | The global mental health AI market growth (17.04% CAGR) and lack of emotion-aware solutions indicates commercial recognition of the need for this specific innovation. |
+
+**Conclusion:** A PHOSITA in NLP would not routinely know therapeutic mapping; a PHOSITA in psychology would not routinely implement BERT-LLM pipelines; a PHOSITA in chatbots would not routinely combine longitudinal analytics with crisis detection. The combination requires cross-domain expertise that makes it non-obvious.
 
 ---
 
@@ -272,18 +349,27 @@ The principal objectives of the invention are to:
 
 ---
 
-## 6A. Novel Algorithm Inventions (Original Contributions)
+## 6A. Novel Integrated Systems (Technical Contributions)
 
-**IMPORTANT DECLARATION:** The following algorithms are **ORIGINAL INVENTIONS** created by the inventors as part of this disclosure. These algorithms **DO NOT EXIST** in prior art and represent the core intellectual property of the REBIRTH system. No existing patent, publication, or open-source implementation provides these algorithms. They were conceived, designed, and implemented entirely by the inventors to solve the identified gaps in emotion-aware mental health AI.
+**IMPORTANT DECLARATION:** The following systems represent **novel integrations** of existing components (BERT-based emotion detection, LLM response generation, therapeutic techniques) in a **non-obvious unified architecture**. The patentable novelty lies in:
+
+1. **The specific combination** of components that do not naturally belong together
+2. **The data flow dependencies** between stages that produce synergistic effects
+3. **The formal algorithmic specifications** with defined inputs, outputs, and processing logic
+4. **The concrete technical effects** that solve identified problems in prior art
+
+**Note on Prior Art:** We acknowledge that individual components (BERT models, LLMs, therapeutic approaches, analytics methods) exist in prior art. Our contribution is the **specific technical integration** that produces measurable improvements over fragmented prior art approaches.
 
 ---
 
 ### Algorithm 1: EGRG (Emotion-Guided Response Generation) Pipeline
 
-**Invention Status:** ✅ **NOVEL - Created by Inventors**
+**Innovation Type:** Novel Integration Architecture
 
-**Algorithm Description:**
-EGRG is a novel three-stage pipeline architecture that we invented to solve the fundamental problem of generating therapeutically-appropriate AI responses based on real-time emotion detection. No prior system implements this unified pipeline approach.
+**Technical Contribution:**
+EGRG is a three-stage pipeline architecture that integrates emotion detection, therapeutic mapping, and constrained response generation with defined data dependencies. While each individual component exists in prior art, the **specific pipeline arrangement with mandatory data flow** between stages represents a non-obvious technical improvement.
+
+**Problem Solved:** Prior art systems treat emotion detection and response generation as separate concerns, resulting in emotionally-misaligned responses. EGRG ensures every response is computationally informed by detected emotional state.
 
 **Formal Algorithm Specification:**
 
@@ -346,19 +432,21 @@ PROCEDURE EGRG(M, U, H):
 END PROCEDURE
 ```
 
-**Why This Is Novel:**
-- No prior art combines emotion detection → therapeutic mapping → constrained prompting in a single pipeline
-- The three-stage architecture ensures emotion data flows through every step
-- Unlike fragmented approaches, EGRG guarantees therapeutic alignment
+**Technical Differentiation from Prior Art:**
+- Prior art treats emotion detection and response generation as independent modules
+- EGRG creates mandatory data dependencies ensuring emotion-informed responses
+- The three-stage architecture produces measurable end-to-end latency improvements
 
 ---
 
 ### Algorithm 2: TRM (Therapeutic Response Mapping) Algorithm
 
-**Invention Status:** ✅ **NOVEL - Created by Inventors**
+**Innovation Type:** Novel Computational Framework
 
-**Algorithm Description:**
-TRM is our original algorithm that maps detected emotions to evidence-based therapeutic response strategies. We designed this algorithm by synthesizing principles from Cognitive Behavioral Therapy (CBT), Dialectical Behavior Therapy (DBT), and Person-Centered Therapy into a computational framework. **No existing system implements such algorithmic therapeutic mapping.**
+**Technical Contribution:**
+TRM translates conceptual therapeutic approaches (known from CBT, DBT, Person-Centered Therapy) into a **formal computational algorithm** with defined input specifications, mapping rules, severity modifiers, and contraindication logic. The novelty is in the **computational implementation**, not the therapeutic concepts themselves.
+
+**Problem Solved:** While therapists conceptually apply therapeutic approaches based on emotional states, no prior art provides a real-time computational algorithm that performs this mapping with sub-5ms latency.
 
 **Formal Algorithm Specification:**
 
@@ -401,7 +489,7 @@ PROCEDURE TRM_ALGORITHM(e, s):
     
     1.  base_strategy ← THERAPEUTIC_MAPPING[e]
     
-    2.  // SEVERITY MODIFICATION (Our Novel Contribution)
+    2.  // SEVERITY MODIFICATION (Technical Contribution)
         IF s = "high" THEN:
             IF e ∈ {fear, sadness} THEN:
                 base_strategy.techniques.prepend("crisis_check")
@@ -415,11 +503,11 @@ PROCEDURE TRM_ALGORITHM(e, s):
             base_strategy.intensity ← "light"
         END IF
     
-    3.  // TECHNIQUE SELECTION (Our Novel Contribution)
+    3.  // TECHNIQUE SELECTION (Technical Contribution)
         selected_techniques ← SELECT_TOP_N(base_strategy.techniques, 3)
         base_strategy.active_techniques ← selected_techniques
     
-    4.  // CONTRAINDICATION CHECK (Our Novel Contribution)
+    4.  // CONTRAINDICATION CHECK (Technical Contribution)
         IF e = "anger" THEN:
             base_strategy.avoid ← ["confrontation", "blame", "dismissal"]
         ELSE IF e = "sadness" THEN:
@@ -442,20 +530,21 @@ PROCEDURE TRM_ALGORITHM(e, s):
 END PROCEDURE
 ```
 
-**Why This Is Novel:**
-- **First algorithmic therapeutic mapping:** No prior patent or system implements computational mapping from emotions to therapeutic strategies
-- **Evidence-based synthesis:** We translated CBT, DBT, and Person-Centered Therapy principles into algorithmic form
-- **Severity-based modification:** Dynamic adjustment based on emotional intensity is our innovation
-- **Contraindication system:** Explicit avoidance rules prevent therapeutically harmful responses
+**Technical Differentiation from Prior Art:**
+- Prior art uses static rule-based responses without emotion-specific adaptation
+- TRM provides dynamic technique selection based on emotion + severity
+- The contraindication system prevents therapeutically harmful response patterns
 
 ---
 
 ### Algorithm 3: EGP (Emotion-Guided Prompting) Protocol
 
-**Invention Status:** ✅ **NOVEL - Created by Inventors**
+**Innovation Type:** Novel Prompt Engineering Framework
 
-**Algorithm Description:**
-EGP is our original protocol for constructing therapeutically-constrained prompts that incorporate emotion data, therapeutic strategy, and safety guidelines. This ensures LLM responses are therapeutically appropriate. **No prior art implements this structured emotion-guided prompt engineering for mental health.**
+**Technical Contribution:**
+EGP is a structured protocol for constructing LLM prompts that incorporate emotion data, therapeutic strategy, user context, and safety constraints. The novelty is in the **specific multi-section prompt architecture** that constrains LLM output to therapeutically appropriate responses.
+
+**Problem Solved:** Research shows unconstrained LLM responses to mental health queries have 23% therapeutic inappropriateness and 8% potential harm (Liu et al., 2024). EGP provides a systematic approach to constraining LLM output.
 
 **Formal Algorithm Specification:**
 
@@ -581,18 +670,25 @@ END PROCEDURE
 
 **Why This Is Novel:**
 - **First structured emotion-guided prompt protocol:** No prior system constructs prompts that incorporate detected emotion + therapeutic strategy + safety constraints
-- **Multi-section prompt architecture:** Our novel 6-section structure ensures comprehensive therapeutic context
+- **Multi-section prompt architecture:** The 6-section structure ensures comprehensive therapeutic context
 - **Dynamic constraint injection:** Safety guidelines and avoidance rules are algorithmically inserted based on emotional state
-- **Personalization integration:** User context weaving into prompts is our original contribution
+- **Personalization integration:** User context weaving into prompts enables individualized responses
+
+**Technical Differentiation from Prior Art:**
+- Prior art uses generic LLM prompts without emotion-specific constraints
+- EGP's 6-section architecture provides structured therapeutic guidance
+- Dynamic safety constraint injection addresses LLM harm concerns identified in Wang et al. (2023)
 
 ---
 
 ### Algorithm 4: LEA (Longitudinal Emotion Analytics) System
 
-**Invention Status:** ✅ **NOVEL - Created by Inventors**
+**Innovation Type:** Novel Integrated Analytics Framework
 
-**Algorithm Description:**
-LEA is our original analytics system for tracking emotional patterns over time and computing wellness metrics. **No existing mental health chatbot implements longitudinal emotional pattern analysis with the metrics we defined.**
+**Technical Contribution:**
+LEA combines emotion detection data with time-series analytics to produce actionable wellness metrics. While individual analytics methods exist, the **specific combination of positivity ratio, stability scoring, trajectory analysis, and early warning pattern detection** applied to mental health chatbot emotion data represents a non-obvious integration.
+
+**Problem Solved:** Prior art mental health chatbots treat each conversation in isolation, missing longitudinal patterns that indicate improving or deteriorating mental health states.
 
 **Formal Algorithm Specification:**
 
@@ -629,7 +725,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         END FOR
     
     ┌─────────────────────────────────────────────────────────┐
-    │ METRIC 2: POSITIVITY RATIO (Our Novel Metric)           │
+    │ METRIC 2: POSITIVITY RATIO                             │
     └─────────────────────────────────────────────────────────┘
     
     3.  positive_emotions ← {joy, love}
@@ -637,7 +733,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         
         positivity_ratio ← positive_count / N
         
-        // Our novel interpretation scale:
+        // Interpretation scale:
         IF positivity_ratio ≥ 0.6 THEN:
             positivity_status ← "flourishing"
         ELSE IF positivity_ratio ≥ 0.4 THEN:
@@ -649,7 +745,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         END IF
     
     ┌─────────────────────────────────────────────────────────┐
-    │ METRIC 3: EMOTIONAL STABILITY SCORE (Our Novel Metric)  │
+    │ METRIC 3: EMOTIONAL STABILITY SCORE                    │
     └─────────────────────────────────────────────────────────┘
     
     4.  // Count emotion transitions
@@ -662,7 +758,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         
         transition_rate ← transitions / (N - 1)
         
-        // Our novel stability formula:
+        // Stability formula:
         stability_score ← (1 - transition_rate) * 100
         
         IF stability_score ≥ 70 THEN:
@@ -681,7 +777,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         dominant_percentage ← distribution[dominant_emotion] * 100
     
     ┌─────────────────────────────────────────────────────────┐
-    │ METRIC 5: EMOTIONAL TRAJECTORY (Our Novel Metric)       │
+    │ METRIC 5: EMOTIONAL TRAJECTORY                         │
     └─────────────────────────────────────────────────────────┘
     
     6.  // Compare current period to previous period
@@ -699,7 +795,7 @@ PROCEDURE LEA_COMPUTE(user_id, period):
         END IF
     
     ┌─────────────────────────────────────────────────────────┐
-    │ METRIC 6: EARLY WARNING DETECTION (Our Novel System)    │
+    │ METRIC 6: EARLY WARNING DETECTION                       │
     └─────────────────────────────────────────────────────────┘
     
     7.  warnings ← []
@@ -766,20 +862,22 @@ PROCEDURE LEA_COMPUTE(user_id, period):
 END PROCEDURE
 ```
 
-**Why This Is Novel:**
-- **First longitudinal emotion tracking for chatbots:** No prior mental health chatbot tracks emotional patterns over time
-- **Original wellness metrics:** Positivity ratio, stability score, and trajectory are our invented formulas
-- **Early warning system:** Our novel pattern detection algorithms for crisis identification
-- **Personalized insights:** Generated interpretations based on our original thresholds
+**Technical Differentiation from Prior Art:**
+- Prior art chatbots treat each conversation in isolation without historical context
+- LEA provides computed wellness metrics (positivity ratio, stability score) not found in prior chatbot systems
+- Early warning pattern detection identifies concerning trends before crisis
+- Integration with CIP enables longitudinal-informed crisis detection
 
 ---
 
 ### Algorithm 5: CIP (Crisis Intervention Protocol)
 
-**Invention Status:** ✅ **NOVEL - Created by Inventors**
+**Innovation Type:** Novel Multi-Signal Fusion System
 
-**Algorithm Description:**
-CIP is our original multi-signal crisis detection and intervention protocol. We designed this to identify users in severe distress and trigger appropriate safety responses. **No prior chatbot patent implements such comprehensive crisis detection.**
+**Technical Contribution:**
+CIP implements a **multi-signal scoring algorithm** that fuses four independent detection signals (emotion-based, linguistic, longitudinal, session-based) with weighted scoring and graduated intervention responses. While keyword-based crisis detection exists in prior art, the **specific multi-signal fusion architecture with weighted scoring thresholds and graduated intervention levels** represents a non-obvious technical improvement.
+
+**Problem Solved:** Prior art crisis detection relies on keyword matching alone, missing crisis indicators apparent only through emotion analysis, longitudinal patterns, or session behavior.
 
 **Formal Algorithm Specification:**
 
@@ -929,26 +1027,31 @@ CRISIS RESOURCES (Included when required):
   https://www.iasp.info/resources/Crisis_Centres/
 ```
 
-**Why This Is Novel:**
-- **Multi-signal scoring system:** Our original weighted combination of emotion + linguistic + longitudinal + session signals
-- **Graduated crisis levels:** Novel 4-tier crisis classification with corresponding actions
-- **Longitudinal integration:** First system to combine real-time and historical patterns for crisis detection
-- **Actionable intervention protocol:** Specific response modifications for each crisis level
+**Technical Differentiation from Prior Art:**
+- Prior art uses single-signal (keyword only) crisis detection
+- CIP's weighted multi-signal fusion provides more robust detection
+- Graduated intervention levels enable proportional response
+- Integration with LEA enables longitudinal pattern-based detection not possible in prior art
 
 ---
 
-### Summary of Novel Algorithm Contributions
+### Summary of Technical Contributions
 
-| Algorithm | Full Name | Invention Type | Prior Art Status |
-|-----------|-----------|----------------|------------------|
-| **EGRG** | Emotion-Guided Response Generation Pipeline | Novel Architecture | ❌ No prior art exists |
-| **TRM** | Therapeutic Response Mapping | Novel Algorithm | ❌ No prior art exists |
-| **EGP** | Emotion-Guided Prompting Protocol | Novel Protocol | ❌ No prior art exists |
-| **LEA** | Longitudinal Emotion Analytics | Novel System | ❌ No prior art exists |
-| **CIP** | Crisis Intervention Protocol | Novel Algorithm | ❌ No prior art exists |
+| Integrated System | Full Name | Innovation Type | Prior Art Differentiation |
+|-------------------|-----------|-----------------|---------------------------|
+| **EGRG** | Emotion-Guided Response Generation Pipeline | Novel Integration Architecture | Unifies components that prior art treats separately |
+| **TRM** | Therapeutic Response Mapping | Novel Computational Framework | Provides real-time algorithmic mapping not in prior art |
+| **EGP** | Emotion-Guided Prompting Protocol | Novel Prompt Engineering Framework | Structured constraints for LLM safety not in prior art |
+| **LEA** | Longitudinal Emotion Analytics | Novel Integrated Analytics | Combines metrics not previously applied to chatbots |
+| **CIP** | Crisis Intervention Protocol | Novel Multi-Signal Fusion | Multi-signal weighted scoring not in prior art |
 
-**Declaration of Originality:**
-We, the inventors, hereby declare that the above five algorithms (EGRG, TRM, EGP, LEA, CIP) are our **original creations**. These algorithms were conceived, designed, and implemented entirely by us to solve the identified problems in emotion-aware AI mental health support. We have conducted thorough prior art searches and confirm that no existing patent, academic publication, or open-source implementation provides these specific algorithms or their core methodologies.
+**Declaration of Technical Contribution:**
+We, the inventors, hereby declare that the above five integrated systems represent **novel technical contributions** through the specific combination and integration of existing components (BERT models, LLMs, therapeutic techniques, analytics methods) in a **non-obvious unified architecture**. While individual components exist in prior art, our contribution lies in:
+
+1. The **specific arrangement and data flow dependencies** between components
+2. The **formal algorithmic specifications** with defined inputs, outputs, and processing logic
+3. The **concrete technical effects** (sub-200ms emotion detection, <1.5s end-to-end response, multi-signal crisis detection)
+4. The **synergistic integration** that produces capabilities not achievable by prior art's fragmented approaches
 
 ---
 
@@ -1507,13 +1610,15 @@ For complete reference numeral definitions, see: `/diagrams/patent/FIGURE_LEGEND
 | Hybrid Architecture | ✅ BERT + TRM + EGP + LLM | Single model | Single model | Single model |
 | Open Pipeline | ✅ Modular, extensible | Proprietary | Proprietary | Proprietary |
 
-### Key Differentiators:
+### Key Differentiators (Technical Integration Focus):
 
-1. **Only system with three-stage EGRG pipeline** (emotion detection → therapeutic mapping → constrained generation)
-2. **Only system with formal therapeutic mapping algorithm (TRM)** based on CBT/DBT/Person-Centered principles
-3. **Only system with multi-signal crisis detection (CIP)** combining emotion, linguistic, longitudinal, and session patterns
-4. **Only system with longitudinal emotion analytics (LEA)** with computed wellness metrics
-5. **Only system with emotion-guided LLM prompting (EGP)** ensuring therapeutic safety
+1. **Integrated three-stage EGRG pipeline** unifying emotion detection → therapeutic mapping → constrained generation with data dependencies
+2. **Formal computational TRM framework** implementing CBT/DBT/Person-Centered principles as real-time algorithms
+3. **Multi-signal CIP detection system** fusing emotion, linguistic, longitudinal, and session signals with weighted scoring
+4. **Integrated LEA analytics** combining positivity ratio, stability score, and trajectory with early warning patterns
+5. **Structured EGP prompting protocol** with emotion-guided constraints ensuring therapeutic safety
+
+**Note:** The differentiation lies in the **specific technical integration** of these systems, not claims of absolute uniqueness of individual components.
 
 ---
 
@@ -1587,7 +1692,7 @@ The system of Claim 1.1, wherein the BERT emotion detection component processes 
 **Claim 1.4 (Dependent):**
 The system of Claim 1.1, characterized in that the pipeline operates in real-time with end-to-end latency under 1.5 seconds, enabling conversational interaction where users receive emotionally-appropriate responses without perceptible delay.
 
-### Set 2: Therapeutic Response Mapping (TRM) Algorithm (Novel Core Algorithm)
+### Set 2: Therapeutic Response Mapping (TRM) Algorithm (Computational Framework)
 
 **Claim 2.1 (Independent):**
 A computer-implemented method for therapeutically-informed response generation comprising:
@@ -1648,7 +1753,7 @@ The method of Claim 3.1, wherein prompt construction incorporates contextual ele
 - Previous emotional patterns from longitudinal data;
 - Session-specific context and therapeutic progress indicators.
 
-### Set 4: Longitudinal Emotion Analytics (LEA) System (Novel Analytics Framework)
+### Set 4: Longitudinal Emotion Analytics (LEA) System (Integrated Analytics)
 
 **Claim 4.1 (Independent):**
 A system for longitudinal emotional pattern analysis in mental health applications comprising:
@@ -1913,8 +2018,8 @@ We, the undersigned inventors, hereby declare that:
 1. The above information is true and complete to the best of our knowledge.
 2. We believe we are the original inventors of the subject matter described herein.
 3. We acknowledge VIT's Intellectual Property Rights policies and procedures.
-4. The five novel algorithms (EGRG, TRM, EGP, LEA, CIP) described in this disclosure are our original creations.
-5. We have conducted prior art searches and confirm no existing patent or publication discloses these specific algorithms.
+4. The five integrated systems (EGRG, TRM, EGP, LEA, CIP) described in this disclosure represent **novel technical integrations** of known components in a non-obvious unified architecture.
+5. We have conducted prior art searches and confirm that the **specific integration architecture, data flow dependencies, and algorithmic specifications** described herein are not disclosed in existing patents or publications.
 
 | Inventor Name | Designation | Signature | Date |
 |---------------|-------------|-----------|------|
