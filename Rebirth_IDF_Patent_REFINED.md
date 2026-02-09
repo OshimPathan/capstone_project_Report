@@ -447,90 +447,165 @@ PROCEDURE CSM_EVALUATE(currentState, E, A, message):
 
 ---
 
-## 10. Claims
+## 10. Claims (Aspects Needing Protection)
 
-### Claim Set 1: Multi-Stage Response Regulation System
+### Set 1: Multi-Stage Response Regulation System (Core Architecture)
 
 **Claim 1.1 (Independent):** A computer-implemented conversational response regulation system comprising:
 
-**(a)** an emotion signal processor producing a structured metadata object comprising signal classification, confidence value, severity indicator, and category;
+**(a)** an emotion signal processor configured to receive natural language input and produce a structured emotion metadata object comprising a signal classification label, a confidence value, a severity indicator, and a category classification;
 
-**(b)** a response strategy controller receiving the metadata object and producing constraint specifications through deterministic mapping logic with severity-based modification;
+**(b)** a response strategy controller configured to receive the emotion metadata object and produce strategy parameters comprising an approach identifier, constraint specifications, and escalation indicators, wherein the strategy parameters are derived from the emotion metadata through deterministic mapping logic with severity-based modification;
 
-**(c)** a constrained output generator receiving user input, metadata object, and constraint specifications, producing response output bounded by the constraints;
+**(c)** a constrained output generator configured to receive the user input, the emotion metadata object, and the strategy parameters, and to produce a response output constrained by the strategy parameters and constraint specifications;
 
-wherein the metadata object propagates through all stages as mandatory input.
+wherein the emotion metadata object propagates through all stages as mandatory input, ensuring that response generation is governed by the detected emotional signal and derived constraints.
 
-**Claim 1.2:** The system of Claim 1.1, wherein severity-based modification comprises:
-- high-severity negative signals triggering elevated constraint intensity;
-- safety-related elements prepended to required list;
-- escalation flags set for downstream processing.
+**Claim 1.2 (Dependent):** The system of Claim 1.1, wherein the response strategy controller implements severity-based modification comprising:
+- detection of high-severity negative emotional signals triggering elevated constraint intensity;
+- prepending of safety-related techniques to the technique list;
+- setting of escalation flags for downstream processing.
 
-**Claim 1.3:** The system of Claim 1.1, wherein constraint specification comprises required elements, prohibited elements, safety enforcement flag, and escalation flag.
+**Claim 1.3 (Dependent):** The system of Claim 1.1, wherein the constraint specification comprises:
+- a required elements list specifying mandatory response characteristics;
+- a prohibited elements list specifying content patterns to avoid;
+- a safety enforcement flag activating safety rules;
+- an escalation flag triggering resource provision.
 
-### Claim Set 2: Longitudinal State Accumulation
+**Claim 1.4 (Dependent):** The system of Claim 1.1, wherein the constrained output generator constructs a structured generation request comprising:
+- a role definition section;
+- an emotional context section incorporating the emotion metadata;
+- a strategy directive section incorporating the strategy parameters;
+- a constraint enforcement section incorporating the constraint specification;
+- a safety rules section.
 
-**Claim 2.1 (Independent):** A computer-implemented method for modifying conversational system behavior based on accumulated state, comprising:
+---
 
-**(a)** collecting and storing emotion metadata from multiple interactions;
+### Set 2: Longitudinal State Accumulation and Behavior Modification
 
-**(b)** computing aggregate metrics comprising emotion distribution, positivity ratio, stability score, and trajectory indicator;
+**Claim 2.1 (Independent):** A computer-implemented method for modifying conversational system behavior based on accumulated emotional state, comprising:
 
-**(c)** generating warning flags when metrics exceed thresholds;
+**(a)** collecting and storing emotion metadata objects from multiple user interactions with associated timestamps;
 
-**(d)** modifying response strategy controller behavior based on metrics and flags;
+**(b)** computing aggregate metrics from the accumulated emotion metadata, the metrics comprising:
+- an emotion distribution representing the frequency of each emotion signal classification;
+- a positivity ratio representing the proportion of positive emotional signals;
+- a stability score representing the emotional consistency over the accumulation period;
+- a trajectory indicator representing the direction of emotional pattern change;
 
-wherein accumulated state causes runtime behavior modification.
+**(c)** generating warning flags when computed metrics exceed defined thresholds;
 
-**Claim 2.2:** The method of Claim 2.1, wherein warning flags include persistent negativity, high volatility, trajectory decline, and crisis pattern.
+**(d)** modifying the response strategy controller behavior based on the computed metrics and warning flags;
 
-### Claim Set 3: Crisis State Machine
+wherein the accumulated state causes runtime behavior modification, such that system responses are influenced by historical patterns in addition to current input.
 
-**Claim 3.1 (Independent):** A computer-implemented crisis handling method comprising:
+**Claim 2.2 (Dependent):** The method of Claim 2.1, wherein warning flags are generated based on:
+- persistent negativity: positivity ratio below threshold for minimum signal count;
+- high volatility: stability score below threshold;
+- trajectory decline: negative trajectory delta exceeding threshold;
+- crisis pattern: combined fear-sadness signals exceeding frequency threshold.
 
-**(a)** maintaining system state from set {NORMAL, ELEVATED, HIGH_ALERT, CRITICAL};
+**Claim 2.3 (Dependent):** The method of Claim 2.1, wherein response strategy controller behavior modification comprises:
+- adjusting strategy selection based on trajectory indicator;
+- increasing response intensity based on warning flags;
+- triggering proactive system responses based on pattern detection.
 
-**(b)** evaluating multiple signals to compute risk score:
-- emotion severity signals;
-- linguistic pattern signals;
-- longitudinal warning signals;
-- session behavior signals;
+---
+
+### Set 3: Crisis State Machine
+
+**Claim 3.1 (Independent):** A computer-implemented crisis handling method for conversational systems, comprising:
+
+**(a)** maintaining a current system state from a defined set of states comprising NORMAL, ELEVATED, HIGH_ALERT, and CRITICAL;
+
+**(b)** evaluating multiple input signals to compute a risk score, the signals comprising:
+- emotion-based signals derived from current emotion metadata severity and category;
+- linguistic signals derived from crisis pattern detection in user input;
+- longitudinal signals derived from accumulated state warning flags;
+- session signals derived from current session negativity ratio;
 
 **(c)** determining state transitions based on risk score thresholds;
 
-**(d)** triggering state-specific actions based on current state;
+**(d)** triggering state-specific actions based on the current state, the actions comprising response modification and escalation actions;
 
-wherein crisis handling is implemented as finite state machine with defined transitions.
+wherein the crisis handling is implemented as a finite state machine with defined states, transition rules, and state-specific behaviors.
 
-**Claim 3.2:** The method of Claim 3.1, wherein risk score is computed by weighted combination:
-- emotion severity (weight: 25);
-- linguistic crisis patterns (weight: 35);
-- longitudinal warnings (weight: 20);
-- trajectory decline (weight: 15).
+**Claim 3.2 (Dependent):** The method of Claim 3.1, wherein the risk score is computed by weighted combination of:
+- emotion severity signal (weight: 25 for high-severity negative);
+- linguistic crisis signal (weight: 35 for crisis keyword detection);
+- longitudinal warning signal (weight: 20 for crisis pattern warning);
+- trajectory decline signal (weight: 15 for severe decline).
 
-### Claim Set 4: Emotion Metadata Propagation
+**Claim 3.3 (Dependent):** The method of Claim 3.1, wherein state-specific actions comprise:
+- ELEVATED state: enhanced validation in response;
+- HIGH_ALERT state: safety prioritization and support mention;
+- CRITICAL state: crisis response mode with resource provision and session flagging.
 
-**Claim 4.1 (Independent):** A computer-implemented method ensuring emotion-aware processing comprising:
+---
 
-**(a)** defining structured metadata schema;
-**(b)** producing metadata object at first processing stage;
-**(c)** propagating metadata as mandatory input to subsequent stages;
-**(d)** utilizing metadata at each stage for processing decisions;
-**(e)** persisting metadata for longitudinal accumulation;
+### Set 4: Emotion Metadata Propagation Protocol
 
-wherein propagation ensures consistent emotional context across all stages.
+**Claim 4.1 (Independent):** A computer-implemented method for ensuring emotion-aware processing in multi-stage conversational systems, comprising:
 
-### Claim Set 5: Constraint Injection
+**(a)** defining a structured emotion metadata schema comprising signal classification, confidence value, severity indicator, category, and timestamp;
 
-**Claim 5.1 (Independent):** A computer-implemented method for constraining response generation comprising:
+**(b)** producing an emotion metadata object at the first stage of processing based on user input analysis;
 
-**(a)** receiving emotion metadata;
-**(b)** mapping metadata to constraint specification through deterministic logic;
-**(c)** constructing structured request comprising role definition, emotional context, strategy directive, and safety rules;
-**(d)** transmitting request to generation service;
-**(e)** delivering constrained response;
+**(c)** propagating the emotion metadata object as mandatory input to each subsequent processing stage;
 
-wherein structured request enforces constraint conformance.
+**(d)** utilizing the emotion metadata object at each stage to inform stage-specific processing decisions;
+
+**(e)** persisting the emotion metadata object with the interaction record for longitudinal accumulation;
+
+wherein the emotion metadata propagation ensures consistent emotional context across all processing stages and enables longitudinal analysis.
+
+---
+
+### Set 5: Structured Constraint Injection for Response Generation
+
+**Claim 5.1 (Independent):** A computer-implemented method for constraining automated response generation based on emotional signals, comprising:
+
+**(a)** receiving emotion metadata including signal classification and severity;
+
+**(b)** mapping the emotion metadata to a constraint specification through deterministic control logic;
+
+**(c)** constructing a structured request for a text generation service, the request comprising:
+- role definition parameters;
+- emotional context parameters derived from the emotion metadata;
+- strategy directive derived from the constraint specification;
+- explicit safety rules;
+
+**(d)** transmitting the structured request to the text generation service;
+
+**(e)** receiving and delivering the constrained response;
+
+wherein the structured request format enforces that generated responses conform to emotion-derived constraints and safety rules.
+
+---
+
+### Set 6: System Integration (Platform Claims)
+
+**Claim 6.1 (Independent):** A response regulation system comprising:
+
+**(a)** a client application executing on user devices;
+
+**(b)** a backend server exposing API endpoints for message processing;
+
+**(c)** a cloud-hosted emotion classification service;
+
+**(d)** a text generation service configured with constraint injection;
+
+**(e)** a persistent storage system storing user profiles, interaction histories, and emotion metadata;
+
+**(f)** an analytics engine computing longitudinal emotional state metrics;
+
+wherein all components operate in coordinated manner to deliver emotion-aware, constraint-governed conversational interactions.
+
+**Claim 6.2 (Dependent):** The system of Claim 6.1, implementing a data structure for storing emotion-aware interaction data comprising:
+- user identifier with privacy-preserving encryption;
+- session metadata including timestamps;
+- message buckets containing user input, emotion metadata, strategy applied, and generated response;
+- longitudinal analytics fields including emotion distribution and trend indicators.
 
 ---
 
@@ -584,14 +659,32 @@ We, the undersigned inventors, declare that:
 
 ## Appendix: Patent-Safe Language Reference
 
-| USE | AVOID |
-|----|-------|
-| Emotion signal | Therapy/therapeutic |
-| Signal classification | CBT/DBT/psychological methods |
-| Response strategy controller | Clinical/diagnosis/patient |
-| Constraint specification | BERT/GPT/Gemini/specific models |
-| State machine | Accuracy %/F1-score metrics |
-| Severity indicator | Mental health conditions |
+### Terms to AVOID (Rejection Risk)
+
+| AVOID | REASON |
+|-------|--------|
+| therapeutic response | Medical claims → Section 3(k) rejection |
+| therapeutic strategy | Psychological method → not patentable |
+| therapeutic approach | Medical practice connotation |
+| CBT/DBT/psychological methods | Psychological methods → not patentable |
+| BERT/GPT/Gemini/specific models | Model-specific → easily designed around |
+| Accuracy %/F1-score metrics | Performance metrics → not claim-worthy |
+| Mental health conditions | Medical conditions → scope limitation |
+| Clinical/diagnosis/patient | Medical practice terminology |
+
+### Replacement Terms to USE
+
+| USE INSTEAD | REPLACES |
+|-------------|----------|
+| emotion-conditioned supportive response | therapeutic response |
+| response regulation strategy | therapeutic strategy |
+| emotion-aware interaction control parameters | therapeutic approach |
+| emotion signal | detected emotion |
+| signal classification | emotion prediction |
+| response strategy controller | therapeutic mapping algorithm |
+| constraint specification | therapeutic rules |
+| state machine | crisis intervention protocol |
+| severity indicator | distress level |
 
 ---
 
