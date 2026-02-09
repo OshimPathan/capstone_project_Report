@@ -209,7 +209,65 @@ We invented the CSM algorithm to address the critical safety gap (EP 4012624 A1 
 
 ---
 
-## 6. System Architecture
+## 6. Working Principle of the Invention (Brief)
+
+### 6.1 User Interaction Layer (Mobile Application)
+
+- **Personalized Onboarding:** New users complete a guided onboarding flow capturing interaction goals, response preferences, and initial state assessment.
+- **Conversation Interface:** Clean, accessible text-based interface for interaction with the AI companion system.
+- **Signal Badge Display:** Each AI response displays the detected emotion signal badge, making the signal processing transparent to users.
+
+### 6.2 Message Processing Flow
+
+- **User Message Capture:** User text input is captured and transmitted securely to the backend API.
+- **Authentication Validation:** JWT token verification ensures secure, authenticated sessions.
+- **Signal Detection Request:** Message text is sent to the emotion signal processing service for classification.
+
+### 6.3 MSPP Pipeline (Multi-Stage Processing Pipeline)
+
+**Stage 1: Emotion Signal Processing**
+- Text is processed by the external classification service
+- 6-class signal probabilities are returned (joy, sadness, anger, fear, surprise, love)
+- Primary signal selected based on highest confidence score
+- Metadata enrichment adds severity classification, color coding, and category (positive/negative/neutral)
+
+**Stage 2: Response Strategy Controller (RSC)**
+- Detected signal is mapped to response regulation strategy through deterministic control logic
+- Each signal has associated response approaches:
+  - Sadness/Fear: Validation, gentle exploration, compassion, supportive techniques
+  - Anger: Acknowledgment, perspective exploration, de-escalation
+  - Joy/Love: Celebration, reinforcement, positive reflection
+  - Surprise: Curiosity engagement, exploration support
+
+**Stage 3: Structured Request Builder (SRB)**
+- Structured request constructed incorporating:
+  - Detected emotion signal and confidence level
+  - Mapped response strategy and constraints
+  - User context (conversation history, onboarding preferences)
+  - Safety guidelines and constraint specifications
+- Request sent to text generation service for response generation
+
+### 6.4 Response Generation and Delivery
+
+- **Constrained Generation:** Text generation service produces constraint-governed response based on SRB output
+- **Response Storage:** Message, AI response, and emotion metadata stored in database (bucketed message architecture)
+- **Client Response:** Response with emotion metadata delivered to mobile application
+- **UI Update:** Conversation interface updated with AI response and signal badge display
+
+### 6.5 Longitudinal State Accumulator (LSA)
+
+- **Continuous Data Collection:** All emotion signal detections stored with timestamps
+- **Analytics Computation:**
+  - Emotion distribution over time periods (day, week, month)
+  - Positivity ratio calculation
+  - Emotional stability score
+  - Dominant signal identification
+- **Visualization:** Analytics dashboard with charts, graphs, and state insights
+- **Warning Flag Detection:** Monitoring for concerning patterns (persistent negative signals, sudden shifts)
+
+---
+
+## 7. System Architecture
 
 ### 6.1 Overview
 
@@ -266,7 +324,7 @@ AccumulatedState {
 
 ---
 
-## 7. Algorithm Specifications
+## 8. Algorithm Specifications
 
 ### Algorithm 1: Multi-Stage Processing Pipeline (MSPP)
 
@@ -394,7 +452,7 @@ PROCEDURE CSM_EVALUATE(currentState, E, A, message):
 
 ---
 
-## 8. System Diagrams
+## 9. System Diagrams
 
 ### FIGURE 1: System Architecture
 
@@ -422,7 +480,7 @@ PROCEDURE CSM_EVALUATE(currentState, E, A, message):
 
 ---
 
-## 9. Validation Results
+## 10. Validation Results
 
 | Component | Metric | Value |
 |-----------|--------|-------|
@@ -447,7 +505,7 @@ PROCEDURE CSM_EVALUATE(currentState, E, A, message):
 
 ---
 
-## 10. Claims (Aspects Needing Protection)
+## 11. Claims (Aspects Needing Protection)
 
 ### Set 1: Multi-Stage Response Regulation System (Core Architecture)
 
@@ -609,7 +667,7 @@ wherein all components operate in coordinated manner to deliver emotion-aware, c
 
 ---
 
-## 11. Technology Readiness Level
+## 12. Technology Readiness Level
 
 **Assessment: TRL 5 - Technology Validated in Relevant Environment**
 
@@ -622,7 +680,7 @@ wherein all components operate in coordinated manner to deliver emotion-aware, c
 
 ---
 
-## 12. Technical Effect Statement
+## 13. Technical Effect Statement
 
 ### India Patents Act Section 3(k) Compliance
 
@@ -642,7 +700,7 @@ This invention is **NOT** a mathematical method or algorithm *per se*. It is a *
 
 ---
 
-## 13. Declaration
+## 14. Declaration
 
 We, the undersigned inventors, declare that:
 
