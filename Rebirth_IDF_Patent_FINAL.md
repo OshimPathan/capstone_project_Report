@@ -7,7 +7,7 @@
 | 02-IPR-R003  | 2/01.02.2024  | 1/09.02.2026 |
 
 **Inventor(s):** Oshim Pathan  
-**Affiliation:** VIT Chennai  
+**Affiliation:** VIT Vellore 
 **Filing Date:** February 9, 2026
 
 ---
@@ -672,92 +672,79 @@ END PROCEDURE
 
 ### 7.7 System Architecture Diagrams
 
-#### High-Level Control Architecture
+#### FIGURE 1: High-Level System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    CLIENT APPLICATION TIER                           │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────┐   │
-│  │ Conversation │  │  Analytics   │  │  State Visualization      │   │
-│  │  Interface   │  │  Dashboard   │  │                           │   │
-│  └──────┬───────┘  └──────┬───────┘  └───────────┬───────────────┘   │
-└─────────┼──────────────────┼──────────────────────┼──────────────────┘
-          │                  │                      │
-          └──────────────────┼──────────────────────┘
-                             │ HTTPS API
-                             ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    PROCESSING SERVER TIER                            │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │                 MULTI-STAGE PROCESSING PIPELINE               │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐   │   │
-│  │  │  Stage 1:   │  │  Stage 2:   │  │     Stage 3:        │   │   │
-│  │  │  Emotion    │──│  Strategy   │──│   Constrained       │   │   │
-│  │  │  Signal     │  │  Controller │  │    Generator        │   │   │
-│  │  │  Processor  │  │             │  │                     │   │   │
-│  │  └─────────────┘  └─────────────┘  └─────────────────────┘   │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                             │                                        │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │           LONGITUDINAL STATE ACCUMULATION ENGINE              │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                             │                                        │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │                   CRISIS STATE MACHINE                        │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
-          │                  │                      │
-          ▼                  ▼                      ▼
-┌───────────────┐  ┌─────────────────┐  ┌─────────────────────────────┐
-│  Emotion      │  │  Text           │  │  Persistent                 │
-│  Classifier   │  │  Generator      │  │  Storage                    │
-│  (External)   │  │  (External)     │  │  (MongoDB)                  │
-└───────────────┘  └─────────────────┘  └─────────────────────────────┘
-```
+![FIG1: System Architecture](diagrams/patent/FIG1_system_architecture.png)
 
-#### Data Flow Diagram
+**Reference Numerals:**
+- **100**: Mobile Client Tier (User-facing application layer)
+- **200**: Backend Server Tier (Application logic layer)
+- **210**: Multi-Stage Processing Pipeline (MSPP)
+- **300**: External Services Tier (Third-party integrations)
 
-```
-User Input: "I'm feeling really anxious about tomorrow"
-    │
-    ▼
-┌───────────────────────────────────────────────────────────────┐
-│  STAGE 1: Emotion Signal Processor                            │
-│  Output: EmotionMetadata {                                    │
-│      signalLabel: "fear",                                     │
-│      confidence: 0.92,                                        │
-│      severity: HIGH,                                          │
-│      category: NEGATIVE                                       │
-│  }                                                            │
-└───────────────────────────────────────────────────────────────┘
-    │ EmotionMetadata (mandatory propagation)
-    ▼
-┌───────────────────────────────────────────────────────────────┐
-│  STAGE 2: Response Strategy Controller                        │
-│  Output: StrategyParameters {                                 │
-│      approach: "reassurance_grounding",                       │
-│      tone: ["calm", "supportive"],                            │
-│      intensity: ELEVATED                                      │
-│  }                                                            │
-│  Output: ConstraintSpec {                                     │
-│      required: ["validation_first", "grounding_offer"],       │
-│      prohibited: ["catastrophizing", "rushing"],              │
-│      safetyEnforcement: true                                  │
-│  }                                                            │
-└───────────────────────────────────────────────────────────────┘
-    │ StrategyParameters + ConstraintSpec (mandatory propagation)
-    ▼
-┌───────────────────────────────────────────────────────────────┐
-│  STAGE 3: Constrained Output Generator                        │
-│  Output: "I can hear that you're feeling anxious about        │
-│   tomorrow, and those feelings are completely valid. Let's    │
-│   take a moment together—would you like to try a grounding    │
-│   exercise to help center yourself?"                          │
-└───────────────────────────────────────────────────────────────┘
-    │
-    ▼
-Response to User + EmotionMetadata stored for longitudinal analysis
-```
+---
+
+#### FIGURE 2: Processing Pipeline (MSPP Algorithm)
+
+![FIG2: Processing Pipeline](diagrams/patent/FIG2_processing_pipeline.png)
+
+**Reference Numerals:**
+- **400**: User Input Stage
+- **410**: Stage 1 - Emotion Signal Processing
+- **430**: Stage 2 - Response Strategy Controller
+- **440**: Stage 3 - Structured Request Builder
+- **450**: Response Generation
+- **460**: Output Stage
+
+---
+
+#### FIGURE 3: Database Schema
+
+![FIG3: Database Schema](diagrams/patent/FIG3_database_schema.png)
+
+**Reference Numerals:**
+- **USER_500**: User Entity
+- **SESSION_510**: Chat Session Entity
+- **BUCKET_520**: Message Bucket Entity
+- **MESSAGE_530**: Message Entity
+- **EMOTION_540**: Emotion Data Entity
+
+---
+
+#### FIGURE 4: Message Flow Sequence
+
+![FIG4: Message Flow](diagrams/patent/FIG4_message_flow.png)
+
+**Reference Numerals:**
+- **600-607**: System Components (User Device → Mobile App → API Server → Services → Database)
+- **610-626**: Message Flow Steps
+
+---
+
+#### FIGURE 5: Technology Stack
+
+![FIG5: Technology Stack](diagrams/patent/FIG5_technology_stack.png)
+
+**Reference Numerals:**
+- **700**: Presentation Layer (Flutter, Dart)
+- **710**: Application Layer (Node.js, Express)
+- **720**: Security Layer (JWT, Helmet, CORS)
+- **730**: AI/ML Processing Layer
+- **740**: Data Persistence Layer
+- **750**: Cloud Infrastructure
+
+---
+
+#### FIGURE 6: Longitudinal Analytics System (LSA)
+
+![FIG6: Analytics System](diagrams/patent/FIG6_analytics_system.png)
+
+**Reference Numerals:**
+- **800**: Data Collection Stage
+- **810**: Analytics Engine
+- **820**: Pattern Detection Subsystem
+- **830**: Early Warning System
+- **840**: Visualization Output
 
 ---
 
@@ -807,6 +794,52 @@ Response to User + EmotionMetadata stored for longitudinal analysis
 | Prohibited patterns | Negative constraints | 94.8% |
 | Safety enforcement | Explicit safety rules | 99.1% |
 | Escalation actions | State-triggered additions | 100% |
+
+### 8.6 Application Interface Demonstration
+
+The following screenshots demonstrate the implemented system interface and operational states:
+
+#### FIGURE 7: Onboarding Flow Interface
+
+![Onboarding Screen 1](diagrams/patent/2026-02-07_20-01-57.png)
+
+*Figure 7a: Initial onboarding interface showing user preference collection for system parameterization.*
+
+![Onboarding Screen 2](diagrams/patent/2026-02-07_20-02-01.png)
+
+*Figure 7b: Emotion baseline collection interface for longitudinal comparison initialization.*
+
+---
+
+#### FIGURE 8: Chat Conversation Interface
+
+![Chat Interface 1](diagrams/patent/2026-02-07_20-02-40.png)
+
+*Figure 8a: Main conversational interface demonstrating user input capture and response display.*
+
+![Chat Interface 2](diagrams/patent/2026-02-07_20-02-35.png)
+
+*Figure 8b: Emotion-adapted response generation showing strategy-modified output.*
+
+---
+
+#### FIGURE 9: Analytics Dashboard
+
+![Analytics Dashboard](diagrams/patent/2026-02-07_20-02-17.png)
+
+*Figure 9: Longitudinal State Accumulator output visualization showing emotion distribution, positivity ratio trends, and stability metrics.*
+
+---
+
+#### FIGURE 10: Profile and Settings Interface
+
+![Profile Interface](diagrams/patent/2026-02-07_20-02-49.png)
+
+*Figure 10a: User profile interface for personalization parameter management.*
+
+![Settings Interface](diagrams/patent/2026-02-07_20-02-54.png)
+
+*Figure 10b: System settings interface for constraint configuration.*
 
 ---
 
