@@ -801,11 +801,11 @@ The following screenshots demonstrate the implemented system interface and opera
 
 #### FIGURE 7: Onboarding Flow Interface
 
-![Onboarding Screen 1](diagrams/patent/2026-02-07_20-01-57.png)
+![Onboarding Screen 1](diagrams/patent/2026-02-07_10-48-54%20AM.png)
 
 *Figure 7a: Initial onboarding interface showing user preference collection for system parameterization.*
 
-![Onboarding Screen 2](diagrams/patent/2026-02-07_20-02-01.png)
+![Onboarding Screen 2](diagrams/patent/2026-02-07_10-49-17%20AM.png)
 
 *Figure 7b: Emotion baseline collection interface for longitudinal comparison initialization.*
 
@@ -813,11 +813,11 @@ The following screenshots demonstrate the implemented system interface and opera
 
 #### FIGURE 8: Chat Conversation Interface
 
-![Chat Interface 1](diagrams/patent/2026-02-07_20-02-40.png)
+![Chat Interface 1](diagrams/patent/2026-02-07_10-49-40%20AM.png)
 
 *Figure 8a: Main conversational interface demonstrating user input capture and response display.*
 
-![Chat Interface 2](diagrams/patent/2026-02-07_20-02-35.png)
+![Chat Interface 2](diagrams/patent/2026-02-07_10-49-57%20AM.png)
 
 *Figure 8b: Emotion-adapted response generation showing strategy-modified output.*
 
@@ -825,7 +825,7 @@ The following screenshots demonstrate the implemented system interface and opera
 
 #### FIGURE 9: Analytics Dashboard
 
-![Analytics Dashboard](diagrams/patent/2026-02-07_20-02-17.png)
+![Analytics Dashboard](diagrams/patent/2026-02-07_10-50-15%20AM.png)
 
 *Figure 9: Longitudinal State Accumulator output visualization showing emotion distribution, positivity ratio trends, and stability metrics.*
 
@@ -833,11 +833,11 @@ The following screenshots demonstrate the implemented system interface and opera
 
 #### FIGURE 10: Profile and Settings Interface
 
-![Profile Interface](diagrams/patent/2026-02-07_20-02-49.png)
+![Profile Interface](diagrams/patent/2026-02-07_10-51-10%20AM.png)
 
 *Figure 10a: User profile interface for personalization parameter management.*
 
-![Settings Interface](diagrams/patent/2026-02-07_20-02-54.png)
+![Settings Interface](diagrams/patent/2026-02-07_10-56-38%20AM.png)
 
 *Figure 10b: System settings interface for constraint configuration.*
 
