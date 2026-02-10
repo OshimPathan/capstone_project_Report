@@ -199,6 +199,84 @@ We invented the CSM algorithm to address the critical safety gap (EP 4012624 A1 
 
 ---
 
+### 4.4 Novelty Graphs
+
+#### 4.4.1 Claim-Aligned Novelty Map
+
+```mermaid
+flowchart TB
+    %% Claim-aligned novelty map: Claims -> Features
+    subgraph ClaimSets
+        C1["Set 1: Multi-Stage Response Regulation (C1.1-C1.4)"]
+        C2["Set 2: Longitudinal State Accumulation (C2.1-C2.3)"]
+        C3["Set 3: Crisis State Machine (C3.1-C3.3)"]
+        C4["Set 4: Metadata Propagation (C4.1)"]
+        C5["Set 5: Constraint Injection (C5.1)"]
+    end
+
+    subgraph Features
+        F1["Emotion Metadata Generation [C1.1(a), C4.1(b)]"]
+        F2["Persistent Metadata Propagation [C1.1, C4.1(c,d)]"]
+        F3["Decoupled Response Regulation Engine [C1.1(b,c)]"]
+        F4["Severity-Based Constraint Selector [C1.2, C5.1(b)]"]
+        F5["Constrained Generation Interface [C1.1(c), C5.1(c-e)]"]
+        F6["Multi-Signal Safety Gate [C3.1(b), C5.1(c)]"]
+        F7["System State Transition Controller [C3.1(a,c,d)]"]
+        F8["Longitudinal State Accumulation [C2.1(a-d), C4.1(e)]"]
+    end
+
+    C1 --> F1
+    C1 --> F3
+    C1 --> F5
+    C2 --> F8
+    C3 --> F6
+    C3 --> F7
+    C4 --> F1
+    C4 --> F2
+    C4 --> F8
+    C5 --> F4
+    C5 --> F5
+```
+
+Legend: Brackets show supporting claim clauses.
+
+#### 4.4.2 Prior Art Gap Matrix
+
+```mermaid
+flowchart TB
+    %% Prior art gap matrix: Features vs Prior Art Buckets
+    subgraph Features
+        F1["Emotion Metadata Generation"]
+        F2["Persistent Metadata Propagation"]
+        F3["Decoupled Response Regulation Engine"]
+        F4["Severity-Based Constraint Selector"]
+        F5["Constrained Generation Interface"]
+        F6["Multi-Signal Safety Gate"]
+        F7["System State Transition Controller"]
+        F8["Longitudinal State Accumulation"]
+    end
+
+    subgraph PriorArtBuckets
+        P1["Sentiment Detection"]
+        P2["Rule-Based Moderation"]
+        P3["Static Safety Filters"]
+        P4["Single-Turn Chat Control"]
+        P5["Per-Request Logging"]
+    end
+
+    %% Solid line = present in prior art; dashed = claimed novelty gap
+    F1 --- P1
+    F2 -.- P5
+    F3 -.- P2
+    F4 -.- P3
+    F5 -.- P4
+    F6 -.- P3
+    F7 -.- P4
+    F8 -.- P5
+```
+
+Legend: Solid edges indicate common prior art coverage; dashed edges indicate claimed novelty gaps.
+
 ## 5. Objectives
 
 1. Implement multi-stage processing with stage decoupling
