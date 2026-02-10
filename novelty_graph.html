@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REBIRTH Patent — Novelty Graph</title>
+<meta name="description" content="Interactive novelty visualization for REBIRTH Multi-Stage Emotion-Aware Response Regulation System patent">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0a0e1a;--surface:#111827;--surface2:#1e293b;--surface3:#283548;
+--border:#334155;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+--accent:#6366f1;--accent2:#818cf8;--accent3:#a5b4fc;
+--green:#22c55e;--green2:#4ade80;--red:#ef4444;--orange:#f59e0b;
+--cyan:#06b6d4;--pink:#ec4899;--purple:#a855f7;
+--grad1:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7);
+--grad2:linear-gradient(135deg,#06b6d4,#3b82f6);
+--grad3:linear-gradient(135deg,#22c55e,#14b8a6);
+--shadow:0 4px 24px rgba(0,0,0,.4);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.container{max-width:1320px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+.hero{text-align:center;padding:64px 24px 48px;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(99,102,241,.12) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-block;padding:6px 18px;border-radius:100px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:var(--accent2);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-size:clamp(28px,4vw,48px);font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.hero p{color:var(--text2);font-size:17px;max-width:800px;margin:0 auto}
+.meta-row{display:flex;justify-content:center;gap:32px;margin-top:24px;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:8px;color:var(--text3);font-size:14px}
+.meta-item span{color:var(--accent3);font-weight:600}
+
+/* SECTION */
+.section{padding:48px 0}
+.section-title{font-size:clamp(22px,3vw,32px);font-weight:700;margin-bottom:8px;color:#fff}
+.section-sub{color:var(--text2);font-size:15px;margin-bottom:32px;max-width:700px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.grid-5{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+
+/* NOVELTY MAP */
+.novelty-map{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface)}
+.nmap-header{display:grid;grid-template-columns:220px 1fr 1fr 100px;background:var(--surface2);border-bottom:1px solid var(--border);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.nmap-header>div{padding:14px 16px}
+.nmap-row{display:grid;grid-template-columns:220px 1fr 1fr 100px;border-bottom:1px solid rgba(51,65,85,.5);transition:background .15s}
+.nmap-row:hover{background:rgba(99,102,241,.06)}
+.nmap-row:last-child{border-bottom:none}
+.nmap-row>div{padding:14px 16px;font-size:14px;display:flex;align-items:center}
+.nmap-row .feature{font-weight:600;color:#fff}
+.gap-tag{display:inline-block;padding:2px 10px;border-radius:6px;font-size:11px;font-weight:600}
+.gap-critical{background:rgba(239,68,68,.15);color:var(--red)}
+.gap-high{background:rgba(245,158,11,.15);color:var(--orange)}
+.gap-medium{background:rgba(6,182,212,.15);color:var(--cyan)}
+.novelty-score{font-weight:700;font-size:16px}
+.score-high{color:var(--green2)}
+.score-med{color:var(--orange)}
+
+/* PRIOR ART TABLE */
+.pa-table{width:100%;border-collapse:collapse;font-size:13px}
+.pa-table th{text-align:left;padding:12px;background:var(--surface2);color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-size:11px;border-bottom:2px solid var(--border)}
+.pa-table td{padding:12px;border-bottom:1px solid rgba(51,65,85,.4);vertical-align:top}
+.pa-table tr:hover td{background:rgba(99,102,241,.04)}
+.pa-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;margin:2px}
+.pa-miss{background:rgba(239,68,68,.12);color:var(--red)}
+.pa-partial{background:rgba(245,158,11,.12);color:var(--orange)}
+.pa-yes{background:rgba(34,197,94,.12);color:var(--green)}
+
+/* INNOVATION CARDS */
+.inno-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.inno-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.inno-card.c1::before{background:var(--grad1)}
+.inno-card.c2::before{background:var(--grad2)}
+.inno-card.c3::before{background:var(--grad3)}
+.inno-card.c4::before{background:linear-gradient(135deg,#ec4899,#f43f5e)}
+.inno-card.c5::before{background:linear-gradient(135deg,#f59e0b,#ef4444)}
+.inno-num{font-size:48px;font-weight:900;opacity:.08;position:absolute;top:8px;right:16px}
+.inno-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;margin-bottom:6px}
+.inno-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+.inno-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.claim-ref{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:6px;background:rgba(99,102,241,.12);color:var(--accent2);font-size:11px;font-weight:600}
+
+/* CHART CONTAINERS */
+.chart-wrap{position:relative;width:100%;max-width:420px;margin:0 auto}
+.chart-wrap canvas{width:100%!important;height:auto!important}
+
+/* STATS ROW */
+.stat-card{text-align:center;padding:24px 16px;background:var(--surface);border:1px solid var(--border);border-radius:14px}
+.stat-val{font-size:clamp(28px,4vw,40px);font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:13px;color:var(--text2);margin-top:4px}
+
+/* FLOW */
+.flow{display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:wrap;margin:32px 0}
+.flow-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;text-align:center;min-width:160px;position:relative}
+.flow-box h4{font-size:13px;color:var(--accent2);font-weight:700;margin-bottom:4px}
+.flow-box p{font-size:12px;color:var(--text2)}
+.flow-arrow{font-size:24px;color:var(--accent);padding:0 8px;flex-shrink:0}
+.flow-novel{border-color:var(--green);box-shadow:0 0 20px rgba(34,197,94,.1)}
+.flow-novel h4{color:var(--green2)}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:40px;margin-top:24px}
+.timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:28px}
+.tl-item::before{content:'';position:absolute;left:-33px;top:6px;width:14px;height:14px;border-radius:50%;border:3px solid var(--accent);background:var(--bg)}
+.tl-item.novel::before{background:var(--green);border-color:var(--green)}
+.tl-year{font-size:12px;color:var(--text3);font-weight:600}
+.tl-title{font-size:15px;font-weight:600;color:#fff;margin:2px 0}
+.tl-desc{font-size:13px;color:var(--text2)}
+
+/* FOOTER */
+.footer{text-align:center;padding:48px 24px;color:var(--text3);font-size:13px;border-top:1px solid var(--border);margin-top:48px}
+
+@media(max-width:768px){
+  .nmap-header,.nmap-row{grid-template-columns:1fr}
+  .nmap-header>div:first-child::after,.nmap-row>div::before{font-size:10px;color:var(--text3)}
+  .grid-2{grid-template-columns:1fr}
+  .flow{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="badge">Patent Novelty Analysis</div>
+  <h1>REBIRTH — Novelty Graph</h1>
+  <p>Multi-Stage Emotion-Aware Response Regulation System with Severity-Based State Control, Constraint Enforcement, and Longitudinal Behavior Modification</p>
+  <div class="meta-row">
+    <div class="meta-item">Inventor: <span>Oshim Pathan</span></div>
+    <div class="meta-item">Filing: <span>Feb 9, 2026</span></div>
+    <div class="meta-item">IDF: <span>02-IPR-R003</span></div>
+    <div class="meta-item">TRL: <span>Level 5</span></div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- KEY STATS -->
+<section class="section">
+  <div class="grid-5">
+    <div class="stat-card"><div class="stat-val">5</div><div class="stat-label">Novel Components</div></div>
+    <div class="stat-card"><div class="stat-val">4</div><div class="stat-label">Independent Claims</div></div>
+    <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">Prior Art Patents Analyzed</div></div>
+    <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">Technical Gaps Addressed</div></div>
+    <div class="stat-card"><div class="stat-val">94%</div><div class="stat-label">Emotion Detection Accuracy</div></div>
+  </div>
+</section>
+
+<!-- INNOVATION PIPELINE FLOW -->
+<section class="section">
+  <h2 class="section-title">🔗 Novel Multi-Stage Processing Pipeline</h2>
+  <p class="section-sub">The core invention — a decoupled 3-stage pipeline with mandatory metadata propagation (no prior art achieves this).</p>
+  <div class="flow">
+    <div class="flow-box">
+      <h4>User Input</h4>
+      <p>Natural language text</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box flow-novel">
+      <h4>Stage 1: Emotion Signal Processor</h4>
+      <p>BERT → EmotionMetadata object</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box flow-novel">
+      <h4>Stage 2: Response Strategy Controller</h4>
+      <p>Severity-aware constraint generation</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box flow-novel">
+      <h4>Stage 3: Constrained Output Generator</h4>
+      <p>LLM bounded by ConstraintSpec</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">
+      <h4>Response</h4>
+      <p>Emotion-constrained output</p>
+    </div>
+  </div>
+  <div class="flow" style="margin-top:0">
+    <div class="flow-box flow-novel" style="border-color:var(--cyan)">
+      <h4 style="color:var(--cyan)">Longitudinal State Accumulation Engine</h4>
+      <p>Pattern tracking → runtime behavior modification</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box flow-novel" style="border-color:var(--pink)">
+      <h4 style="color:var(--pink)">Crisis State Machine</h4>
+      <p>NORMAL → ELEVATED → HIGH_ALERT → CRITICAL</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 CORE INNOVATIONS -->
+<section class="section">
+  <h2 class="section-title">🌟 5 Core Inventive Contributions</h2>
+  <p class="section-sub">Each component represents a novel technical contribution absent from all identified prior art.</p>
+  <div class="grid-3" id="innovations">
+    <div class="inno-card c1"><div class="inno-num">01</div>
+      <div class="inno-label">Architecture</div>
+      <div class="inno-title">Multi-Stage Processing Pipeline (MSPP)</div>
+      <div class="inno-desc">Three decoupled stages with mandatory data dependencies — emotion signal processing, strategy control, and constrained output generation operate independently with structured handoffs.</div>
+      <div class="claim-ref">→ Independent Claim 1</div>
+    </div>
+    <div class="inno-card c2"><div class="inno-num">02</div>
+      <div class="inno-label">Protocol</div>
+      <div class="inno-title">Emotion Metadata Propagation Protocol (EMPP)</div>
+      <div class="inno-desc">Structured metadata schema (signalLabel, confidence, severity, category, timestamp, escalationFlag) persists across all stages as mandatory input, ensuring full emotion awareness.</div>
+      <div class="claim-ref">→ Independent Claim 4</div>
+    </div>
+    <div class="inno-card c3"><div class="inno-num">03</div>
+      <div class="inno-label">Control Module</div>
+      <div class="inno-title">Response Constraint Enforcement Module (RCEM)</div>
+      <div class="inno-desc">Deterministic rule-based controller that transforms emotion signals into required/prohibited constraint specs with severity-based intensity modification. 97.3% compliance rate.</div>
+      <div class="claim-ref">→ Dependent Claims 1.1, 1.2, 1.3</div>
+    </div>
+    <div class="inno-card c4"><div class="inno-num">04</div>
+      <div class="inno-label">Analytics Engine</div>
+      <div class="inno-title">Longitudinal State Accumulation Engine (LSAE)</div>
+      <div class="inno-desc">Computes emotion distribution, positivity ratio, stability score, trajectory across sessions. Accumulated state modifies runtime strategy selection — not just passive analytics.</div>
+      <div class="claim-ref">→ Independent Claim 2</div>
+    </div>
+    <div class="inno-card c5"><div class="inno-num">05</div>
+      <div class="inno-label">State Machine</div>
+      <div class="inno-title">Crisis State Machine (CSM)</div>
+      <div class="inno-desc">Finite state machine (NORMAL → ELEVATED → HIGH_ALERT → CRITICAL) with multi-signal risk scoring (emotion + linguistic + longitudinal + session signals). Weighted 25/35/20/15.</div>
+      <div class="claim-ref">→ Independent Claim 3</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVELTY MAP -->
+<section class="section">
+  <h2 class="section-title">📊 Novelty Feature Map — Prior Art Gap Analysis</h2>
+  <p class="section-sub">Each row shows a technical feature, the gap in prior art, and REBIRTH's novel solution with novelty score.</p>
+  <div class="novelty-map">
+    <div class="nmap-header"><div>Feature</div><div>Prior Art Gap</div><div>REBIRTH Solution</div><div>Novelty</div></div>
+    <div class="nmap-row"><div class="feature">Stage Decoupling</div><div>Monolithic emotion+response systems <span class="gap-tag gap-critical">Critical</span></div><div>3-stage pipeline with independent optimization per stage</div><div class="novelty-score score-high">10/10</div></div>
+    <div class="nmap-row"><div class="feature">Metadata Propagation</div><div>Emotion data discarded after detection <span class="gap-tag gap-critical">Critical</span></div><div>Mandatory EMPP schema across all stages</div><div class="novelty-score score-high">10/10</div></div>
+    <div class="nmap-row"><div class="feature">Constraint Enforcement</div><div>LLM output unconstrained <span class="gap-tag gap-critical">Critical</span></div><div>ConstraintSpec with required/prohibited/safety rules</div><div class="novelty-score score-high">9/10</div></div>
+    <div class="nmap-row"><div class="feature">Severity-Based Control</div><div>Same response regardless of intensity <span class="gap-tag gap-high">High</span></div><div>LOW/MEDIUM/HIGH→LIGHT/STANDARD/ELEVATED mapping</div><div class="novelty-score score-high">9/10</div></div>
+    <div class="nmap-row"><div class="feature">Longitudinal Accumulation</div><div>Stateless per-message processing <span class="gap-tag gap-high">High</span></div><div>LSAE with trajectory analysis + runtime modification</div><div class="novelty-score score-high">9/10</div></div>
+    <div class="nmap-row"><div class="feature">Crisis State Machine</div><div>No escalation mechanism <span class="gap-tag gap-critical">Critical</span></div><div>4-state FSM with multi-signal risk scoring</div><div class="novelty-score score-high">10/10</div></div>
+    <div class="nmap-row"><div class="feature">Multi-Class Emotion</div><div>Binary/ternary polarity only <span class="gap-tag gap-high">High</span></div><div>6-class classification at 94.05% accuracy</div><div class="novelty-score score-med">7/10</div></div>
+    <div class="nmap-row"><div class="feature">Safety Layer</div><div>Only 17% of systems assess safety <span class="gap-tag gap-high">High</span></div><div>Pre-processing safety enforcement (99.1% compliance)</div><div class="novelty-score score-high">8/10</div></div>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section class="section">
+  <h2 class="section-title">📈 Comparative Analysis Charts</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Radar: REBIRTH vs Prior Art Capabilities</h3>
+      <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;color:#fff">Bar: Novelty Score per Feature</h3>
+      <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIOR ART COMPARISON TABLE -->
+<section class="section">
+  <h2 class="section-title">🔍 Prior Art Limitation Matrix</h2>
+  <p class="section-sub">Detailed comparison showing which features each prior art patent lacks.</p>
+  <div class="card" style="overflow-x:auto">
+    <table class="pa-table">
+      <thead><tr>
+        <th>Prior Art</th><th>Year</th><th>Multi-Stage</th><th>Metadata Prop.</th><th>Constraints</th><th>Severity Ctrl</th><th>Longitudinal</th><th>Crisis FSM</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>US 11,087,895 B2</strong><br><span style="color:var(--text3)">ML Conversational Agent</span></td><td>2021</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr><td><strong>US 2022/0343983 A1</strong><br><span style="color:var(--text3)">Emotion Recognition System</span></td><td>2022</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-partial">Partial</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr><td><strong>WO 2023/056789 A1</strong><br><span style="color:var(--text3)">AI Assessment Platform</span></td><td>2023</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-partial">Partial</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr><td><strong>US 10,902,943 B2</strong><br><span style="color:var(--text3)">Behavioral Health Agent</span></td><td>2020</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr><td><strong>CN 116579467 A</strong><br><span style="color:var(--text3)">Emotion Dialogue System</span></td><td>2023</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr><td><strong>EP 4012624 A1</strong><br><span style="color:var(--text3)">Digital Intervention System</span></td><td>2022</td>
+          <td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-partial">Partial</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td><td><span class="pa-tag pa-miss">Missing</span></td></tr>
+        <tr style="background:rgba(34,197,94,.06)"><td><strong style="color:var(--green2)">REBIRTH (Ours)</strong><br><span style="color:var(--text3)">This Invention</span></td><td style="color:var(--green2);font-weight:700">2026</td>
+          <td><span class="pa-tag pa-yes">✅ Full</span></td><td><span class="pa-tag pa-yes">✅ Full</span></td><td><span class="pa-tag pa-yes">✅ Full</span></td><td><span class="pa-tag pa-yes">✅ Full</span></td><td><span class="pa-tag pa-yes">✅ Full</span></td><td><span class="pa-tag pa-yes">✅ Full</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CLAIMS MAP -->
+<section class="section">
+  <h2 class="section-title">📋 Claims → Novelty Mapping</h2>
+  <p class="section-sub">How each independent claim maps to a specific technical gap and novel solution.</p>
+  <div class="grid-2">
+    <div class="card" style="border-left:3px solid var(--accent)">
+      <h4 style="color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Independent Claim 1</h4>
+      <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px">Multi-Stage Response Regulation System</h3>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Emotion Signal Processor → Response Strategy Controller → Constrained Output Generator with mandatory metadata propagation.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="gap-tag gap-critical">Gap: Stage Coupling</span>
+        <span class="gap-tag gap-critical">Gap: No Metadata Flow</span>
+        <span class="gap-tag gap-critical">Gap: Unconstrained Output</span>
+      </div>
+      <p style="font-size:12px;color:var(--green2);margin-top:10px;font-weight:600">+ 3 Dependent Claims (1.1, 1.2, 1.3)</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--cyan)">
+      <h4 style="color:var(--cyan);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Independent Claim 2</h4>
+      <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px">Longitudinal State Accumulation</h3>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Collecting emotion metadata across interactions → computing aggregate metrics → generating warnings → modifying runtime behavior.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="gap-tag gap-high">Gap: Stateless Processing</span>
+        <span class="gap-tag gap-high">Gap: No Pattern Detection</span>
+      </div>
+      <p style="font-size:12px;color:var(--green2);margin-top:10px;font-weight:600">+ 2 Dependent Claims (2.1, 2.2)</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--pink)">
+      <h4 style="color:var(--pink);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Independent Claim 3</h4>
+      <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px">Crisis State Machine</h3>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">4-state FSM (NORMAL→ELEVATED→HIGH_ALERT→CRITICAL) with multi-signal risk scoring combining emotion, linguistic, longitudinal, and session signals.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="gap-tag gap-critical">Gap: No Crisis Handling</span>
+        <span class="gap-tag gap-high">Gap: No Escalation</span>
+      </div>
+      <p style="font-size:12px;color:var(--green2);margin-top:10px;font-weight:600">+ 2 Dependent Claims (3.1, 3.2)</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--purple)">
+      <h4 style="color:var(--purple);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Independent Claim 4</h4>
+      <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px">Emotion Metadata Propagation Protocol</h3>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Defining structured schema → producing metadata at Stage 1 → mandatory propagation → utilization at each stage → persistence for longitudinal analysis.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="gap-tag gap-critical">Gap: No Metadata Propagation</span>
+        <span class="gap-tag gap-high">Gap: Context Loss</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <h2 class="section-title">🕐 Innovation Timeline vs Prior Art</h2>
+  <p class="section-sub">How REBIRTH advances beyond the evolution of prior art chronologically.</p>
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-year">2020</div><div class="tl-title">US 10,902,943 B2 — Behavioral Health Agent</div><div class="tl-desc">Scripted response trees. No emotion input, no constraint injection, no crisis states.</div></div>
+      <div class="tl-item"><div class="tl-year">2021</div><div class="tl-title">US 11,087,895 B2 — ML Conversational Agent</div><div class="tl-desc">Rule-based ML architecture. No multi-stage processing, no metadata propagation.</div></div>
+      <div class="tl-item"><div class="tl-year">2022</div><div class="tl-title">US 2022/0343983 A1 — Emotion Recognition</div><div class="tl-desc">Single-stage emotion detection. Data not propagated to response generation.</div></div>
+      <div class="tl-item"><div class="tl-year">2022</div><div class="tl-title">EP 4012624 A1 — Digital Intervention</div><div class="tl-desc">Static content delivery. No real-time signal processing or severity-based modification.</div></div>
+      <div class="tl-item"><div class="tl-year">2023</div><div class="tl-title">WO 2023/056789 A1 & CN 116579467 A</div><div class="tl-desc">AI assessment and basic emotion dialogue. Still no multi-stage decoupling or constraint enforcement.</div></div>
+      <div class="tl-item novel"><div class="tl-year" style="color:var(--green2)">2026</div><div class="tl-title" style="color:var(--green2)">REBIRTH — Multi-Stage Emotion-Aware Response Regulation System</div><div class="tl-desc">First system combining: decoupled multi-stage pipeline + mandatory metadata propagation + severity-aware constraint enforcement + longitudinal state accumulation + crisis state machine. All 6 prior art gaps addressed.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALIDATION -->
+<section class="section">
+  <h2 class="section-title">✅ Experimental Validation of Novel Claims</h2>
+  <div class="grid-3">
+    <div class="stat-card"><div class="stat-val">97.3%</div><div class="stat-label">Constraint Compliance Rate</div></div>
+    <div class="stat-card"><div class="stat-val">99.1%</div><div class="stat-label">Safety Rule Enforcement</div></div>
+    <div class="stat-card"><div class="stat-val">100%</div><div class="stat-label">State Transition Accuracy</div></div>
+    <div class="stat-card"><div class="stat-val">&lt;1.5s</div><div class="stat-label">Total Pipeline Latency</div></div>
+    <div class="stat-card"><div class="stat-val">+51.6%</div><div class="stat-label">Emotional Appropriateness Gain</div></div>
+    <div class="stat-card"><div class="stat-val">+91.3%</div><div class="stat-label">Therapeutic Alignment Gain</div></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 Oshim Pathan — VIT IPR&TT Cell — Patent Novelty Graph — Document 02-IPR-R003</p>
+  <p style="margin-top:4px">Generated for REBIRTH Emotion-Aware Response Regulation System</p>
+</footer>
+
+<script>
+// Radar Chart
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['Multi-Stage\nDecoupling', 'Metadata\nPropagation', 'Constraint\nEnforcement', 'Severity\nControl', 'Longitudinal\nAccumulation', 'Crisis\nState Machine'],
+    datasets: [
+      { label: 'REBIRTH (Ours)', data: [10,10,9,9,9,10], fill: true, backgroundColor: 'rgba(34,197,94,.15)', borderColor: '#22c55e', pointBackgroundColor: '#22c55e', borderWidth: 2, pointRadius: 5 },
+      { label: 'Best Prior Art', data: [2,1,2,3,3,1], fill: true, backgroundColor: 'rgba(239,68,68,.1)', borderColor: '#ef4444', pointBackgroundColor: '#ef4444', borderWidth: 2, pointRadius: 4 },
+      { label: 'Woebot/Wysa', data: [1,0,1,1,2,1], fill: true, backgroundColor: 'rgba(245,158,11,.08)', borderColor: '#f59e0b', pointBackgroundColor: '#f59e0b', borderWidth: 1.5, pointRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: {
+        beginAtZero: true, max: 10,
+        grid: { color: 'rgba(51,65,85,.4)' },
+        angleLines: { color: 'rgba(51,65,85,.3)' },
+        pointLabels: { color: '#94a3b8', font: { size: 11, family: 'Inter' } },
+        ticks: { display: false }
+      }
+    },
+    plugins: {
+      legend: { labels: { color: '#e2e8f0', font: { family: 'Inter', size: 12 }, usePointStyle: true, pointStyle: 'circle' } }
+    }
+  }
+});
+
+// Bar Chart
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Stage\nDecoupling', 'Metadata\nProtocol', 'Constraint\nEnforcement', 'Severity\nControl', 'Longitudinal\nEngine', 'Crisis\nFSM', 'Multi-Class\nEmotion', 'Safety\nLayer'],
+    datasets: [{
+      label: 'Novelty Score',
+      data: [10, 10, 9, 9, 9, 10, 7, 8],
+      backgroundColor: ['#6366f1','#818cf8','#06b6d4','#3b82f6','#22c55e','#ec4899','#f59e0b','#a855f7'],
+      borderRadius: 8,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: 'y',
+    scales: {
+      x: { max: 10, grid: { color: 'rgba(51,65,85,.3)' }, ticks: { color: '#94a3b8', font: { family: 'Inter' } } },
+      y: { grid: { display: false }, ticks: { color: '#e2e8f0', font: { family: 'Inter', size: 11 } } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `Novelty: ${ctx.raw}/10` } }
+    }
+  }
+});
+</script>
+</body>
+</html>
