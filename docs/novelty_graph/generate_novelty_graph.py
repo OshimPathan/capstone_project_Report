@@ -120,7 +120,8 @@ ax2.legend(handles=legend_p, loc='upper right', fontsize=10,
 # ── Title ──
 
 
-out = '/Users/oseempathan/Developer/capstone_project/novelty_graph.png'
+import os
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'novelty_graph.png')
 plt.savefig(out, dpi=200, bbox_inches='tight', facecolor='#0d1117', pad_inches=0.5)
 plt.close()
 print(f"✅ {out}")

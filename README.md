@@ -532,31 +532,70 @@ curl -X POST https://rebirth-backend-zeta.vercel.app/api/chat/message \
 ## 📁 Project Structure
 
 ```
-├── rebirth-frontend/              # Flutter Mobile App
+capstone_project/
+│
+├── README.md                                    # Project overview (this file)
+│
+├── rebirth/                                     # 📱 Flutter Mobile App (Frontend)
 │   ├── lib/
-│   │   ├── main.dart              # Entry point
-│   │   ├── Components/            # UI components
-│   │   ├── models/                # Data models
-│   │   ├── pages/                 # Screens
-│   │   │   ├── auth/              # Login, Register
-│   │   │   ├── Home/              # Chat interface
-│   │   │   ├── Analytics/         # Progress tracking
-│   │   │   ├── Settings/          # Preferences
-│   │   │   └── OnBoarding/        # User setup
-│   │   └── services/              # API services
+│   │   ├── main.dart                            # Entry point
+│   │   ├── Components/                          # UI components
+│   │   ├── models/                              # Data models
+│   │   ├── pages/                               # Screens
+│   │   │   ├── auth/                            #   Login, Register
+│   │   │   ├── Home/                            #   Chat interface
+│   │   │   ├── Analytics/                       #   Progress tracking
+│   │   │   ├── Settings/                        #   Preferences
+│   │   │   └── OnBoarding/                      #   User setup
+│   │   └── services/                            # API services
 │   └── pubspec.yaml
 │
-└── rebirth-backend/               # Node.js API
-    ├── src/
-    │   ├── index.js               # Server entry
-    │   ├── controllers/           # Route handlers
-    │   ├── middleware/            # Auth, validation
-    │   ├── models/                # MongoDB schemas
-    │   ├── routes/                # API routes
-    │   └── services/
-    │       └── emotion.service.js # BERT integration
-    ├── package.json
-    └── vercel.json
+├── rebirth_backend/                             # 🖥️ Node.js API (Backend)
+│   └── rebirth-backend/
+│       ├── src/
+│       │   ├── index.js                         # Server entry
+│       │   ├── controllers/                     # Route handlers
+│       │   ├── middleware/                       # Auth, validation
+│       │   ├── models/                          # MongoDB schemas
+│       │   ├── routes/                          # API routes
+│       │   └── services/
+│       │       └── emotion.service.js           # BERT integration
+│       ├── package.json
+│       └── vercel.json
+│
+└── docs/                                        # 📄 All Documentation
+    │
+    ├── report/                                  # 📝 Capstone Project Report
+    │   └── Rebirth_Capstone_Project_Report.md
+    │
+    ├── patent/                                  # 📜 Patent Documents
+    │   ├── Rebirth_Patent_Disclosure_Document.md #   Main patent disclosure
+    │   ├── Rebirth_IDF_Patent_FINAL.md          #   Final IDF document
+    │   ├── Rebirth_IDF_Patent_Document_EXAMINER_SAFE.md  # Examiner-safe version
+    │   ├── Rebirth_IDF_Patent_REFINED.md        #   Refined IDF version
+    │   ├── System_Design_Diagrams.md            #   System design docs
+    │   └── final-patent.pdf                     #   Final patent PDF
+    │
+    ├── research/                                # 🔬 Research Papers & Data
+    │   ├── Rebirth_IEEE_Research_Paper.md        #   IEEE paper (Markdown)
+    │   ├── Rebirth_IEEE_Research_Paper.tex       #   IEEE paper (LaTeX)
+    │   └── REBIRTH_Patent_Research_Data.md       #   Research data for claims
+    │
+    ├── novelty_graph/                           # 📊 Patent Novelty Analysis
+    │   ├── generate_novelty_graph.py            #   Python script to generate graph
+    │   ├── novelty_graph.png                    #   Generated novelty graph image
+    │   └── novelty_graph.html                   #   Interactive HTML version
+    │
+    └── diagrams/                                # 🖼️ Architecture Diagrams
+        └── patent/
+            ├── FIG1_system_architecture.png      #   System architecture
+            ├── FIG2_processing_pipeline.png      #   Processing pipeline
+            ├── FIG3_database_schema.png          #   Database schema
+            ├── FIG4_message_flow.png             #   Message flow
+            ├── FIG5_technology_stack.png          #   Technology stack
+            ├── FIG6_analytics_system.png          #   Analytics system
+            ├── FIGURE_LEGEND.md                   #   Figure descriptions
+            └── *.mmd                              #   Mermaid source files
 ```
 
 ---
