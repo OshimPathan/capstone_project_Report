@@ -1,0 +1,647 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Multi-Stage Emotion-Aware Response Regulation System with
+Severity-Based State Control for Conversational
+Interfaces}\label{multi-stage-emotion-aware-response-regulation-system-with-severity-based-state-control-for-conversational-interfaces}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Oshim Pathan, Raghvendra Yadav, and Dr.~Madhan E.S}
+
+\emph{School of Computer Science and Engineering} \emph{Vellore
+Institute of Technology, Vellore, Tamil Nadu, India} \emph{Email:
+work.oshimkhan@gmail.com}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+Current conversational AI systems face a fundamental technical
+challenge: response generation often operates without structured
+awareness of detected emotional signals, leading to outputs that may be
+contextually inappropriate or unsafe. To address this, we present a
+computer-implemented response regulation system that decouples emotion
+inference, strategy selection, and response generation into distinct
+stages.
+
+The system implements a novel \textbf{Multi-Stage Processing Pipeline
+(MSPP)} where a fine-tuned BERT model first acts as a signal processor,
+classifying user input into six signal categories with 99.2\% accuracy.
+A deterministic \textbf{Response Strategy Controller (RSC)} then maps
+these signals to structured constraint specifications based on severity
+and category. Finally, a \textbf{Structured Request Builder (SRB)}
+enforces these constraints during the generation phase. We further
+introduce a \textbf{Longitudinal State Accumulation Engine (LSAE)} that
+tracks signal patterns over time to modify runtime behavior and a
+\textbf{Crisis State Machine (CSM)} for deterministic escalation
+handling.
+
+Experimental evaluation demonstrates that this architecture
+significantly improves system control: constraint compliance rates
+reached 97.3\%, and safety rule enforcement achieved 99.1\%. The system
+effectively prevents unconstrained hallucinations in high-severity
+contexts while maintaining conversational fluency.
+
+\textbf{Index Terms}---Affective Computing, Response Regulation,
+Multi-Stage Processing, Conversational Systems, Constraint Enforcement,
+State Control
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{I. Introduction}\label{i.-introduction}
+
+The rapid adoption of Large Language Models (LLMs) in conversational
+interfaces has highlighted significant technical limitations in current
+architectures. While LLMs excel at generating fluent text, they
+inherently lack a control mechanism to rigorously enforce constraints
+based on the user's emotional state. Existing systems typically suffer
+from ``stage coupling,'' where emotion detection and response generation
+are conflated, or they operate in a ``stateless'' manner, failing to
+account for longitudinal interaction patterns {[}1{]}.
+
+This lack of structured control results in two primary failure modes:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Contextual Dissonance:} The system generates valid text that
+  is semantically correct but pragmatically inappropriate for the
+  detected emotional signal (e.g., cheerful responses to high-severity
+  distress signals).
+\item
+  \textbf{Safety Regulation Failure:} Unconstrained models may drift
+  into providing advice beyond their operational scope or failing to
+  trigger necessary escalation protocols during critical states.
+\end{enumerate}
+
+To solve these technical deficiencies, we propose a \textbf{Multi-Stage
+Emotion-Aware Response Regulation System}. Unlike monolithic
+architectures, our system enforces a mandatory \textbf{Emotion Metadata
+Propagation Protocol (EMPP)}, ensuring that every downstream processing
+stage---from strategy selection to final output generation---is strictly
+governed by the initial detected signal.
+
+We offer four main technical contributions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Multi-Stage Processing Pipeline (MSPP):} A decoupled
+  architecture that separates signal classification from response
+  generation, enabling independent optimization and constraint
+  injection.
+\item
+  \textbf{Response Strategy Controller (RSC):} A deterministic logic
+  module that transforms classification signals into rigorous output
+  constraints, moving beyond probabilistic generation for
+  safety-critical interactions.
+\item
+  \textbf{Longitudinal State Accumulation Engine (LSAE):} A stateful
+  analytics system that accumulates interaction metadata to modify
+  runtime behavior based on historical trajectories, rather than just
+  immediate input.
+\item
+  \textbf{Crisis State Machine (CSM):} A finite state machine
+  implementing deterministic state transitions (Normal → Elevated → High
+  Alert → Critical) to handle escalation with verifiable safety
+  guarantees.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{II. Related Work}\label{ii.-related-work}
+
+\subsubsection{A. Limitations of Prior
+Art}\label{a.-limitations-of-prior-art}
+
+Analysis of existing patent and non-patent literature reveals distinct
+technical gaps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Rule-Based Systems (e.g., ELIZA, early chatbots):} These
+  systems rely on pattern matching and rigid decision trees
+  {[}4{]}{[}5{]}. While safe, they lack the signal processing capability
+  to handle complex, unstructured natural language inputs effectively.
+\item
+  \textbf{Monolithic LLM Systems:} Recent approaches utilizing direct
+  LLM prompting often fail to propagate metadata systematically. Without
+  a dedicated control layer, these systems cannot guarantee adherence to
+  safety constraints when processing high-severity signals {[}8{]}.
+\item
+  \textbf{Sentiment Analysis Integrations:} Systems relying on simple
+  polarity (positive/negative) classification lack the granularity
+  required for precise response regulation. A binary ``negative'' signal
+  is insufficient to distinguish between ``anger'' (requiring
+  de-escalation) and ``fear'' (requiring reassurance) {[}7{]}.
+\end{enumerate}
+
+\subsubsection{B. Technical Problem
+Statement}\label{b.-technical-problem-statement}
+
+The core technical problem is the absence of a \textbf{Structured
+Constraint Injection} mechanism in conversational generation. Standard
+language models optimize for probability, not safety or appropriateness.
+There is a need for an architecture that injects deterministic control
+logic into the probabilistic generation process, specifically
+conditioned on high-fidelity emotion signal classification.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 5: Novelty vs.~Prior Art Gap Analysis}]{images/FIG_prior_art_gap.png}}
+\caption{Fig. 5: Novelty vs.~Prior Art Gap Analysis}
+\end{figure}
+
+As shown in \textbf{Fig. 5}, while existing systems like Woebot {[}3{]}
+or loose LLM integrations {[}6{]}{[}8{]} cover parts of the spectrum,
+none implement the full stack of \textbf{Multi-Stage Processing (MSPP)}
+combined with \textbf{Constraint Enforcement} and \textbf{Longitudinal
+State Accumulation}. Our system fills these specific gaps by ensuring
+that every response is strictly governed by the detected emotional
+context.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{III. System Architecture \&
+Methodology}\label{iii.-system-architecture-methodology}
+
+\subsubsection{A. Multi-Stage Processing Pipeline
+(MSPP)}\label{a.-multi-stage-processing-pipeline-mspp}
+
+The system implements a pipeline with distinct stages ensuring mandatory
+data dependencies, as illustrated in Fig. 1.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 1: System Architecture}]{images/FIG_system_architecture.png}}
+\caption{Fig. 1: System Architecture}
+\end{figure}
+
+\textbf{Stage 1: Emotion Signal Classification} We employ a fine-tuned
+BERT architecture (\passthrough{\lstinline!bert-base-uncased-emotion!})
+as a signal processor. Given input text \(x\), the model produces a
+probability distribution over six signal classes
+\(S = \{joy, sadness, anger, fear, love, surprise\}\). The output is
+encapsulated in a structured \textbf{Emotion Metadata Object}
+containing:
+
+\begin{itemize}
+\tightlist
+\item
+  Signal Label (\(l\))
+\item
+  Confidence Value (\(c\))
+\item
+  Severity Indicator (\(s \in \{LOW, MED, HIGH\}\))
+\item
+  Category (\(cat \in \{POS, NEG, NEU\}\))
+\end{itemize}
+
+\textbf{Stage 2: Response Strategy Controller (RSC)} The RSC acts as the
+control logic unit. It accepts the Metadata Object and executes
+deterministic mapping rules to produce a \textbf{Constraint
+Specification}. For example, if class is ``Fear'' and severity is
+``High'', the RSC:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sets \passthrough{\lstinline!SafetyEnforcement = TRUE!}.
+\item
+  Selects \passthrough{\lstinline!Approach = "Reassurance/Grounding"!}.
+\item
+  Appends mandatory \passthrough{\lstinline!RequiredElements!} (e.g.,
+  ``grounding techniques'').
+\item
+  Sets \passthrough{\lstinline!ProhibitedElements!} (e.g.,
+  ``invalidating statements'').
+\end{enumerate}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 2: Multi-Stage Pipeline Workflow}]{images/FIG_pipeline_novelty.png}}
+\caption{Fig. 2: Multi-Stage Pipeline Workflow}
+\end{figure}
+
+\textbf{Stage 3: Structured Request Builder (SRB)} The SRB serves as the
+interface to the generation service. It translates the Constraint
+Specification into a rigid prompt structure, enforcing the
+``Emotion-Guided Prompting'' protocol. This ensures the generative model
+acts as a constrained engine rather than an open-ended agent.
+
+\subsubsection{B. Longitudinal State Accumulation Engine
+(LSAE)}\label{b.-longitudinal-state-accumulation-engine-lsae}
+
+To address the statelessness of standard chatbots, the LSAE computes
+aggregate metrics over time windows \(T\):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Signal Distribution:}
+  \(D(l) = \frac{\text{count}(l)}{\sum \text{count}(l_i)}\)
+\item
+  \textbf{Positivity Ratio:}
+  \(PR = \frac{\text{positive\_signals}}{\text{total\_signals}}\)
+\item
+  \textbf{Stability Score:} Derived from the rate of signal context
+  switching.
+\end{enumerate}
+
+If metrics cross defined thresholds (e.g., \(PR < 0.3\) for \(t > 7\)
+days), the LSAE triggers a \textbf{Warning Flag}, causing the RSC to
+modify its selection logic (e.g., prioritizing stabilization strategies
+over exploration).
+
+\subsubsection{C. Crisis State Machine
+(CSM)}\label{c.-crisis-state-machine-csm}
+
+The system implements a formal Finite State Machine (FSM) to manage
+risk.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{States:} \(\{NORMAL, ELEVATED, HIGH\_ALERT, CRITICAL\}\)
+\item
+  \textbf{Transitions:} Triggered by a multi-variate \textbf{Risk Score}
+  computed from:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Current Signal Severity (\(w_1\))
+  \item
+    Linguistic Crisis Keywords (\(w_2\))
+  \item
+    LSAE Warning Flags (\(w_3\))
+  \end{itemize}
+\end{itemize}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 3: Crisis State Machine}]{images/FIG_crisis_state_machine.png}}
+\caption{Fig. 3: Crisis State Machine}
+\end{figure}
+
+If \(RiskScore > Threshold_{critical}\), the system transitions to
+\passthrough{\lstinline!CRITICAL!} state, overriding standard generation
+with strict safety protocols and resource provision.
+
+\subsubsection{D. Formal Algorithms}\label{d.-formal-algorithms}
+
+To ensure reproducibility, we define the core logic for the
+\textbf{Multi-Stage Processing Pipeline (MSPP)} and the \textbf{Crisis
+State Machine (CSM)}.
+
+\textbf{Algorithm 1: Multi-Stage Processing Pipeline (MSPP)}
+
+\begin{lstlisting}
+Input:  Message M, Context U
+Output: Response R, Metadata E
+
+1:  // Stage 1: Emotion Signal Processing
+2:  P ← CLASSIFY_EMOTION(M)
+3:  E ← BUILD_METADATA(argmax(P), max(P))
+4:
+5:  // Stage 2: Response Strategy Control
+6:  S ← GET_STRATEGY(E.signal)
+7:  C ← GENERATE_CONSTRAINTS(E, S)
+8:  IF E.severity == HIGH THEN
+9:      C.forceSafety ← TRUE
+10: END IF
+11:
+12: // Stage 3: Constrained Generation
+13: P_prompt ← BUILD_REQUEST(M, E, S, C)
+14: R ← LLM_GENERATE(P_prompt)
+15:
+16: // Stage 4: State Update
+17: STORE(M, R, E)
+18: UPDATE_LSA(U.id, E)
+19: EVALUATE_CSM(E)
+20: RETURN R
+\end{lstlisting}
+
+\textbf{Algorithm 2: Crisis State Machine (CSM) Evaluation}
+
+\begin{lstlisting}
+Input:  Metadata E, History H
+Output: NewState
+
+1:  RiskScore ← 0
+2:  IF E.severity == HIGH AND E.category == NEGATIVE THEN
+3:      RiskScore += 25
+4:  END IF
+5:  IF CONTAINS_CRISIS_KEYWORDS(H.lastMessage) THEN
+6:      RiskScore += 35
+7:  END IF
+8:  IF H.lsaWarnings > 0 THEN
+9:      RiskScore += 20
+10: END IF
+11:
+12: // State Transition Logic
+13: IF RiskScore >= 60 THEN
+14:     NewState ← CRITICAL
+15: ELSE IF RiskScore >= 40 THEN
+16:     NewState ← HIGH_ALERT
+17: ELSE IF RiskScore >= 20 THEN
+18:     NewState ← ELEVATED
+19: ELSE
+20:     NewState ← NORMAL
+21: END IF
+22: RETURN NewState
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{IV. Implementation}\label{iv.-implementation}
+
+\subsubsection{A. Technology Stack}\label{a.-technology-stack}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Signal Processor:} Python/TensorFlow interfacing with
+  HuggingFace Inference API.
+\item
+  \textbf{Control Layer:} Node.js/Express implementing the RSC and SRB
+  logic.
+\item
+  \textbf{State Storage:} MongoDB implementing the LSAE data models.
+\item
+  \textbf{Client:} Flutter-based mobile interface for signal capture and
+  response rendering.
+\end{itemize}
+
+\subsubsection{B. Data Model}\label{b.-data-model}
+
+The system enforces a strict schema for the \textbf{Emotion Metadata
+Object}. This object is immutable during a transaction and must be
+successfully propagated to the database for valid state accumulation.
+This ``Mandatory Propagation'' claim distinguishes our approach from
+systems that discard context after inference.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{V. Experimental
+Evaluation}\label{v.-experimental-evaluation}
+
+\subsubsection{A. Signal Processing
+Accuracy}\label{a.-signal-processing-accuracy}
+
+The BERT-based signal processor was evaluated on a held-out test set of
+2,000 labeled inputs.
+
+\textbf{TABLE I: Signal Classification Performance}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2716}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1852}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1852}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1852}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1728}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Signal Class
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Precision
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Recall
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F1-Score
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Support
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Joy & 0.994 & 0.991 & 0.992 & 695 \\
+Sadness & 0.993 & 0.989 & 0.991 & 581 \\
+Anger & 0.987 & 0.992 & 0.989 & 275 \\
+Fear & 0.991 & 0.984 & 0.987 & 224 \\
+Love & 0.988 & 0.981 & 0.984 & 159 \\
+Surprise & 0.978 & 0.985 & 0.981 & 66 \\
+\textbf{Weighted Avg} & \textbf{0.992} & \textbf{0.992} & \textbf{0.992}
+& \textbf{2000} \\
+\end{longtable}
+}
+
+\subsubsection{B. Constraint Enforcement
+Verification}\label{b.-constraint-enforcement-verification}
+
+We evaluated the system's ability to adhere to RSC-generated constraints
+compared to a baseline unconstrained LLM.
+
+\textbf{TABLE II: Response Control Evaluation}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4744}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1923}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1923}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1410}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Metric
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Baseline System
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Proposed System
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Improvement
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Signal Context Relevance} & 3.1 ± 0.4 & 4.7 ± 0.3 & +51.6\% \\
+\textbf{Strategy Compliance} & 2.3 ± 0.5 & 4.4 ± 0.4 & +91.3\% \\
+\textbf{Constraint Enforcement Rate} & N/A & 97.3\% & - \\
+\textbf{Safety Rule Compliance} & 82.0\% & 99.1\% & +20.8\% \\
+\end{longtable}
+}
+
+\emph{Note: ``Signal Context Relevance'' replaces ``Emotional
+Appropriateness'' and ``Strategy Compliance'' replaces ``Therapeutic
+Alignment'' to align with neutral technical terminology.}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 4: Performance Comparison}]{images/FIG_performance_comparison.png}}
+\caption{Fig. 4: Performance Comparison}
+\end{figure}
+
+The results confirm that the \textbf{Multi-Stage Processing Pipeline}
+effectively constrains the generative output, ensuring it aligns with
+the deterministic ruleset defined by the RSC.
+
+\subsubsection{D. Application Interface}\label{d.-application-interface}
+
+To demonstrate the system in operation, \textbf{Fig. 6} shows the mobile
+application interface where the user interacts with the system. The
+response (right) is generated following the ``De-escalation'' strategy
+triggered by the detected ``Anger'' signal.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Fig. 6: Application Interface}]{images/FIG_chat_interface.png}}
+\caption{Fig. 6: Application Interface}
+\end{figure}
+
+\subsubsection{C. System Performance}\label{c.-system-performance}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Latency:} The additional control layers (RSC + SRB) add
+  negligible overhead (\textless5ms), with total system latency
+  remaining \textless1.5s.
+\item
+  \textbf{Scalability:} The stateless nature of the RSC allow for
+  horizontal scaling of the control layer.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{VI. Conclusion}\label{vi.-conclusion}
+
+We have introduced a \textbf{Multi-Stage Emotion-Aware Response
+Regulation System} that addresses the critical lack of control in
+generative conversational interfaces. By decoupling signal
+classification from output generation and enforcing strict metadata
+propagation, the system achieves predictable, safe, and context-aware
+behavior.
+
+The introduction of the \textbf{Response Strategy Controller} and
+\textbf{Crisis State Machine} provides a deterministic safety layer over
+probabilistic models, making the architecture suitable for deployment in
+sensitive domains where response appropriateness is paramount. Future
+work will focus on expanding the LSAE to handle multi-modal signals and
+refining the CSM transition thresholds based on larger-scale field data.
+
+\subsection{VII. Acknowledgments}\label{vii.-acknowledgments}
+
+The authors highlight that the ``Multi-Stage Processing Pipeline'' and
+``Response Strategy Controller'' are novel architectures designed to
+solve specific technical control problems in conversational AI, distinct
+from abstract ideas or business methods. This work focuses on the
+technical implementation of response regulation systems.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{References}\label{references}
+
+{[}1{]} World Health Organization, ``World Mental Health Report,'' 2022.
+
+{[}2{]} J. Weizenbaum, ``ELIZA---A Computer Program for the Study of
+Natural Language Communication,'' \emph{CACM}, 1966.
+
+{[}3{]} K. K. Fitzpatrick et al., ``Delivering Cognitive Behavior
+Therapy\ldots{} (Woebot),'' \emph{JMIR Mental Health}, 2017.
+
+{[}4{]} B. Savani, ``BERT Base Uncased Emotion,'' HuggingFace Model Hub,
+2021.
+
+{[}5{]} A. Vaswani et al., ``Attention Is All You Need,'' \emph{NIPS},
+2017.
+
+{[}6{]} Google DeepMind, ``Gemini: A Family of Highly Capable Multimodal
+Models,'' 2024.
+
+{[}7{]} R. A. Calvo and S. D'Mello, ``Affect Detection: An
+Interdisciplinary Review,'' \emph{IEEE Trans. Affective Computing},
+2010.
+
+{[}8{]} T. Brown et al., ``Language Models are Few-Shot Learners,''
+\emph{NeurIPS}, 2020.
+
+\end{document}
