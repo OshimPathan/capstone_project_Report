@@ -99,6 +99,13 @@ The MSPP is defined as a sequential composition of three functions:
     \Phi(u_t) = (f_{gen} \circ f_{control} \circ f_{signal})(u_t)
 \end{equation}
 
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/FIG_system_architecture.png}
+\caption{System Architecture: The Multi-Stage Processing Pipeline (MSPP) separates signal acquisition, strategy control, and generation into distinct, independent stages.}
+\label{fig:arch}
+\end{figure*}
+
 \subsubsection{Stage 1: Emotion Signal Classification ($f_{signal}$)}
 Let $E = \{e_1, e_2, ..., e_6\}$ be the set of discrete emotion labels (Joy, Sadness, Anger, Fear, Love, Surprise). The function $f_{signal}: \mathcal{U} \to \Delta^{|E|}$ maps the input text to a probability distribution over emotions.
 The output is a structured metadata tuple $M_t$:
@@ -119,6 +126,13 @@ The RSC is a deterministic function mapping metadata to constraint specification
     f_{control}(M_t) \to \langle \sigma_{opt}, \Omega_{act} \rangle
 \end{equation}
 where $\sigma_{opt} \in \Sigma$ is the optimal strategy (e.g., "De-escalation") and $\Omega_{act} \subset \Omega$ is the active prohibition set (e.g., "No Advice Giving").
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{images/FIG_pipeline_novelty.png}
+\caption{Multi-Stage Pipeline Workflow: Transformation of raw input into a constrained prompt via the Response Strategy Controller.}
+\label{fig:pipeline}
+\end{figure*}
 
 \subsubsection{Stage 3: Structured Request Builder ($f_{gen}$)}
 The generation function $f_{gen}$ is conditioned on strictly formatted prompts constructed from $\sigma_{opt}$ and $\Omega_{act}$, minimizing the Kullback-Leibler divergence between the generated distribution and the target safe distribution.
