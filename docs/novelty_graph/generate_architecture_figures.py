@@ -317,76 +317,76 @@ def fig_system_architecture():
 # ═══════════════════════════════════════════════════════════════
 
 def fig_workflow_diagram():
-    fig, ax = plt.subplots(figsize=(20, 20), facecolor=BG)
+    fig, ax = plt.subplots(figsize=(22, 24), facecolor=BG)
     ax.set_facecolor(BG)
-    ax.set_xlim(0, 20)
-    ax.set_ylim(0, 20)
+    ax.set_xlim(0, 22)
+    ax.set_ylim(0, 24)
     ax.axis('off')
 
     # ── Title ──
-    ax.text(10, 19.5, 'REBIRTH — MSPP Message Processing Workflow',
-            ha='center', fontsize=22, fontweight='bold', color=TEXT)
-    ax.text(10, 19.1, 'Algorithm: MSPP(M, U, H) → (R, E) | Matching Patent IDF-B Pseudocode',
-            ha='center', fontsize=11, color=TEXT_DIM)
+    ax.text(11, 23.3, 'REBIRTH — MSPP Message Processing Workflow',
+            ha='center', fontsize=26, fontweight='bold', color=TEXT)
+    ax.text(11, 22.8, 'Algorithm: MSPP(M, U, H) → (R, E) | Matching Patent IDF-B Pseudocode',
+            ha='center', fontsize=13, color=TEXT_DIM)
 
     # ── Swim Lanes ──
     lanes = [
-        ('Client\nDevice', 2.5, BLUE),
-        ('Mobile App\n(Flutter)', 5.5, CYAN),
-        ('API Server\n(Node.js)', 9.0, GREEN),
-        ('HuggingFace\n(BERT)', 12.5, '#3fb950'),
-        ('Google\nGemini', 15.0, PURPLE),
-        ('MongoDB\nAtlas', 17.5, BLUE),
+        ('Client\nDevice', 3.0, BLUE),
+        ('Mobile App\n(Flutter)', 6.0, CYAN),
+        ('API Server\n(Node.js)', 10.0, GREEN),
+        ('HuggingFace\n(BERT)', 14.0, GREEN),
+        ('Google\nGemini', 17.0, PURPLE),
+        ('MongoDB\nAtlas', 20.0, BLUE),
     ]
 
     for name, x, color in lanes:
-        box = FancyBboxPatch((x - 0.9, 18.0), 1.8, 0.8,
-                             boxstyle="round,pad=0.08",
+        box = FancyBboxPatch((x - 1.1, 21.8), 2.2, 0.9,
+                             boxstyle="round,pad=0.1",
                              facecolor=color, edgecolor=color,
-                             linewidth=0, alpha=0.25)
+                             linewidth=1.5, alpha=0.2)
         ax.add_patch(box)
-        ax.text(x, 18.4, name, ha='center', va='center',
-                fontsize=8.5, fontweight='bold', color=color, linespacing=1.2)
-        ax.plot([x, x], [0.8, 18.0], color=color, lw=0.7, alpha=0.2)
+        ax.text(x, 22.25, name, ha='center', va='center',
+                fontsize=10, fontweight='bold', color=color, linespacing=1.2)
+        ax.plot([x, x], [1.0, 21.8], color=color, lw=1.5, alpha=0.35, linestyle='-')
 
     lane_x = {i: lanes[i][1] for i in range(len(lanes))}
 
     # ── WORKFLOW STEPS (matching MSPP algorithm exactly) ──
     steps = [
         # (y, type, from, to, label, detail, color, step, algo_ref)
-        (17.2, 'arrow', 0, 1, 'User types message', 'M = user message text', TEXT, '1', ''),
-        (16.4, 'arrow', 1, 2, 'Send POST /api/chat', 'JWT token + M + U + H', CYAN, '2', ''),
-        (15.6, 'self',  2, 2, 'Auth + Input Validation', 'JWT verify, sanitize, rate limit', YELLOW, '3', ''),
+        (20.8, 'arrow', 0, 1, 'User types message', 'M = user message text', TEXT, '1', ''),
+        (19.8, 'arrow', 1, 2, 'Send POST /api/chat', 'JWT token + M + U + H', CYAN, '2', ''),
+        (18.8, 'self',  2, 2, 'Auth + Input Validation', 'JWT verify, sanitize, rate limit', YELLOW, '3', ''),
 
         # Stage 1: ESP
-        (14.6, 'label', 2, 2, 'STAGE 1: EMOTION SIGNAL PROCESSING', '', GREEN, '', '[410]'),
-        (13.8, 'arrow', 2, 3, 'CLASSIFY_EMOTION(M)', 'Step 1.1: External service call', GREEN, '4', ''),
-        (13.0, 'self',  3, 3, 'BERT 6-class classification', 'P = probability distribution', GREEN, '5', '1.1'),
-        (12.2, 'arrow', 3, 2, 'Return probabilities P', 'signalLabel = argmax(P), confidence = max(P)', GREEN, '6', '1.2-1.3'),
-        (11.4, 'self',  2, 2, 'Build EmotionMetadata E', 'severity = COMPUTE_SEVERITY(confidence)\n'
+        (17.5, 'label', 2, 2, 'STAGE 1: EMOTION SIGNAL PROCESSING', '', GREEN, '', '[410]'),
+        (16.5, 'arrow', 2, 3, 'CLASSIFY_EMOTION(M)', 'Step 1.1: External service call', GREEN, '4', ''),
+        (15.5, 'self',  3, 3, 'BERT 6-class classification', 'P = probability distribution', GREEN, '5', '1.1'),
+        (14.5, 'arrow', 3, 2, 'Return probabilities P', 'signalLabel = argmax(P), confidence = max(P)', GREEN, '6', '1.2-1.3'),
+        (13.5, 'self',  2, 2, 'Build EmotionMetadata E', 'severity = COMPUTE_SEVERITY(confidence)\n'
                                                           'category = CLASSIFY_CATEGORY(signalLabel)', GREEN, '7', '1.4-1.6'),
 
         # Stage 2: RSC
-        (10.2, 'label', 2, 2, 'STAGE 2: RESPONSE STRATEGY CONTROL', '', BLUE, '', '[430]'),
-        (9.4,  'self',  2, 2, 'RSC_ALGORITHM(E)', 'STRATEGY_MAP[signalLabel] → baseStrategy\n'
+        (12.2, 'label', 2, 2, 'STAGE 2: RESPONSE STRATEGY CONTROL', '', BLUE, '', '[430]'),
+        (11.2, 'self',  2, 2, 'RSC_ALGORITHM(E)', 'STRATEGY_MAP[signalLabel] → baseStrategy\n'
                                                     'Severity-based modification', BLUE, '8', '2.1'),
-        (8.6,  'self',  2, 2, 'CONSTRAINT_GENERATOR(E, S)', 'C.required, C.prohibited\n'
+        (10.2, 'self',  2, 2, 'CONSTRAINT_GENERATOR(E, S)', 'C.required, C.prohibited\n'
                                                               'C.safetyEnforcement, C.escalation', BLUE, '9', '2.2'),
 
         # Stage 3: COG
-        (7.4,  'label', 2, 2, 'STAGE 3: CONSTRAINED OUTPUT GENERATION', '', ORANGE, '', '[440+450]'),
-        (6.6,  'self',  2, 2, 'SRB: BUILD_STRUCTURED_REQUEST', 'Role + Context + Strategy\n'
+        (8.9,  'label', 2, 2, 'STAGE 3: CONSTRAINED OUTPUT GENERATION', '', ORANGE, '', '[440+450]'),
+        (7.9,  'self',  2, 2, 'SRB: BUILD_STRUCTURED_REQUEST', 'Role + Context + Strategy\n'
                                                                  '+ Constraints + Safety Rules', PURPLE, '10', '3.1'),
-        (5.8,  'arrow', 2, 4, 'GENERATE_CONSTRAINED(request)', 'Step 3.2: Structured prompt → LLM', ORANGE, '11', '3.2'),
-        (5.0,  'self',  4, 4, 'LLM generation within constraints', 'Response within bounds', ORANGE, '12', ''),
-        (4.2,  'arrow', 4, 2, 'Return constrained response R', 'Constraint-compliant response', ORANGE, '13', ''),
+        (6.9,  'arrow', 2, 4, 'GENERATE_CONSTRAINED(request)', 'Step 3.2: Structured prompt → LLM', ORANGE, '11', '3.2'),
+        (5.9,  'self',  4, 4, 'LLM generation within constraints', 'Response within bounds', ORANGE, '12', ''),
+        (4.9,  'arrow', 4, 2, 'Return constrained response R', 'Constraint-compliant response', ORANGE, '13', ''),
 
         # Stage 4: State Update
-        (3.0,  'label', 2, 2, 'STAGE 4: STATE UPDATE', '', CYAN, '', '[460]'),
-        (2.4,  'arrow', 2, 5, 'STORE_INTERACTION(M, R, E)', 'Step 4.1: Persist all data', BLUE, '14', '4.1'),
-        (1.8,  'self',  2, 2, 'UPDATE_ACCUMULATED_STATE(U.id, E)', 'LSA: distribution, positivity, stability, trajectory', CYAN, '15', '4.2'),
+        (3.6,  'label', 2, 2, 'STAGE 4: STATE UPDATE', '', CYAN, '', '[460]'),
+        (2.8,  'arrow', 2, 5, 'STORE_INTERACTION(M, R, E)', 'Step 4.1: Persist all data', BLUE, '14', '4.1'),
+        (2.0,  'self',  2, 2, 'UPDATE_ACCUMULATED_STATE(U.id, E)', 'LSA: distribution, positivity, stability, trajectory', CYAN, '15', '4.2'),
         (1.2,  'self',  2, 2, 'EVALUATE_CRISIS_STATE(E, A)', 'CSM: riskScore → state transition', RED, '16', '4.3'),
-        (0.5,  'arrow', 2, 1, 'RETURN (R, E)', 'Response + EmotionMetadata → client', GREEN, '17', ''),
+        (0.4,  'arrow', 2, 1, 'RETURN (R, E)', 'Response + EmotionMetadata → client', GREEN, '17', ''),
     ]
 
     for y, typ, fi, ti, label, detail, color, step_num, algo_ref in steps:
@@ -394,85 +394,85 @@ def fig_workflow_diagram():
         tx = lane_x[ti]
 
         if typ == 'label':
-            # Section label
-            label_box = FancyBboxPatch((fx - 3.0, y - 0.25), 6.0, 0.5,
-                                       boxstyle="round,pad=0.08",
+            # Section label — prominent banner
+            label_box = FancyBboxPatch((fx - 3.5, y - 0.3), 7.0, 0.6,
+                                       boxstyle="round,pad=0.1",
                                        facecolor=color, edgecolor=color,
-                                       linewidth=0, alpha=0.15)
+                                       linewidth=1.5, alpha=0.2)
             ax.add_patch(label_box)
             ax.text(fx, y, label, ha='center', va='center',
-                    fontsize=9, fontweight='bold', color=color)
+                    fontsize=11, fontweight='bold', color=color)
             if algo_ref:
-                ax.text(fx + 3.3, y, algo_ref, ha='left', va='center',
-                        fontsize=7, color=TEXT_DIM)
+                ax.text(fx + 3.8, y, algo_ref, ha='left', va='center',
+                        fontsize=9, fontweight='bold', color=TEXT_DIM)
             continue
 
         if typ == 'self':
-            # Self-processing box
-            box = FancyBboxPatch((fx - 1.5, y - 0.3), 3.0, 0.65,
-                                 boxstyle="round,pad=0.06",
+            # Self-processing box — larger and bolder
+            box = FancyBboxPatch((fx - 1.8, y - 0.38), 3.6, 0.8,
+                                 boxstyle="round,pad=0.08",
                                  facecolor=BG_CARD, edgecolor=color,
-                                 linewidth=1.5, alpha=0.9)
+                                 linewidth=2, alpha=0.95)
             ax.add_patch(box)
-            ax.text(fx, y + 0.08, label, ha='center', va='center',
-                    fontsize=7.5, fontweight='bold', color=color)
+            ax.text(fx, y + 0.1, label, ha='center', va='center',
+                    fontsize=9, fontweight='bold', color=color)
             if detail:
                 lines = detail.split('\n')
                 for li, line in enumerate(lines):
-                    ax.text(fx, y - 0.15 - li * 0.13, line, ha='center',
-                            va='center', fontsize=5.5, color=TEXT_DIM)
+                    ax.text(fx, y - 0.18 - li * 0.16, line, ha='center',
+                            va='center', fontsize=7, color=TEXT_DIM)
         else:
-            # Arrow between lanes
-            offset = 0.5 if tx > fx else -0.5
+            # Arrow between lanes — thicker and fully opaque
+            offset = 0.6 if tx > fx else -0.6
             ax.annotate('', xy=(tx - offset, y),
                         xytext=(fx + offset, y),
                         arrowprops=dict(arrowstyle='->', color=color,
-                                        lw=1.8, alpha=0.7))
+                                        lw=2.5, alpha=0.9))
             mid_x = (fx + tx) / 2
-            ax.text(mid_x, y + 0.22, label, ha='center', fontsize=7,
+            ax.text(mid_x, y + 0.28, label, ha='center', fontsize=9,
                     fontweight='bold', color=color)
             if detail:
                 lines = detail.split('\n')
                 for li, line in enumerate(lines):
-                    ax.text(mid_x, y - 0.12 - li * 0.12, line, ha='center',
-                            fontsize=5.5, color=TEXT_DIM)
+                    ax.text(mid_x, y - 0.15 - li * 0.15, line, ha='center',
+                            fontsize=7, color=TEXT_DIM)
 
-        # Step number
+        # Step number — larger badge
         if step_num:
-            badge = plt.Circle((0.7, y), 0.2, facecolor=color,
-                               edgecolor=color, alpha=0.25, linewidth=0)
+            badge = plt.Circle((0.8, y), 0.28, facecolor=color,
+                               edgecolor=color, alpha=0.2, linewidth=1.5)
             ax.add_patch(badge)
-            ax.text(0.7, y, step_num, ha='center', va='center',
-                    fontsize=7, fontweight='bold', color=color)
+            ax.text(0.8, y, step_num, ha='center', va='center',
+                    fontsize=9, fontweight='bold', color=color)
 
         # Algorithm reference
         if algo_ref and typ != 'label':
-            ax.text(19.3, y, algo_ref, ha='center', va='center',
-                    fontsize=6.5, color=TEXT_DIM,
-                    bbox=dict(boxstyle='round,pad=0.12', facecolor=BG_CARD,
-                              edgecolor=BORDER, alpha=0.8))
+            ax.text(21.3, y, algo_ref, ha='center', va='center',
+                    fontsize=8, fontweight='bold', color=TEXT_DIM,
+                    bbox=dict(boxstyle='round,pad=0.15', facecolor=BG_CARD,
+                              edgecolor=BORDER, linewidth=1.5, alpha=0.9))
 
     # ── Timeline arrow ──
-    ax.annotate('', xy=(0.7, 0.3), xytext=(0.7, 17.7),
-                arrowprops=dict(arrowstyle='->', color=TEXT_DIM, lw=1.2, alpha=0.3))
+    ax.annotate('', xy=(0.8, 0.2), xytext=(0.8, 21.3),
+                arrowprops=dict(arrowstyle='->', color=TEXT_DIM, lw=1.5, alpha=0.4))
 
     # ── Novel badges ──
     novel_items = [
-        (13.0, 'ESP', GREEN),
-        (9.4,  'RSC', BLUE),
-        (8.6,  'Constraints', BLUE),
-        (6.6,  'SRB + EMPP', PURPLE),
-        (1.8,  'LSA', CYAN),
+        (15.5, 'ESP', GREEN),
+        (11.2, 'RSC', BLUE),
+        (10.2, 'Constraints', BLUE),
+        (7.9,  'SRB + EMPP', PURPLE),
+        (2.0,  'LSA', CYAN),
         (1.2,  'CSM', RED),
     ]
     for y, label, color in novel_items:
-        ax.text(19.3, y, f'NOVEL', ha='center', fontsize=6,
-                fontweight='bold', color=YELLOW,
-                bbox=dict(boxstyle='round,pad=0.1', facecolor=YELLOW,
-                          edgecolor=YELLOW, alpha=0.15))
+        ax.text(21.3, y, 'NOVEL', ha='center', fontsize=7,
+                fontweight='bold', color='#b45309',
+                bbox=dict(boxstyle='round,pad=0.12', facecolor='#fef3c7',
+                          edgecolor='#f59e0b', linewidth=1.5, alpha=0.9))
 
     out = os.path.join(OUT_DIR, 'FIG_workflow_diagram.png')
-    plt.savefig(out, dpi=200, bbox_inches='tight', facecolor=BG, pad_inches=0.4)
+    plt.savefig(out, dpi=250, bbox_inches='tight', facecolor=BG, pad_inches=0.5)
     plt.close()
     print(f'✅ {out}')
 
