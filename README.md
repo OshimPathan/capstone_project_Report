@@ -12,7 +12,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-[**View Demo**](#) • [**Read Paper**](docs/research/Final_IEEE_Research_Paper.pdf) • [**See Patent**](docs/patent/final-patent.pdf)
+[**View Demo**](https://capstone-project-report.vercel.app) • [**Read Paper**](docs/research/Final_IEEE_Research_Paper.pdf) • [**See Patent**](docs/patent/final-patent.pdf)
 
 </div>
 
