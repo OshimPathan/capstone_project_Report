@@ -18,20 +18,13 @@
 
 ---
 
-## 📋 Table of Contents
+## 📋 Note on Structure
 
-- [Abstract](#-abstract)
-- [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
-- [Methodology](#-methodology)
-- [Performance & Results](#-performance--results)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Installation & Setup](#-installation--setup)
-- [API Documentation](#-api-documentation)
-- [Research & Patent](#-research--patent)
-- [Future Scope](#-future-scope)
-- [Author](#-author)
+This repository contains two main applications:
+1.  **Frontend**: Located in [`rebirth/`](rebirth/), built with Flutter.
+2.  **Backend**: Located in [`rebirth_backend/`](rebirth_backend/), built with Node.js.
+
+The `docs/` folder contains comprehensive research, patent documentation, and system diagrams.
 
 ---
 
@@ -61,37 +54,54 @@ Unlike generic chatbots, Rebirth employs a **two-stage pipeline**:
 - **Mood Tracking**: Visualizes emotional patterns over time.
 - **Progress Insights**: Provides actionable insights based on long-term data.
 
-### 🔒 Privacy & Security
-- **Secure Data Storage**: MongoDB Atlas with strict access controls.
-- **Anonymity**: User data is processed securely with privacy as a priority.
-
 ---
 
 ## 🏗 System Architecture
 
-The system follows a client-server architecture with a clear separation of concerns:
+The overarching system architecture ensures scalability, security, and performance.
 
-```mermaid
-graph TD
-    User[User] -->|Interacts| App[Flutter Mobile App]
-    App -->|REST API| Backend[Node.js Backend]
-    Backend -->|Text| BERT[BERT Emotion Model]
-    BERT -->|Emotion Metadata| Backend
-    Backend -->|Prompt + Metadata| LLM[Google Gemini LLM]
-    LLM -->|Response| Backend
-    Backend -->|Response| App
-    Backend -->|Store Data| DB[(MongoDB Atlas)]
-```
+<div align="center">
+  <img src="docs/novelty_graph/FIG_system_architecture.png" alt="System Architecture Diagram" width="800"/>
+  <p><em>Figure 1: High-Level System Architecture of Rebirth</em></p>
+</div>
 
-### Emotion-Aware Pipeline
-1.  **Input**: "I've been feeling really anxious about my exams."
-2.  **Detection (BERT)**: `Fear: 0.97`, `Sadness: 0.02`.
-3.  **Enrichment**: Metadata added -> `Strategy: Reassurance`, `Tone: Gentle`.
-4.  **Generation (LLM)**: "I hear that exam anxiety is weighing on you. Let's take a deep breath together..."
+The architecture consists of:
+1.  **Mobile Client (Flutter)**: Handles UI, user interactions, and local caching.
+2.  **API Gateway (Node.js/Express)**: Manages authentication, rate limiting, and request routing.
+3.  **AI Engine**: 
+    - **Emotion Service**: BERT model hosted on HuggingFace for classification.
+    - **Response Service**: Google Gemini API for context-aware generation.
+4.  **Database (MongoDB Atlas)**: Stores user profiles, encrypted chat logs, and analytics data.
 
 ---
 
-## 🔬 Methodology
+## ⚙️ How It Works (The Pipeline)
+
+The core innovation of Rebirth lies in its **Emotion-Aware Processing Pipeline**.
+
+<div align="center">
+  <img src="docs/novelty_graph/FIG_workflow_diagram.png" alt="Processing Pipeline Workflow" width="800"/>
+  <p><em>Figure 2: The Emotion-Aware Processing Pipeline</em></p>
+</div>
+
+### Step-by-Step Workflow:
+1.  **User Input**: The user sends a message (e.g., "I feel overwhelmed").
+2.  **Emotion Detection (BERT)**: The backend sends the text to the BERT model, which returns probabilities (e.g., `Fear: 0.85`, `Sadness: 0.10`).
+3.  **Context Enrichment**: The system appends metadata such as *Therapeutic Strategy* (e.g., "Use grounding techniques") and *Tone* (e.g., "Calm, reassuring").
+4.  **Prompt Engineering**: A prompt is constructed combining the User Message + Emotion Metadata + User Profile Context.
+5.  **LLM Generation (Gemini)**: The LLM generates a response that is not generic, but specifically tailored to the user's emotional state.
+6.  **Response Delivery**: The app displays the response along with visual cues (e.g., color themes) matching the emotion.
+
+---
+
+## 🔬 Methodology & Novelty
+
+Our approach bridges the gap between rule-based chatbots and generic LLMs.
+
+<div align="center">
+  <img src="docs/novelty_graph/FIG_pipeline_novelty.png" alt="Novelty Pipeline Diagram" width="800"/>
+  <p><em>Figure 3: Novelty of the Hybrid Approach vs Traditional Methods</em></p>
+</div>
 
 ### 1. Model Selection
 We evaluated multiple models before selecting **BERT** for its superior accuracy and latency balance.
@@ -103,6 +113,8 @@ We evaluated multiple models before selecting **BERT** for its superior accuracy
 | **BERT-uncased** | **99%** | **120ms** | **Optimal** |
 
 ### 2. Therapeutic Mapping
+Each detected emotion triggers a specific therapeutic response strategy:
+
 | Emotion | Strategy | Technique |
 |---------|----------|-----------|
 | **Sadness** | Validation | Active listening, reflection |
@@ -119,6 +131,11 @@ The model achieves exceptional performance on the validation set:
 - **Overall Accuracy**: >99%
 - **F1-Score**: 0.99
 - **Inference Time**: ~120ms
+
+<div align="center">
+  <img src="docs/novelty_graph/FIG_performance_comparison.png" alt="Performance Comparison Chart" width="600"/>
+  <p><em>Figure 4: Performance Comparison with Baseline Models</em></p>
+</div>
 
 ### User Study (n=50)
 | Metric | Baseline LLM | Rebirth | Improvement |
@@ -157,7 +174,7 @@ The model achieves exceptional performance on the validation set:
 
 ```bash
 capstone_project/
-├── README.md                      # Project documentation
+├── README.md                      # Project documentation (This file)
 ├── extract_pdf.py                 # Utility script to extract text from PDFs
 ├── rebirth/                       # 📱 Flutter Mobile App Source Code
 │   ├── lib/
