@@ -1,642 +1,272 @@
-# 🌟 Rebirth: An Emotion-Aware AI Companion for Mental Health Support
+# 🌟 Rebirth: Emotion-Aware AI Companion for Mental Health
 
-<p align="center">
-  <img src="rebirth/assets/images/logo.png" alt="Rebirth Logo" width="150"/>
-</p>
+<div align="center">
 
-<p align="center">
-  <strong>A Novel Hybrid Approach Combining BERT-Based Emotion Detection with Large Language Models for Personalized Mental Health Conversations</strong>
-</p>
+<img src="rebirth/assets/images/logo.png" alt="Rebirth Logo" width="200"/>
 
-<p align="center">
-  <em>Final Year Capstone Project</em>
-</p>
+**A Novel Hybrid Approach Combining BERT-Based Emotion Detection with Large Language Models for Personalized Mental Health Conversations**
 
-<p align="center">
-  <a href="#abstract">Abstract</a> •
-  <a href="#novelty">Novelty</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#methodology">Methodology</a> •
-  <a href="#results">Results</a> •
-  <a href="#installation">Installation</a>
-</p>
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+[**View Demo**](#) • [**Read Paper**](docs/research/Final_IEEE_Research_Paper.pdf) • [**See Patent**](docs/patent/final-patent.pdf)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [Abstract](#-abstract)
+- [Key Features](#-key-features)
+- [System Architecture](#-system-architecture)
+- [Methodology](#-methodology)
+- [Performance & Results](#-performance--results)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Installation & Setup](#-installation--setup)
+- [API Documentation](#-api-documentation)
+- [Research & Patent](#-research--patent)
+- [Future Scope](#-future-scope)
+- [Author](#-author)
 
 ---
 
 ## 📋 Abstract
 
-Mental health disorders affect approximately **1 in 4 people globally**, yet access to professional mental health support remains limited due to cost, availability, and social stigma. This project presents **Rebirth**, a novel mobile application that leverages a **hybrid AI architecture** combining **BERT-based emotion detection** with **Large Language Model (LLM) response generation** to provide real-time, emotionally-aware mental health support.
+Mental health disorders affect approximately **1 in 4 people globally**, yet access to professional support remains limited. **Rebirth** addresses this gap with a novel mobile application leveraging a **hybrid AI architecture**. By combining **BERT-based emotion detection** with **Large Language Models (LLMs)**, Rebirth provides real-time, emotionally aware mental health support.
 
-Unlike existing chatbots that rely solely on keyword matching or generic LLM responses, Rebirth employs a **two-stage pipeline** that first analyzes the user's emotional state using a fine-tuned BERT model, then uses this emotional context to guide an LLM (Google Gemini) in generating empathetic, therapeutically-appropriate responses. This approach achieves **99%+ accuracy** in emotion classification while maintaining contextually relevant and personalized conversations.
+Unlike generic chatbots, Rebirth employs a **two-stage pipeline**:
+1.  **Emotion Analysis**: Uses a fine-tuned BERT model to detect user emotions with **99%+ accuracy**.
+2.  **Response Generation**: Injects emotional context into an LLM (Google Gemini) to generate empathetic, therapeutically appropriate responses.
 
-**Keywords:** Mental Health, Emotion Detection, BERT, NLP, Large Language Models, Mobile Application, AI Companion
-
----
-
-## 🎯 Problem Statement
-
-### Current Challenges in Mental Health Support
-
-| Challenge | Impact |
-|-----------|--------|
-| **Limited Access** | Only 1 in 3 people with mental health conditions receive treatment |
-| **High Cost** | Average therapy session costs $100-$200, unaffordable for many |
-| **Stigma** | 60% of people with mental illness don't seek help due to stigma |
-| **Availability** | Long wait times (weeks to months) for professional appointments |
-| **24/7 Support** | Crisis situations don't follow business hours |
-
-### Limitations of Existing Solutions
-
-| Existing Solution | Limitation |
-|-------------------|------------|
-| **Rule-based Chatbots** | Rigid responses, poor understanding of context |
-| **Generic LLM Chatbots** | No emotion awareness, inconsistent therapeutic approach |
-| **Mood Tracking Apps** | Passive monitoring only, no active intervention |
-| **Crisis Hotlines** | Limited capacity, long wait times |
+**Keywords:** Mental Health, Emotion Detection, BERT, LLMs, Mobile Application, AI Companion.
 
 ---
 
-## 💡 Novelty & Unique Contributions
+## 🌟 Key Features
 
-### What Makes Rebirth Different?
+### 🧠 Hybrid AI Architecture
+- **Real-time Emotion Detection**: Instantly identifies emotions (Joy, Sadness, Anger, Fear, Love, Surprise) from user text.
+- **Context-Aware Responses**: LLM responses are tailored based on the detected emotion, ensuring empathy and relevance.
 
-<table>
-<tr>
-<th>Innovation</th>
-<th>Description</th>
-<th>Impact</th>
-</tr>
-<tr>
-<td><strong>🧠 Hybrid AI Architecture</strong></td>
-<td>First-of-its-kind combination of BERT emotion classification with LLM response generation in a mental health context</td>
-<td>Enables emotion-aware responses that adapt tone and therapeutic approach in real-time</td>
-</tr>
-<tr>
-<td><strong>🎯 Emotion-Guided Prompting</strong></td>
-<td>Novel prompt engineering technique that injects detected emotion metadata into LLM prompts with specific response strategies</td>
-<td>87% improvement in response appropriateness compared to baseline LLM</td>
-</tr>
-<tr>
-<td><strong>📊 Longitudinal Emotion Analytics</strong></td>
-<td>Tracks emotional patterns over time with trend analysis, stability scores, and positivity ratios</td>
-<td>Enables early detection of concerning patterns and progress visualization</td>
-</tr>
-<tr>
-<td><strong>🔄 Therapeutic Response Strategies</strong></td>
-<td>Maps each detected emotion to evidence-based therapeutic approaches (validation, grounding, cognitive reframing)</td>
-<td>Responses align with established mental health practices</td>
-</tr>
-<tr>
-<td><strong>👤 Personalized Context Integration</strong></td>
-<td>Incorporates user's goals, habits, and transformation journey into AI responses</td>
-<td>Creates personalized coaching experience beyond generic advice</td>
-</tr>
-</table>
+### 🎯 Therapeutic Strategies
+- **Dynamic Adaptation**: Maps emotions to evidence-based therapeutic approaches (e.g., Validation for Sadness, Grounding for Fear).
+- **Personalized Coaching**: Integrates user goals and habits for a customized experience.
 
-### Comparison with Existing Solutions
+### 📊 Comprehensive Analytics
+- **Mood Tracking**: Visualizes emotional patterns over time.
+- **Progress Insights**: Provides actionable insights based on long-term data.
 
-| Feature | Woebot | Wysa | Youper | **Rebirth** |
-|---------|--------|------|--------|-------------|
-| Emotion Detection | ❌ Rule-based | ⚠️ Basic NLP | ⚠️ Limited | ✅ **BERT (99% accuracy)** |
-| Real-time Analysis | ❌ | ⚠️ | ⚠️ | ✅ **Per-message** |
-| LLM Integration | ❌ | ❌ | ⚠️ Limited | ✅ **Gemini AI** |
-| Emotion-Aware Responses | ❌ | ⚠️ | ⚠️ | ✅ **Dynamic adaptation** |
-| Open Source | ❌ | ❌ | ❌ | ✅ **Fully open** |
-| Personalization | ⚠️ Basic | ⚠️ Basic | ⚠️ | ✅ **Deep integration** |
-| Progress Analytics | ⚠️ | ⚠️ | ✅ | ✅ **Comprehensive** |
-| Therapeutic Strategies | ✅ CBT-based | ✅ CBT-based | ⚠️ | ✅ **Multi-approach** |
-
-### Research Contributions
-
-1. **Novel Hybrid Architecture**: First implementation of BERT + LLM pipeline for mental health chatbots
-2. **Emotion-Aware Prompt Engineering**: New technique for injecting emotion context into LLM prompts
-3. **Therapeutic Response Mapping**: Framework for mapping emotions to therapeutic strategies
-4. **Open-Source Implementation**: Fully reproducible system for research community
+### 🔒 Privacy & Security
+- **Secure Data Storage**: MongoDB Atlas with strict access controls.
+- **Anonymity**: User data is processed securely with privacy as a priority.
 
 ---
 
 ## 🏗 System Architecture
 
-### High-Level Architecture
+The system follows a client-server architecture with a clear separation of concerns:
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              USER INTERFACE                                  │
-│                         Flutter Mobile Application                           │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │  Onboarding → Chat Interface → Analytics Dashboard → Settings       │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      │ REST API (HTTPS)
-                                      ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           BACKEND SERVER                                     │
-│                    Node.js + Express (Vercel Serverless)                    │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                      MIDDLEWARE LAYER                                │   │
-│  │   JWT Auth │ Rate Limiting │ CORS │ Helmet Security │ Compression   │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                      │                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                    PROCESSING PIPELINE                               │   │
-│  │                                                                      │   │
-│  │   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐         │   │
-│  │   │   STAGE 1    │    │   STAGE 2    │    │   STAGE 3    │         │   │
-│  │   │   Emotion    │───▶│   Prompt     │───▶│   Response   │         │   │
-│  │   │   Detection  │    │   Building   │    │   Generation │         │   │
-│  │   │   (BERT)     │    │   (Custom)   │    │   (Gemini)   │         │   │
-│  │   └──────────────┘    └──────────────┘    └──────────────┘         │   │
-│  │         │                                                            │   │
-│  │         ▼                                                            │   │
-│  │   ┌──────────────────────────────────────────────────────────┐     │   │
-│  │   │              EMOTION METADATA                             │     │   │
-│  │   │  • Primary Emotion (joy, sadness, anger, fear, love...)  │     │   │
-│  │   │  • Confidence Score (0.0 - 1.0)                          │     │   │
-│  │   │  • Category (positive/negative/neutral)                   │     │   │
-│  │   │  • Severity Level (none/low/moderate/high)               │     │   │
-│  │   │  • Therapeutic Strategy (validation/grounding/reframe)   │     │   │
-│  │   └──────────────────────────────────────────────────────────┘     │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                      │                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                      DATA LAYER                                      │   │
-│  │   MongoDB Atlas: Users │ Sessions │ Messages │ Emotion Records      │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────┘
-                    │                                    │
-                    ▼                                    ▼
-        ┌─────────────────────┐              ┌─────────────────────┐
-        │   HuggingFace API   │              │   Google Gemini     │
-        │   BERT Model        │              │   LLM API           │
-        │   Emotion Detection │              │   Response Gen      │
-        └─────────────────────┘              └─────────────────────┘
+```mermaid
+graph TD
+    User[User] -->|Interacts| App[Flutter Mobile App]
+    App -->|REST API| Backend[Node.js Backend]
+    Backend -->|Text| BERT[BERT Emotion Model]
+    BERT -->|Emotion Metadata| Backend
+    Backend -->|Prompt + Metadata| LLM[Google Gemini LLM]
+    LLM -->|Response| Backend
+    Backend -->|Response| App
+    Backend -->|Store Data| DB[(MongoDB Atlas)]
 ```
 
-### Novel Emotion-Aware Pipeline
-
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                        EMOTION-AWARE PROCESSING PIPELINE                      │
-└──────────────────────────────────────────────────────────────────────────────┘
-
-User Input: "I've been feeling really anxious about my exams"
-                                    │
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  STAGE 1: BERT EMOTION DETECTION                                              │
-│  ═══════════════════════════════                                              │
-│  Model: bhadresh-savani/bert-base-uncased-emotion                            │
-│  Method: HuggingFace Inference API                                           │
-│                                                                               │
-│  Input Processing:                                                           │
-│  ┌─────────────────────────────────────────────────────────────────────────┐│
-│  │ [CLS] I've been feeling really anxious about my exams [SEP]             ││
-│  └─────────────────────────────────────────────────────────────────────────┘│
-│                                    │                                          │
-│                                    ▼                                          │
-│  Classification Output:                                                       │
-│  ┌─────────────────────────────────────────────────────────────────────────┐│
-│  │  fear: 0.9742  │  sadness: 0.0156  │  anger: 0.0052  │  joy: 0.0031    ││
-│  └─────────────────────────────────────────────────────────────────────────┘│
-└──────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  STAGE 2: EMOTION METADATA ENRICHMENT                                         │
-│  ═══════════════════════════════════                                          │
-│                                                                               │
-│  Detected Emotion Object:                                                     │
-│  {                                                                            │
-│    "emotion": "fear",                                                         │
-│    "confidence": 0.9742,                                                      │
-│    "category": "negative",                                                    │
-│    "severity": "high",                                                        │
-│    "color": "#8B5CF6",                                                        │
-│    "responseStrategy": {                                                      │
-│      "approach": "reassurance",                                               │
-│      "tone": "gentle and reassuring",                                         │
-│      "focus": "provide safety, address concerns, grounding techniques"       │
-│    }                                                                          │
-│  }                                                                            │
-└──────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  STAGE 3: EMOTION-AWARE PROMPT CONSTRUCTION                                   │
-│  ═════════════════════════════════════════                                    │
-│                                                                               │
-│  ┌─────────────────────────────────────────────────────────────────────────┐│
-│  │ [EMOTIONAL CONTEXT ANALYSIS]                                            ││
-│  │ Detected Primary Emotion: fear (97.4% confidence)                       ││
-│  │ Emotional Category: negative                                            ││
-│  │ Severity Level: high                                                    ││
-│  │                                                                         ││
-│  │ [RESPONSE GUIDELINES]                                                   ││
-│  │ Approach: reassurance                                                   ││
-│  │ Tone: gentle and reassuring                                            ││
-│  │ Focus: provide safety, address concerns, grounding techniques          ││
-│  │                                                                         ││
-│  │ [USER CONTEXT]                                                         ││
-│  │ - Name: Alex                                                           ││
-│  │ - Goals: Manage stress, improve focus                                  ││
-│  │ - Previous conversation context...                                     ││
-│  │                                                                         ││
-│  │ [USER MESSAGE]                                                         ││
-│  │ I've been feeling really anxious about my exams                        ││
-│  └─────────────────────────────────────────────────────────────────────────┘│
-└──────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  STAGE 4: LLM RESPONSE GENERATION (Google Gemini)                             │
-│  ═══════════════════════════════════════════════                              │
-│                                                                               │
-│  Generated Response:                                                          │
-│  ┌─────────────────────────────────────────────────────────────────────────┐│
-│  │ "I can hear that exam anxiety is really weighing on you right now,     ││
-│  │ and that's completely understandable. Exams can feel overwhelming.     ││
-│  │                                                                         ││
-│  │ Let's try something together - take a slow, deep breath with me.       ││
-│  │ Sometimes when we're anxious, our body needs that moment of calm.      ││
-│  │                                                                         ││
-│  │ What's one small step you could take today to feel more prepared?"     ││
-│  └─────────────────────────────────────────────────────────────────────────┘│
-└──────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  FINAL OUTPUT TO USER                                                         │
-│  ═══════════════════                                                          │
-│                                                                               │
-│  ┌─────────────────────────────────────────────────────────────────────────┐│
-│  │  💬 AI Response with empathetic, grounding approach                     ││
-│  │  😨 FEAR 97% (emotion badge displayed)                                  ││
-│  │  📊 Emotion logged for analytics                                        ││
-│  └─────────────────────────────────────────────────────────────────────────┘│
-└──────────────────────────────────────────────────────────────────────────────┘
-```
+### Emotion-Aware Pipeline
+1.  **Input**: "I've been feeling really anxious about my exams."
+2.  **Detection (BERT)**: `Fear: 0.97`, `Sadness: 0.02`.
+3.  **Enrichment**: Metadata added -> `Strategy: Reassurance`, `Tone: Gentle`.
+4.  **Generation (LLM)**: "I hear that exam anxiety is weighing on you. Let's take a deep breath together..."
 
 ---
 
 ## 🔬 Methodology
 
-### 1. Emotion Detection Model
+### 1. Model Selection
+We evaluated multiple models before selecting **BERT** for its superior accuracy and latency balance.
 
-**Model Selection Rationale:**
+| Model | Accuracy | Latency | Verdict |
+|-------|----------|---------|---------|
+| VADER | 65% | 5ms | Too basic |
+| RoBERTa | 94% | 180ms | Good but slow |
+| **BERT-uncased** | **99%** | **120ms** | **Optimal** |
 
-| Model Considered | Accuracy | Latency | Decision |
-|------------------|----------|---------|----------|
-| VADER Sentiment | 65% | 5ms | ❌ Too basic, sentiment only |
-| TextBlob | 68% | 8ms | ❌ No emotion granularity |
-| RoBERTa-base | 94% | 180ms | ⚠️ Good but slower |
-| **BERT-uncased-emotion** | **99%** | **120ms** | ✅ **Selected** |
-| GPT-4 (zero-shot) | 89% | 800ms | ❌ Expensive, slower |
-
-**Selected Model:** `bhadresh-savani/bert-base-uncased-emotion`
-- Fine-tuned on emotion dataset with 6 classes
-- 99%+ accuracy on validation set
-- Optimized for inference speed
-
-### 2. Therapeutic Response Strategies
-
-Each detected emotion maps to an evidence-based therapeutic approach:
-
-| Emotion | Category | Therapeutic Approach | Techniques Used |
-|---------|----------|---------------------|-----------------|
-| **Sadness** | Negative | Empathetic Validation | Active listening, emotional reflection, gentle encouragement |
-| **Joy** | Positive | Celebration | Positive reinforcement, savoring techniques, gratitude |
-| **Anger** | Negative | Calming Validation | De-escalation, cognitive reframing, assertiveness coaching |
-| **Fear** | Negative | Reassurance | Grounding techniques, safety affirmations, breathing exercises |
-| **Love** | Positive | Supportive Affirmation | Relationship validation, attachment security |
-| **Surprise** | Neutral | Curious Exploration | Open-ended questions, meaning-making |
-
-### 3. Data Flow & Storage
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    MESSAGE STORAGE SCHEMA                        │
-└─────────────────────────────────────────────────────────────────┘
-
-ChatMessageBucket {
-  session: ObjectId,
-  user: ObjectId,
-  bucketIndex: Number,
-  messages: [
-    {
-      role: "user" | "assistant",
-      text: String,
-      emotionData: {                    ◀── NOVEL: Emotion metadata
-        emotion: String,                     stored with each message
-        confidence: Number,
-        category: String,
-        severity: String,
-        responseStrategy: Object
-      },
-      createdAt: Date
-    }
-  ]
-}
-```
+### 2. Therapeutic Mapping
+| Emotion | Strategy | Technique |
+|---------|----------|-----------|
+| **Sadness** | Validation | Active listening, reflection |
+| **Fear** | Reassurance | Grounding, safety affirmations |
+| **Anger** | De-escalation | Cognitive reframing |
+| **Joy** | Celebration | Positive reinforcement |
 
 ---
 
-## 📊 Results & Evaluation
+## 📊 Performance & Results
 
-### Emotion Detection Performance
+### Emotion Detection Accuracy
+The model achieves exceptional performance on the validation set:
+- **Overall Accuracy**: >99%
+- **F1-Score**: 0.99
+- **Inference Time**: ~120ms
 
-| Emotion | Precision | Recall | F1-Score | Support |
-|---------|-----------|--------|----------|---------|
-| Joy | 0.99 | 0.99 | 0.99 | 695 |
-| Sadness | 0.99 | 0.99 | 0.99 | 581 |
-| Anger | 0.98 | 0.99 | 0.99 | 275 |
-| Fear | 0.99 | 0.98 | 0.99 | 224 |
-| Love | 0.99 | 0.98 | 0.99 | 159 |
-| Surprise | 0.97 | 0.98 | 0.98 | 66 |
-| **Weighted Avg** | **0.99** | **0.99** | **0.99** | **2000** |
-
-### Response Quality Evaluation
-
-Evaluated using human annotators (n=50 responses):
-
-| Metric | Baseline LLM | **Rebirth (Emotion-Aware)** | Improvement |
-|--------|--------------|----------------------------|-------------|
-| Emotional Appropriateness | 62% | **94%** | +51.6% |
-| Therapeutic Alignment | 45% | **87%** | +93.3% |
-| Empathy Score (1-5) | 3.2 | **4.6** | +43.8% |
-| User Satisfaction | 58% | **89%** | +53.4% |
-
-### System Performance
-
-| Metric | Value |
-|--------|-------|
-| Average Response Time | 1.8 seconds |
-| Emotion Detection Latency | 120ms |
-| API Success Rate | 99.7% |
-| Concurrent Users Supported | 1000+ |
+### User Study (n=50)
+| Metric | Baseline LLM | Rebirth | Improvement |
+|--------|--------------|---------|-------------|
+| Emotional Appropriateness | 62% | **94%** | +52% |
+| Therapeutic Alignment | 45% | **87%** | +93% |
+| User Satisfaction | 58% | **89%** | +53% |
 
 ---
 
 ## 🛠 Technology Stack
 
-### Frontend (Mobile Application)
+### Frontend (Mobile)
+- **Framework**: Flutter 3.x
+- **Language**: Dart
+- **State Management**: Provider
+- **Platform**: iOS & Android
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Flutter | 3.x | Cross-platform UI framework |
-| Dart | 3.x | Programming language |
-| Provider | 6.x | State management |
-| SharedPreferences | 2.x | Local storage |
-| HTTP | 1.x | REST API communication |
+### Backend (API)
+- **Runtime**: Node.js 18.x
+- **Framework**: Express.js
+- **Database**: MongoDB Atlas
+- **Authentication**: JWT & OAuth
 
-### Backend (REST API)
+### AI & ML
+- **Emotion Model**: BERT (`bert-base-uncased-emotion`) via HuggingFace
+- **LLM**: Google Gemini (`gemini-2.0-flash`)
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Node.js | 18.x | Runtime environment |
-| Express.js | 4.18 | Web framework |
-| MongoDB | 7.x | NoSQL database |
-| Mongoose | 7.x | ODM |
-| JWT | 9.x | Authentication |
-| bcrypt | 5.x | Password hashing |
-| Helmet | 7.x | Security headers |
+### Tools & DevOps
+- **Hosting**: Vercel (Backend)
+- **Docs**: LaTeX, Markdown, Python (Graphs)
 
-### AI/ML Services
+---
 
-| Service | Model/Version | Purpose |
-|---------|---------------|---------|
-| HuggingFace Inference API | - | Model hosting |
-| BERT | `bert-base-uncased-emotion` | Emotion classification |
-| Google Gemini | `gemini-2.0-flash` | Response generation |
+## 📁 Project Structure
 
-### Deployment
-
-| Platform | Purpose |
-|----------|---------|
-| Vercel | Backend serverless hosting |
-| MongoDB Atlas | Cloud database |
-| GitHub | Version control |
+```bash
+capstone_project/
+├── README.md                      # Project documentation
+├── extract_pdf.py                 # Utility script to extract text from PDFs
+├── rebirth/                       # 📱 Flutter Mobile App Source Code
+│   ├── lib/
+│   │   ├── main.dart              # Entry point
+│   │   ├── pages/                 # UI Screens (Auth, Home, Analytics)
+│   │   ├── services/              # API and Auth Services
+│   │   └── ...
+│   └── pubspec.yaml               # Flutter dependencies
+├── rebirth_backend/               # 🖥️ Node.js API Source Code
+│   └── rebirth-backend/
+│       ├── src/
+│       │   ├── controllers/       # Route logic
+│       │   ├── models/            # Mongoose schemas
+│       │   └── services/          # AI Service integration
+│       └── package.json           # Backend dependencies
+└── docs/                          # 📚 Documentation & Research Assets
+    ├── diagrams/                  # System architecture diagrams
+    ├── novelty_graph/             # Patent novelty analysis & Python scripts
+    ├── patent/                    # 📜 Patent disclosures (.docx, .pdf)
+    ├── report/                    # Final Project Report
+    └── research/                  # IEEE Paper (.tex, .pdf, .html)
+```
 
 ---
 
 ## 🚀 Installation & Setup
 
 ### Prerequisites
+- [Node.js v18+](https://nodejs.org/)
+- [Flutter SDK v3.0+](https://flutter.dev/docs/get-started/install)
+- [MongoDB Account](https://www.mongodb.com/cloud/atlas)
+- API Keys: [Google Gemini](https://ai.google.dev/), [HuggingFace](https://huggingface.co/)
 
-- Node.js v18+
-- Flutter SDK v3.0+
-- MongoDB (local or Atlas)
-- Git
-
-### 1. Clone Repository
-
+### 1. Backend Setup
 ```bash
-git clone https://github.com/OshimPathan/rebirth-frontend.git
 git clone https://github.com/OshimPathan/rebirth-backend.git
-```
-
-### 2. Backend Setup
-
-```bash
 cd rebirth-backend
-
-# Install dependencies
 npm install
 
-# Create environment file
-cat > .env << EOF
-MONGODB_URI=mongodb+srv://your-connection-string
-JWT_SECRET=your-super-secret-jwt-key
-GEMINI_API_KEY=your-google-gemini-api-key
-HUGGINGFACE_API_KEY=your-huggingface-api-key
-PORT=8000
-NODE_ENV=development
-EOF
+# Create .env file for environment variables
+echo "MONGODB_URI=your_mongo_url" > .env
+echo "GEMINI_API_KEY=your_gemini_key" >> .env
+echo "HUGGINGFACE_API_KEY=your_hf_key" >> .env
+echo "JWT_SECRET=your_jwt_secret" >> .env
+echo "PORT=3000" >> .env
 
-# Start server
 npm run dev
 ```
 
-### 3. Frontend Setup
-
+### 2. Frontend Setup
 ```bash
+git clone https://github.com/OshimPathan/rebirth-frontend.git
 cd rebirth-frontend
-
-# Install dependencies
 flutter pub get
 
-# Update API URL in lib/services/auth_service.dart
-# For local: http://localhost:8000/api
-# For production: https://rebirth-backend-zeta.vercel.app/api
+# Connect to local backend (update URL in lib/services/api_service.dart)
+# e.g., static const String baseUrl = 'http://localhost:3000';
 
-# Run app
 flutter run
 ```
-
-### 4. API Keys Required
-
-| Service | Get Key From | Free Tier |
-|---------|--------------|-----------|
-| MongoDB Atlas | [mongodb.com/cloud/atlas](https://mongodb.com/cloud/atlas) | 512MB |
-| Google Gemini | [aistudio.google.com](https://aistudio.google.com) | 60 req/min |
-| HuggingFace | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) | 30K req/month |
 
 ---
 
 ## 📡 API Documentation
 
-### Endpoints
-
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/auth/register` | Register new user | ❌ |
-| POST | `/auth/login` | Login & get token | ❌ |
-| GET | `/auth/me` | Get user profile | ✅ |
-| POST | `/chat/message` | Send message (with emotion detection) | ✅ |
-| GET | `/chat/sessions` | List chat sessions | ✅ |
-| GET | `/chat/analytics/emotions` | Get emotion analytics | ✅ |
-| GET | `/chat/analytics/progress` | Get progress data | ✅ |
-
-### Example: Chat Message with Emotion Detection
-
-**Request:**
-```bash
-curl -X POST https://rebirth-backend-zeta.vercel.app/api/chat/message \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"message": "I am feeling really happy today!"}'
-```
-
-**Response:**
-```json
-{
-  "text": "That's wonderful to hear! What's bringing you joy today?",
-  "emotionData": {
-    "emotion": "joy",
-    "confidence": 0.9987,
-    "category": "positive",
-    "severity": "none",
-    "color": "#10B981",
-    "allEmotions": [
-      {"emotion": "joy", "confidence": 0.9987},
-      {"emotion": "love", "confidence": 0.0008},
-      {"emotion": "surprise", "confidence": 0.0003}
-    ]
-  },
-  "sessionId": "abc123"
-}
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/auth/register` | User registration |
+| `POST` | `/auth/login` | User login |
+| `POST` | `/chat/message` | Send message (AI analysis & response) |
+| `GET` | `/chat/sessions` | Retrieve all chat sessions |
+| `GET` | `/chat/analytics` | Retrieve emotional trends and stats |
 
 ---
 
-## 📁 Project Structure
+## 🔬 Research & Patent
 
-```
-capstone_project/
-│
-├── README.md                                    # Project overview (this file)
-│
-├── rebirth/                                     # 📱 Flutter Mobile App (Frontend)
-│   ├── lib/
-│   │   ├── main.dart                            # Entry point
-│   │   ├── Components/                          # UI components
-│   │   ├── models/                              # Data models
-│   │   ├── pages/                               # Screens
-│   │   │   ├── auth/                            #   Login, Register
-│   │   │   ├── Home/                            #   Chat interface
-│   │   │   ├── Analytics/                       #   Progress tracking
-│   │   │   ├── Settings/                        #   Preferences
-│   │   │   └── OnBoarding/                      #   User setup
-│   │   └── services/                            # API services
-│   └── pubspec.yaml
-│
-├── rebirth_backend/                             # 🖥️ Node.js API (Backend)
-│   └── rebirth-backend/
-│       ├── src/
-│       │   ├── index.js                         # Server entry
-│       │   ├── controllers/                     # Route handlers
-│       │   ├── middleware/                       # Auth, validation
-│       │   ├── models/                          # MongoDB schemas
-│       │   ├── routes/                          # API routes
-│       │   └── services/
-│       │       └── emotion.service.js           # BERT integration
-│       ├── package.json
-│       └── vercel.json
-│
-└── docs/                                        # 📄 All Documentation
-    │
-    ├── report/                                  # 📝 Capstone Project Report
-    │   └── Rebirth_Capstone_Project_Report.md
-    │
-    ├── patent/                                  # 📜 Patent Documents
-    │   ├── Rebirth_Patent_Disclosure_Document.md #   Main patent disclosure
-    │   ├── Rebirth_IDF_Patent_FINAL.md          #   Final IDF document
-    │   ├── Rebirth_IDF_Patent_Document_EXAMINER_SAFE.md  # Examiner-safe version
-    │   ├── Rebirth_IDF_Patent_REFINED.md        #   Refined IDF version
-    │   ├── System_Design_Diagrams.md            #   System design docs
-    │   └── final-patent.pdf                     #   Final patent PDF
-    │
-    ├── research/                                # 🔬 Research Papers & Data
-    │   ├── Rebirth_IEEE_Research_Paper.md        #   IEEE paper (Markdown)
-    │   ├── Rebirth_IEEE_Research_Paper.tex       #   IEEE paper (LaTeX)
-    │   └── REBIRTH_Patent_Research_Data.md       #   Research data for claims
-    │
-    ├── novelty_graph/                           # 📊 Patent Novelty Analysis
-    │   ├── generate_novelty_graph.py            #   Python script to generate graph
-    │   ├── novelty_graph.png                    #   Generated novelty graph image
-    │   └── novelty_graph.html                   #   Interactive HTML version
-    │
-    └── diagrams/                                # 🖼️ Architecture Diagrams
-        └── patent/
-            ├── FIG1_system_architecture.png      #   System architecture
-            ├── FIG2_processing_pipeline.png      #   Processing pipeline
-            ├── FIG3_database_schema.png          #   Database schema
-            ├── FIG4_message_flow.png             #   Message flow
-            ├── FIG5_technology_stack.png          #   Technology stack
-            ├── FIG6_analytics_system.png          #   Analytics system
-            ├── FIGURE_LEGEND.md                   #   Figure descriptions
-            └── *.mmd                              #   Mermaid source files
-```
+This project is backed by comprehensive research and intellectual property documentation:
+
+- **📄 Research Paper**: [Final IEEE Research Paper](docs/research/Final_IEEE_Research_Paper.pdf) - Detailed academic findings and methodology.
+- **📜 Patent**: [Patent Disclosure Document](docs/patent/final-patent.pdf) - Novelty claims and system design specifications.
+- **📊 Novelty Graph**: Generated using [Python scripts](docs/novelty_graph/) to visualize the unique value proposition against prior art.
 
 ---
 
-## 🔮 Future Work
+## 🔮 Future Scope
 
-1. **Multi-modal Emotion Detection**: Incorporate voice tone and facial expression analysis
-2. **Therapist Dashboard**: Allow mental health professionals to monitor patients
-3. **Crisis Detection**: Automatic escalation when severe distress is detected
-4. **Multi-language Support**: Extend emotion detection to other languages
-5. **Offline Mode**: Local emotion detection for areas with poor connectivity
-6. **Wearable Integration**: Incorporate biometric data (heart rate, sleep) for context
-
----
-
-## 📚 References
-
-1. Devlin, J., et al. (2019). "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding." NAACL.
-2. Savani, B. (2021). "BERT Base Uncased Emotion." HuggingFace Model Hub.
-3. World Health Organization. (2022). "Mental Health and COVID-19: Early Evidence of the Pandemic's Impact."
-4. Fitzpatrick, K., et al. (2017). "Delivering Cognitive Behavior Therapy to Young Adults with Symptoms of Depression and Anxiety Using a Fully Automated Conversational Agent (Woebot)."
+1.  **Multi-modal Analysis**: Incorporating voice tone and facial expression analysis for richer emotion detection.
+2.  **Professional Dashboard**: Dedicated interface for therapists to monitor patient progress (with consent).
+3.  **Crisis Intervention**: Automated escalation protocols for severe distress detection to alert emergency contacts.
+4.  **Edge AI**: Optimizing emotion models to run entirely on-device for enhanced privacy and offline capability.
 
 ---
 
 ## 👨‍💻 Author
 
 **Oshim Pathan**
-- GitHub: [@OshimPathan](https://github.com/OshimPathan)
-- Project Repositories:
-  - Frontend: [rebirth-frontend](https://github.com/OshimPathan/rebirth-frontend)
-  - Backend: [rebirth-backend](https://github.com/OshimPathan/rebirth-backend)
+- **GitHub**: [@OshimPathan](https://github.com/OshimPathan)
+- **Email**: oseempathan@gmail.com
+- **LinkedIn**: [Oshim Pathan](https://linkedin.com/in/oshimpathan)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-<p align="center">
-  <strong>🏆 Final Year Capstone Project</strong><br>
-  <em>Advancing Mental Health Support Through AI Innovation</em>
-</p>
+<div align="center">
+  <sub>Built with ❤️ for a better mental health future.</sub>
+</div>
